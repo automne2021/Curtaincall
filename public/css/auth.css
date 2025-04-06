@@ -1,0 +1,56 @@
+.modal-dialog {
+    max-width: 360px;
+    width: 100%;
+    overflow: auto;
+}
+
+.modal-header {
+    background-color: #075E54;
+    color: white;
+    border-radius: 5px 5px 0 0;
+}
+
+.modal-title {
+    padding-left: 10px;
+}
+
+.auth-btn {
+    background-color: #AFE3CE;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    width: 100%;
+}
+
+.social-btn {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid #e0e0e0;
+}
+
+.divider-text {
+    position: relative;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.divider-text span {
+    padding: 0 10px;
+    background-color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.divider-text:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+}
