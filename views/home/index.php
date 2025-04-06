@@ -8,7 +8,7 @@ require_once 'helpers/sort_helpers.php';
         <div class="col-12">
             <div id="hotPerformancesCarousel" class="carousel slide" data-bs-ride="carousel">
                 <!-- Indicators -->
-                <div class="carousel-indicators mt-8">
+                <div class="carousel-indicators">
                     <button type="button" data-bs-target="#hotPerformancesCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#hotPerformancesCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#hotPerformancesCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -57,8 +57,11 @@ require_once 'helpers/sort_helpers.php';
 
     <!-- UpComing Performances Section -->
     <div class="row mb-4">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">UPCOMING PERFORMANCES</h3>
+        <div class="col-12 d-flex justify-content-left align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="orange" class="bi bi-fire" viewBox="0 0 16 16">
+                <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15" />
+            </svg>
+            <h5 class="mx-2 mb-0">Sự kiện sắp tới</h5>
         </div>
     </div>
 

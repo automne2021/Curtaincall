@@ -2,7 +2,7 @@
 include 'db_config.php';
 header('Content-Type: application/json');
 
-// Get parameters
+
 $theater_id = isset($_GET['theater_id']) ? $_GET['theater_id'] : '';
 $sort_field = isset($_GET['sort']) ? $_GET['sort'] : 'date';
 $sort_dir = isset($_GET['dir']) ? $_GET['dir'] : 'desc';
@@ -20,16 +20,17 @@ switch ($sort_field) {
         break;
     case 'date':
     default:
-        $orderBy = "p.date " . strtoupper($sort_dir);
+        $orderBy = "s.date " . strtoupper($sort_dir);
         break;
 }
 
 // Prepare query based on if theater_id is provided
 if (!empty($theater_id)) {
-    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name
+    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name, s.date
             FROM plays p
             JOIN seat_prices sp ON p.theater_id = sp.theater_id
             JOIN theaters t ON p.theater_id = t.theater_id
+            LEFT JOIN schedules s ON p.play_id = s.play_id
             WHERE p.theater_id = ?
             GROUP BY p.play_id
             ORDER BY {$orderBy}
@@ -39,10 +40,11 @@ if (!empty($theater_id)) {
     $stmt->bind_param("sii", $theater_id, $plays_per_page, $offset);
 } else {
     // Show all plays if no theater is selected
-    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name
+    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name, s.date
             FROM plays p
             JOIN seat_prices sp ON p.theater_id = sp.theater_id
             JOIN theaters t ON p.theater_id = t.theater_id
+            LEFT JOIN schedules s ON p.play_id = s.play_id
             GROUP BY p.play_id
             ORDER BY {$orderBy}
             LIMIT ? OFFSET ?";

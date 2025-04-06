@@ -102,7 +102,7 @@ class Play
 
         return $result;
     }
-
+    // can be excluded
     public function getTotalPlays($theater_id = null)
     {
         if ($theater_id) {

@@ -37,11 +37,11 @@ $current_route = $_GET['route'] ?? 'home';
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-left flex-grow-1 pe-3 gap-4">
                             <li class="nav-item">
-                                <a class="nav-link <?= $current_route === 'home' ? 'active' : '' ?>" href="index.php">Home</a>
+                                <a class="nav-link <?= $current_route === 'home' ? 'active' : '' ?>" href="index.php">Trang chủ</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="index.php?route=play" role="button">
-                                    Theaters
+                                    Nhà hát kịch
                                 </a>
                                 <ul class="dropdown-menu">
                                     <?php if ($theaters_result && $theaters_result->num_rows > 0): ?>
@@ -55,12 +55,12 @@ $current_route = $_GET['route'] ?? 'home';
                                         <?php $theaters_result->data_seek(0); // Reset result pointer 
                                         ?>
                                     <?php else: ?>
-                                        <li><a class="dropdown-item" href="#">No theaters available</a></li>
+                                        <li><a class="dropdown-item" href="#">Không có nhà hát kịch nào được tìm thấy.</a></li>
                                     <?php endif; ?>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php?route=contact">Contact</a>
+                                <a class="nav-link" href="index.php?route=contact">Liên hệ</a>
                             </li>
                         </ul>
 
