@@ -79,6 +79,36 @@ unset($_SESSION['password_errors']);
                                     <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
                                     <div class="form-text">Chấp nhận các định dạng: JPG, JPEG, PNG, GIF. Kích thước tối đa: 2MB.</div>
                                 </div>
+
+                                <!-- Add Google Account Connection Section -->
+                                <div class="mb-4">
+                                    <label class="form-label">Liên kết tài khoản</label>
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <h6 class="mb-1">Tài khoản Google</h6>
+                                                    <p class="text-muted mb-0 small">
+                                                        <?php if (isset($user['google_id']) && $user['google_id']): ?>
+                                                            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Đã kết nối</span>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">Chưa kết nối</span>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                </div>
+                                                <?php if (isset($user['google_id']) && $user['google_id']): ?>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm" disabled>
+                                                        <i class="bi bi-google me-1"></i>Đã kết nối
+                                                    </button>
+                                                <?php else: ?>
+                                                    <a href="<?= BASE_URL ?>index.php?route=user/google-login" class="btn btn-outline-primary btn-sm">
+                                                        <i class="bi bi-google me-1"></i>Kết nối
+                                                    </a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                 <!-- Submit Button -->
                                 <div class="text-center">
@@ -134,6 +164,63 @@ unset($_SESSION['password_errors']);
                                     <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connected Accounts Tab -->
+                <div class="tab-pane fade" id="connected-accounts">
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-link-45deg me-2"></i>Tài khoản liên kết</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle me-2"></i> Kết nối tài khoản mạng xã hội để đăng nhập nhanh hơn.
+                            </div>
+                            
+                            <!-- Google Account -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <div class="social-icon google-icon me-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 48 48">
+                                                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                                                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
+                                                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
+                                                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">Google</h6>
+                                                <p class="mb-0 text-muted small">
+                                                    <?php if (isset($user['google_id']) && $user['google_id']): ?>
+                                                        <span class="text-success">Đã kết nối với tài khoản Google của bạn</span>
+                                                    <?php else: ?>
+                                                        <span>Kết nối để đăng nhập nhanh hơn</span>
+                                                    <?php endif; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <?php if (isset($user['google_id']) && $user['google_id']): ?>
+                                                <form action="index.php?route=user/disconnectGoogle" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy kết nối tài khoản Google?');">
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm">Hủy kết nối</button>
+                                                </form>
+                                            <?php else: ?>
+                                                <a href="<?= BASE_URL ?>index.php?route=user/google-login" class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-google me-1"></i>Kết nối
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-warning mt-4">
+                                <i class="bi bi-exclamation-triangle me-2"></i> Nếu bạn đăng nhập bằng tài khoản xã hội và chưa đặt mật khẩu, bạn có thể tạo mật khẩu bằng cách sử dụng tính năng "Quên mật khẩu".
+                            </div>
                         </div>
                     </div>
                 </div>

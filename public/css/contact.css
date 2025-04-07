@@ -33,13 +33,13 @@
 }
 
 .contact-link {
-    color: #0d6efd;
+    color: #075E54;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .contact-link:hover {
-    color: #0a58ca;
+    color: #075E54;
     text-decoration: underline;
 }
 
@@ -66,12 +66,12 @@
 }
 
 .contact-form .input-group:focus-within .input-group-text {
-    border-color: #86b7fe;
+    border-color: #075E54;
 }
 
 .contact-form .input-group:focus-within .form-control {
     box-shadow: none;
-    border-color: #86b7fe;
+    border-color: #075E54;
 }
 
 /* Map container */
@@ -96,7 +96,7 @@
 .separator {
     height: 3px;
     width: 50px;
-    background-color: #0d6efd;
+    background-color: #075E54;
     margin-top: 10px;
     margin-bottom: 20px;
 }

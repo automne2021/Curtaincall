@@ -26,7 +26,9 @@ $route = isset($_GET['route']) ? $_GET['route'] : 'home';
 $routes['payment/process'] = ['controller' => 'PaymentController', 'action' => 'process'];
 $routes['contact'] = ['controller' => 'ContactController', 'action' => 'index'];
 $routes['contact/send'] = ['controller' => 'ContactController', 'action' => 'send'];
-
+$routes['user/google-login'] = ['controller' => 'UserController', 'action' => 'googleLogin'];
+$routes['user/google-callback'] = ['controller' => 'UserController', 'action' => 'googleCallback'];
+$routes['user/disconnectGoogle'] = ['controller' => 'UserController', 'action' => 'disconnectGoogle'];
 
 // Parse the route
 $parts = explode('/', trim($route, '/'));
@@ -47,13 +49,19 @@ if (file_exists($controllerFile)) {
 
     // Create controller instance
     $controllerInstance = new $controller($conn);
-
+    if (strpos($action, '-') !== false) {
+        $camelCaseAction = lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $action))));
+        if (method_exists($controllerInstance, $camelCaseAction)) {
+            $action = $camelCaseAction;
+        }
+    }
     // Check if the action exists
     if (method_exists($controllerInstance, $action)) {
         // Call the action with parameters
         call_user_func_array([$controllerInstance, $action], $params);
     } else {
         // Action not found - default to index
+        echo "404 Not Found: Action '$action' not found in controller '$controller'";
         $controllerInstance->index();
     }
 } else {

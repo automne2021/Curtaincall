@@ -132,4 +132,91 @@ class User {
         
         return $stmt->execute();
     }
+
+    public function getUserByGoogleId($google_id) {
+        $sql = "SELECT * FROM users WHERE google_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $google_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows == 0) {
+            return null;
+        }
+        
+        return $result->fetch_assoc();
+    }
+    
+    public function updateGoogleId($user_id, $google_id) {
+        $sql = "UPDATE users SET google_id = ? WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("si", $google_id, $user_id);
+        $stmt->execute();
+        
+        return $stmt->affected_rows > 0;
+    }
+    
+    public function registerUser($data) {
+        // Check for Google ID field
+        $has_google_id = isset($data['google_id']) && !empty($data['google_id']);
+        
+        if ($has_google_id) {
+            $sql = "INSERT INTO users (username, email, password, name, google_id, avatar) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssssss", 
+                $data['username'], 
+                $data['email'], 
+                $data['password'], 
+                $data['name'], 
+                $data['google_id'],
+                $data['avatar']
+            );
+        } else {
+            // Your existing register code
+            $sql = "INSERT INTO users (username, email, password, name) VALUES (?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssss", 
+                $data['username'], 
+                $data['email'], 
+                $data['password'], 
+                $data['name']
+            );
+        }
+        
+        $stmt->execute();
+        
+        if ($stmt->affected_rows > 0) {
+            return $stmt->insert_id;
+        }
+        
+        return false;
+    }
+
+    public function getUserByUsername($username) {
+        $sql = "SELECT * FROM users WHERE username = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows === 0) {
+            return null;
+        }
+        
+        return $result->fetch_assoc();
+    }
+    
+    public function getUserByEmail($email) {
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows === 0) {
+            return null;
+        }
+        
+        return $result->fetch_assoc();
+    }
 }
