@@ -20,9 +20,12 @@ class Theater
 
     public function getTheaterById($theater_id)
     {
+        // Convert to integer explicitly
+        $theater_id = (int)$theater_id;
+        
         $sql = "SELECT * FROM theaters WHERE theater_id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $theater_id);
+        $stmt->bind_param("i", $theater_id);  // Change "s" to "i" for integer
         $stmt->execute();
         $result = $stmt->get_result();
 

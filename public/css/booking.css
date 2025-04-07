@@ -1,0 +1,103 @@
+/* Booking styles */
+.container.my-5 {
+    background-color: inherit; /* Inherit background from parent (body) */
+}
+
+/* Ensure cards have consistent styling */
+.booking-page .card {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Style the card headers to match site theme */
+.booking-page .card-header {
+    border-bottom: none;
+    padding: 1rem 1.5rem;
+}
+
+.seat-map {
+    margin-bottom: 20px;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.row-label {
+    margin-right: 10px;
+    font-weight: bold;
+    width: 20px;
+}
+
+.seat-container {
+    margin: 5px;
+}
+
+.seat-checkbox {
+    display: none;
+}
+
+.seat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: #c8e6c9;
+    cursor: pointer;
+    color: #333;
+    font-size: 11px;
+    transition: all 0.2s;
+}
+
+.seat.vip {
+    background-color: #ffecb3;
+}
+
+.seat.booked, .seat.pending {
+    background-color: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+}
+
+.seat-checkbox:checked + .seat {
+    background-color: #4caf50;
+    color: white;
+}
+
+.screen {
+    width: 80%;
+    height: 30px;
+    background-color: #ddd;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transform: perspective(300px) rotateX(-20deg);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Legend styles */
+.seat-legend .seat {
+    width: 25px;
+    height: 25px;
+    cursor: default;
+}
+
+.seat-legend .seat.selected {
+    background-color: #4caf50;
+}
+
+.seat-legend .seat.booked {
+    background-color: #e0e0e0;
+}
+
+.seat-legend .seat.vip {
+    background-color: #ffecb3;
+}

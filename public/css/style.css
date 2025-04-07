@@ -444,3 +444,30 @@
         margin-bottom: 8px;
     }
 }
+
+/* Add these styles to the existing file */
+.notification-container {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    max-width: 350px;
+    z-index: 1050;
+}
+
+.alert {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* User avatar styles */
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.dropdown-menu-end {
+    right: 0;
+    left: auto;
+}

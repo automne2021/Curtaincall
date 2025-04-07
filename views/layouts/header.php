@@ -2,6 +2,9 @@
 // filepath: c:\Users\VY\Downloads\curtaincall\views\layouts\header.php
 // Get current route for active nav highlighting
 $current_route = $_GET['route'] ?? 'home';
+
+// Determine if this is a booking page
+$isBookingPage = strpos($current_route, 'booking') === 0;
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -18,9 +21,15 @@ $current_route = $_GET['route'] ?? 'home';
     <link rel="stylesheet" href="public/css/style.css">
     <link rel="stylesheet" href="public/css/layouts.css">
     <link rel="stylesheet" href="public/css/auth.css">
+    <link rel="stylesheet" href="public/css/profile.css">
+    <link rel="stylesheet" href="public/css/booking.css">
+    <link rel="stylesheet" href="public/css/breadcrumb.css">
+    <link rel="stylesheet" href="public/css/payment-success.css">
+
+    <script src="public/js/auth-validation.js"></script>
 </head>
 
-<body>
+<body class="<?= $isBookingPage ? 'booking-page' : '' ?>">
     <header>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -86,13 +95,31 @@ $current_route = $_GET['route'] ?? 'home';
                         </form>
 
                         <div class="login-btn mx-2">
-                            <button type="button" class="utility-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                Đăng nhập
-                            </button>
-                            <span class="login-divider vr my-2"></span>
-                            <button type="button" class="utility-btn" data-bs-toggle="modal" data-bs-target="#registerModal">
-                                Đăng ký
-                            </button>
+                            <?php if (isset($_SESSION['user'])): ?>
+                                <!-- User is logged in, show avatar and dropdown -->
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle utility-btn d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <?php $avatarUrl = $_SESSION['user']['avatar'] ?? 'public/images/avatars/default.png'; ?>
+                                        <img src="<?= $avatarUrl ?>" alt="User Avatar" class="user-avatar me-2">
+                                        <span><?= htmlspecialchars($_SESSION['user']['username']) ?></span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                        <li><a class="dropdown-item" href="index.php?route=user/profile"><i class="bi bi-person me-2"></i>Tài khoản</a></li>
+                                        <li><a class="dropdown-item" href="index.php?route=booking/history"><i class="bi bi-ticket-perforated me-2"></i>Lịch sử đặt vé</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="index.php?route=user/logout"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            <?php else: ?>
+                                <!-- User is not logged in, show login/register buttons -->
+                                <button type="button" class="utility-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                    Đăng nhập
+                                </button>
+                                <span class="login-divider vr my-2"></span>
+                                <button type="button" class="utility-btn" data-bs-toggle="modal" data-bs-target="#registerModal">
+                                    Đăng ký
+                                </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -107,3 +134,52 @@ $current_route = $_GET['route'] ?? 'home';
             </div>
         </nav>
     </header>
+
+    <!-- Notification System -->
+    <?php if (isset($_SESSION['success_message']) || isset($_SESSION['error_message'])): ?>
+        <div class="notification-container">
+            <?php if (isset($_SESSION['success_message'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i> <?= $_SESSION['success_message'] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['success_message']); ?>
+            <?php endif; ?>
+            
+            <?php if (isset($_SESSION['error_message'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i> <?= $_SESSION['error_message'] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['error_message']); ?>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all alert notifications
+            const alerts = document.querySelectorAll('.alert');
+            
+            // Set timeout for each alert
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    // Create fade out effect
+                    alert.style.transition = 'opacity 1s';
+                    alert.style.opacity = '0';
+                    
+                    // Remove the element after the fade completes
+                    setTimeout(function() {
+                        // Use Bootstrap's alert dismiss method if available
+                        if (typeof bootstrap !== 'undefined') {
+                            const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                            bsAlert.close();
+                        } else {
+                            // Fallback to manual removal
+                            alert.remove();
+                        }
+                    }, 1000);
+                }, 3000); // 5 seconds before starting the fade
+            });
+        });
+    </script>

@@ -1,0 +1,35 @@
+/* User profile specific styles */
+.list-group-item.active {
+    background-color: #075E54;
+    border-color: #075E54;
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+.btn-primary {
+    background-color: #075E54;
+    border-color: #075E54;
+}
+
+.btn-primary:hover {
+    background-color: #053f38;
+    border-color: #053f38;
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 15px 20px;
+}

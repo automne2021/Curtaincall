@@ -46,7 +46,11 @@ require_once 'helpers/sort_helpers.php';
                             <div class="card-body">
                                 <h5 class="card-title"><?= $row['title'] ?></h5>
                                 <p class="fw-bold mb-1">Từ <?= number_format($row['min_price'], 0, ',', '.') ?>đ</p>
-                                <p class="date-info"><i class="bi bi-calendar-event me-2"></i><?= date("d \\t\h\á\\n\g m, Y", strtotime($row['date'])) ?></p>
+                                <?php if (!empty($row['date'])): ?>
+                                    <p class="date-info"><i class="bi bi-calendar-event me-2"></i><?= date("d \\t\h\á\\n\g m, Y", strtotime($row['date'])) ?></p>
+                                <?php else: ?>
+                                    <p class="date-info"><i class="bi bi-calendar-event me-2"></i>Lịch diễn chưa xác định</p>
+                                <?php endif; ?>
                                 <?php if (empty($theater_id)): ?>
                                     <small class="text-muted d-block mt-2">
                                         <i class="bi bi-building"></i> <?= $row['theater_name'] ?>

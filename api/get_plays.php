@@ -3,7 +3,7 @@ include 'db_config.php';
 header('Content-Type: application/json');
 
 
-$theater_id = isset($_GET['theater_id']) ? $_GET['theater_id'] : '';
+$theater_id = isset($_GET['theater_id']) && $_GET['theater_id'] !== '' ? $_GET['theater_id'] : null;
 $sort_field = isset($_GET['sort']) ? $_GET['sort'] : 'date';
 $sort_dir = isset($_GET['dir']) ? $_GET['dir'] : 'desc';
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -20,32 +20,33 @@ switch ($sort_field) {
         break;
     case 'date':
     default:
-        $orderBy = "s.date " . strtoupper($sort_dir);
+        $orderBy = "IFNULL(MIN(s.date), '9999-12-31') " . strtoupper($sort_dir);
         break;
 }
 
-// Prepare query based on if theater_id is provided
-if (!empty($theater_id)) {
-    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name, s.date
+if ($theater_id !== null) {
+    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name, 
+            MIN(s.date) as date, MIN(s.start_time) as start_time, MIN(s.end_time) as end_time
             FROM plays p
-            JOIN seat_prices sp ON p.theater_id = sp.theater_id
             JOIN theaters t ON p.theater_id = t.theater_id
+            LEFT JOIN seat_prices sp ON p.theater_id = sp.theater_id
             LEFT JOIN schedules s ON p.play_id = s.play_id
             WHERE p.theater_id = ?
-            GROUP BY p.play_id
+            GROUP BY p.play_id, p.title, p.theater_id, t.name
             ORDER BY {$orderBy}
             LIMIT ? OFFSET ?";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sii", $theater_id, $plays_per_page, $offset);
+    $stmt->bind_param("sii", $theater_id, $plays_per_page, $offset); // Use "sii" for string + integers
 } else {
     // Show all plays if no theater is selected
-    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name, s.date
+    $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name,
+            MIN(s.date) as date, MIN(s.start_time) as start_time, MIN(s.end_time) as end_time
             FROM plays p
-            JOIN seat_prices sp ON p.theater_id = sp.theater_id
             JOIN theaters t ON p.theater_id = t.theater_id
+            LEFT JOIN seat_prices sp ON p.theater_id = sp.theater_id
             LEFT JOIN schedules s ON p.play_id = s.play_id
-            GROUP BY p.play_id
+            GROUP BY p.play_id, p.title, p.theater_id, t.name
             ORDER BY {$orderBy}
             LIMIT ? OFFSET ?";
 
@@ -67,10 +68,10 @@ if ($result && $result->num_rows > 0) {
 }
 
 // Count total plays query (for pagination)
-if (!empty($theater_id)) {
+if ($theater_id !== null) {
     $count_sql = "SELECT COUNT(*) as total FROM plays p WHERE p.theater_id = ?";
     $count_stmt = $conn->prepare($count_sql);
-    $count_stmt->bind_param("s", $theater_id);
+    $count_stmt->bind_param("i", $theater_id); // Use "i" for integer
 } else {
     $count_sql = "SELECT COUNT(*) as total FROM plays p";
     $count_stmt = $conn->prepare($count_sql);

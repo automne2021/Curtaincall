@@ -30,14 +30,29 @@
                 <div class="play-meta mb-4">
                     <div class="row">
                         <div class="col-md-6">
+                            <!-- FIX: Show date properly -->
                             <div class="meta-item">
                                 <i class="bi bi-calendar-event me-2 text-primary"></i>
-                                <span class="meta-value"><?= date("d/m/Y", strtotime($play['date'])) ?></span>
+                                <span class="meta-value">
+                                    <?php if (!empty($play['date'])): ?>
+                                        <?= date("d/m/Y", strtotime($play['date'])) ?>
+                                    <?php else: ?>
+                                        Ngày diễn chưa xác định
+                                    <?php endif; ?>
+                                </span>
                             </div>
+                            
+                            <!-- FIX: Show time instead of duplicate date -->
                             <?php if (isset($play['start_time']) && isset($play['end_time'])): ?>
                                 <div class="meta-item">
                                     <i class="bi bi-clock me-2 text-primary"></i>
-                                    <span class="meta-value"><?= date("H:i", strtotime($play['start_time'])) ?> - <?= date("H:i", strtotime($play['end_time'])) ?></span>
+                                    <span class="meta-value">
+                                        <?php if (!empty($play['start_time']) && !empty($play['end_time'])): ?>
+                                            <?= date("H:i", strtotime($play['start_time'])) ?> - <?= date("H:i", strtotime($play['end_time'])) ?>
+                                        <?php else: ?>
+                                            Giờ diễn chưa xác định
+                                        <?php endif; ?>
+                                    </span>
                                 </div>
                             <?php endif; ?>
                         </div>

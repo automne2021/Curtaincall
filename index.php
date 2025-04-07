@@ -19,9 +19,12 @@ require_once 'helpers/sort_helpers.php';
 
 // Load the database configuration
 require_once 'config/database.php';
+require_once 'config/config.php';
 
 // Simple routing mechanism
 $route = isset($_GET['route']) ? $_GET['route'] : 'home';
+$routes['payment/process'] = ['controller' => 'PaymentController', 'action' => 'process'];
+
 
 // Parse the route
 $parts = explode('/', trim($route, '/'));

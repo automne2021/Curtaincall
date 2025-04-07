@@ -1,3 +1,10 @@
+<?php
+// filepath: c:\xampp\htdocs\Curtaincall\views\auth\login-modal.php
+$login_errors = $_SESSION['login_errors'] ?? [];
+$login_data = $_SESSION['login_data'] ?? [];
+// Clear session data after use
+unset($_SESSION['login_errors'], $_SESSION['login_data']);
+?>
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -6,12 +13,24 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form action="<?= BASE_URL ?? '' ?>index.php?route=user/login" method="POST">
+                <?php if (!empty($login_errors['general'])): ?>
+                    <div class="alert alert-danger"><?= $login_errors['general'] ?></div>
+                <?php endif; ?>
+
+                <form id="loginForm" action="<?= BASE_URL ?>index.php?route=user/login" method="POST">
                     <div class="mb-3">
-                        <input placeholder="Email/ Số điện thoại" type="text" class="form-control" id="email" name="email" required>
+                        <input placeholder="Email hoặc Tên đăng nhập" type="text" class="form-control" id="login" name="login" value="<?= htmlspecialchars($login_data['login'] ?? '') ?>">
+                        <?php if (!empty($login_errors['login'])): ?>
+                            <small class="text-danger"><?= $login_errors['login'] ?></small>
+                        <?php endif; ?>
+                        <small id="loginError" class="text-danger"></small>
                     </div>
                     <div class="mb-3">
-                        <input placeholder="Mật khẩu" type="password" class="form-control" id="password" name="password" required>
+                        <input placeholder="Mật khẩu" type="password" class="form-control" id="password" name="password">
+                        <?php if (!empty($login_errors['password'])): ?>
+                            <small class="text-danger"><?= $login_errors['password'] ?></small>
+                        <?php endif; ?>
+                        <small id="passwordError" class="text-danger"></small>
                     </div>
                     <div class="d-grid">
                         <div class="d-flex justify-content-end mb-2">
@@ -30,7 +49,6 @@
                 </div>
 
                 <!-- Social Login Buttons -->
-
                 <div class="d-grid gap-2">
                     <a href="<?= BASE_URL ?>index.php?route=user/facebook-login" class="btn social-btn facebook-btn">
                         <i class="bi bi-facebook text-primary me-2"></i> Tiếp tục với Facebook
