@@ -24,6 +24,8 @@ require_once 'config/config.php';
 // Simple routing mechanism
 $route = isset($_GET['route']) ? $_GET['route'] : 'home';
 $routes['payment/process'] = ['controller' => 'PaymentController', 'action' => 'process'];
+$routes['contact'] = ['controller' => 'ContactController', 'action' => 'index'];
+$routes['contact/send'] = ['controller' => 'ContactController', 'action' => 'send'];
 
 
 // Parse the route

@@ -25,6 +25,7 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
     <link rel="stylesheet" href="public/css/booking.css">
     <link rel="stylesheet" href="public/css/breadcrumb.css">
     <link rel="stylesheet" href="public/css/payment-success.css">
+    <link rel="stylesheet" href="public/css/contact.css">
 
     <script src="public/js/auth-validation.js"></script>
 </head>

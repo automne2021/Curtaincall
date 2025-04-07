@@ -1,0 +1,130 @@
+/* Contact page styles matching the site theme */
+
+/* Contact cards */
+.contact-card {
+    border-radius: 8px;
+    border: none;
+    background-color: #f8f9fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Contact icons */
+.contact-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.contact-icon i {
+    font-size: 32px;
+}
+
+.contact-card .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.contact-link {
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+/* Contact form */
+.contact-form {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form label {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.contact-form .input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+}
+
+.contact-form .form-control {
+    border-left: none;
+}
+
+.contact-form .input-group:focus-within .input-group-text {
+    border-color: #86b7fe;
+}
+
+.contact-form .input-group:focus-within .form-control {
+    box-shadow: none;
+    border-color: #86b7fe;
+}
+
+/* Map container */
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    height: calc(100% - 75px);
+    min-height: 350px;
+}
+
+.map-container iframe {
+    height: 100%;
+}
+
+/* Section heading styling */
+.section-heading h2, .section-heading h3 {
+    position: relative;
+    display: inline-block;
+}
+
+.separator {
+    height: 3px;
+    width: 50px;
+    background-color: #0d6efd;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Submit button styling */
+.contact-form .btn-primary {
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.contact-form .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .contact-card {
+        margin-bottom: 15px;
+    }
+    
+    .map-container {
+        margin-top: 30px;
+        min-height: 300px;
+    }
+    
+    .contact-form {
+        margin-bottom: 30px;
+    }
+}

@@ -21,15 +21,72 @@ header {
 
 /* Footer Styles */
 footer {
-    background-color: #e6fff3;
-    color: gray;
-    text-align: center;
-    padding: 2px;
+    background-color: #212529;
+}
+
+footer h5 {
+    font-weight: 600;
     position: relative;
-    width: 100%;
+    padding-bottom: 12px;
+}
+
+footer h5::after {
+    content: '';
+    position: absolute;
+    left: 0;
     bottom: 0;
-    height: 40px;
-    line-height: 40px;
+    height: 3px;
+    width: 50px;
+    background-color: #AFE3CE;
+}
+
+/* Quick Links hover effect */
+footer .list-unstyled li a {
+    position: relative;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding-left: 0;
+}
+
+footer .list-unstyled li a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #AFE3CE;
+    transition: width 0.3s ease;
+}
+
+footer .list-unstyled li a:hover {
+    color: #AFE3CE !important;
+    padding-left: 5px;
+}
+
+footer .list-unstyled li a:hover::before {
+    width: 100%;
+}
+
+/* Enhance social media icons hover effect */
+footer .social-links a {
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+footer .social-links a:hover {
+    color: #AFE3CE !important;
+    transform: translateY(-3px);
+}
+
+/* Add hover effect to newsletter button */
+footer .input-group .btn {
+    transition: all 0.3s ease;
+}
+
+footer .input-group .btn:hover {
+    background-color: #AFE3CE;
+    transform: translateX(3px);
 }
 
 #myBtn {
