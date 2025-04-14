@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\Users\VY\Downloads\curtaincall\controllers\PlayController.php
 require_once 'models/Play.php';
 require_once 'models/Theater.php';
 
@@ -29,7 +28,7 @@ class PlayController
         $theaters_result = $this->theaterModel->getAllTheaters();
 
         // Get the theater name if theater_id is provided
-        $theater_name = "All Theaters";
+        $theater_name = "Tất cả nhà hát kịch";
         if ($theater_id) {
             $theater = $this->theaterModel->getTheaterById($theater_id);
             if ($theater) {

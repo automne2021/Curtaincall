@@ -5,32 +5,22 @@ require_once 'helpers/sort_helpers.php';
 <main class="container-fluid px-4">
     <div class="row mb-4">
         <div class="col">
-            <h2 class="theater-title"><?= htmlspecialchars($theater_name) ?></h2>
-            <p class="theater-subtitle">
-                <?php if (!empty($theater_id)): ?>
-                    <a href="index.php?route=play" class="btn btn-sm btn-outline-secondary">
-                        <i class="bi bi-arrow-left"></i> All Theaters
-                    </a>
-                <?php endif; ?>
-            </p>
-        </div>
-    </div>
-
-    <!-- Add sorting options here -->
-    <div class="row mb-4">
-        <div class="col">
-            <div class="sorting-container">
-                <div class="sort-label me-2"><i class="bi bi-sort-alpha-down me-1"></i> Sort by:</div>
-                <div class="sort-options d-flex flex-wrap gap-2">
-                    <a href="<?= getSortUrl('date') ?>" class="sort-option <?= isSortActive('date') ?>">
-                        Date <?= getSortIcon('date') ?>
-                    </a>
-                    <a href="<?= getSortUrl('name') ?>" class="sort-option <?= isSortActive('name') ?>">
-                        Name <?= getSortIcon('name') ?>
-                    </a>
-                    <a href="<?= getSortUrl('price') ?>" class="sort-option <?= isSortActive('price') ?>">
-                        Price <?= getSortIcon('price') ?>
-                    </a>
+            <div class="d-flex justify-content-between align-items-start flex-wrap mt-3">
+                <h2 class="theater-title mb-0"><?= htmlspecialchars($theater_name) ?></h2>
+                <!-- Sorting options -->
+                <div class="sorting-container mt-3">
+                    <div class="sort-label me-2"><i class="bi bi-filter"></i> Sắp xếp theo: </div>
+                    <div class="sort-options d-flex flex-wrap gap-2">
+                        <a href="<?= getSortUrl('date') ?>" class="sort-option <?= isSortActive('date') ?>">
+                            Lịch diễn <?= getSortIcon('date') ?>
+                        </a>
+                        <a href="<?= getSortUrl('name') ?>" class="sort-option <?= isSortActive('name') ?>">
+                            Tên <?= getSortIcon('name') ?>
+                        </a>
+                        <a href="<?= getSortUrl('price') ?>" class="sort-option <?= isSortActive('price') ?>">
+                            Giá tiền <?= getSortIcon('price') ?>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,11 +41,6 @@ require_once 'helpers/sort_helpers.php';
                                 <?php else: ?>
                                     <p class="date-info"><i class="bi bi-calendar-event me-2"></i>Lịch diễn chưa xác định</p>
                                 <?php endif; ?>
-                                <?php if (empty($theater_id)): ?>
-                                    <small class="text-muted d-block mt-2">
-                                        <i class="bi bi-building"></i> <?= $row['theater_name'] ?>
-                                    </small>
-                                <?php endif; ?>
                             </div>
                         </div>
                     </a>
@@ -65,9 +50,9 @@ require_once 'helpers/sort_helpers.php';
             <div class="col-12">
                 <div class="alert alert-info">
                     <?php if (!empty($theater_id)): ?>
-                        No plays found for this theater.
+                        Hiện chưa có vở diễn nào tại <?= htmlspecialchars($theater_name) ?>.
                     <?php else: ?>
-                        No plays currently available.
+                        Hiện chưa có vở diễn nào được tìm thấy.
                     <?php endif; ?>
                 </div>
             </div>
@@ -91,7 +76,7 @@ require_once 'helpers/sort_helpers.php';
         totalPages: <?= $total_pages ?? 1 ?>,
         theaterId: '<?= $theater_id ?? '' ?>',
         sortField: '<?= $sort_field ?? 'date' ?>',
-        sortDir: '<?= $sort_dir ?? 'desc' ?>'
+        sortDir: '<?= $sort_dir ?? 'desc' ?>',
     };
 </script>
 <script src="public/js/lazy-loading.js"></script>

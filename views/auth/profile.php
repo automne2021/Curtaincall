@@ -11,7 +11,19 @@ unset($_SESSION['password_errors']);
             <div class="card mb-4">
                 <div class="card-body text-center">
                     <?php
-                    $avatarUrl = isset($user['avatar']) && $user['avatar'] ? $user['avatar'] : BASE_URL . 'public/images/avatars/default.png'; 
+                    $avatarUrl = '';
+                    // Check if avatar is an external URL or local path
+                    if (isset($user['avatar']) && $user['avatar']) {
+                        // from Google
+                        if (strpos($user['avatar'], 'http') === 0) {
+                            $avatarUrl = $user['avatar'];
+                        } else {
+                            $avatarUrl = BASE_URL . $user['avatar'];
+                        }
+                    } else {
+                        // Default avatar
+                        $avatarUrl = BASE_URL . 'public/images/avatars/default.png';
+                    }
                     ?>
                     <img src="<?= $avatarUrl ?>" alt="User Avatar" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
                     <h5 class="mb-0"><?= htmlspecialchars($user['username']) ?></h5>
@@ -30,7 +42,7 @@ unset($_SESSION['password_errors']);
                 </div>
             </div>
         </div>
-        
+
         <!-- Main Content -->
         <div class="col-md-9">
             <div class="tab-content">
@@ -48,31 +60,31 @@ unset($_SESSION['password_errors']);
                                     <input type="text" class="form-control" id="username" value="<?= htmlspecialchars($user['username']) ?>" readonly>
                                     <div class="form-text">Tên đăng nhập không thể thay đổi.</div>
                                 </div>
-                                
+
                                 <!-- Email (readonly) -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" value="<?= htmlspecialchars($user['email']) ?>" readonly>
                                 </div>
-                                
+
                                 <!-- Full Name -->
                                 <div class="mb-3">
                                     <label for="fullname" class="form-label">Họ và tên</label>
                                     <input type="text" class="form-control" id="fullname" name="fullname" value="<?= htmlspecialchars($user['fullname'] ?? '') ?>">
                                 </div>
-                                
+
                                 <!-- Phone -->
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Số điện thoại</label>
                                     <input type="tel" class="form-control" id="phone" name="phone" value="<?= htmlspecialchars($user['phone'] ?? '') ?>">
                                 </div>
-                                
+
                                 <!-- Address -->
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Địa chỉ</label>
                                     <textarea class="form-control" id="address" name="address" rows="3"><?= htmlspecialchars($user['address'] ?? '') ?></textarea>
                                 </div>
-                                
+
                                 <!-- Avatar -->
                                 <div class="mb-3">
                                     <label for="avatar" class="form-label">Ảnh đại diện</label>
@@ -109,7 +121,7 @@ unset($_SESSION['password_errors']);
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Submit Button -->
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
@@ -118,7 +130,7 @@ unset($_SESSION['password_errors']);
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Change Password Tab -->
                 <div class="tab-pane fade" id="change-password">
                     <div class="card">
@@ -129,7 +141,7 @@ unset($_SESSION['password_errors']);
                             <?php if (!empty($password_errors['general'])): ?>
                                 <div class="alert alert-danger"><?= $password_errors['general'] ?></div>
                             <?php endif; ?>
-                            
+
                             <form action="index.php?route=user/changePassword" method="POST">
                                 <!-- Current Password -->
                                 <div class="mb-3">
@@ -139,7 +151,7 @@ unset($_SESSION['password_errors']);
                                         <div class="text-danger"><?= $password_errors['current_password'] ?></div>
                                     <?php endif; ?>
                                 </div>
-                                
+
                                 <!-- New Password -->
                                 <div class="mb-3">
                                     <label for="new_password" class="form-label">Mật khẩu mới</label>
@@ -149,7 +161,7 @@ unset($_SESSION['password_errors']);
                                     <?php endif; ?>
                                     <div class="form-text">Mật khẩu phải có ít nhất 6 ký tự.</div>
                                 </div>
-                                
+
                                 <!-- Confirm New Password -->
                                 <div class="mb-3">
                                     <label for="confirm_password" class="form-label">Xác nhận mật khẩu mới</label>
@@ -158,7 +170,7 @@ unset($_SESSION['password_errors']);
                                         <div class="text-danger"><?= $password_errors['confirm_password'] ?></div>
                                     <?php endif; ?>
                                 </div>
-                                
+
                                 <!-- Submit Button -->
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
@@ -178,7 +190,7 @@ unset($_SESSION['password_errors']);
                             <div class="alert alert-info">
                                 <i class="bi bi-info-circle me-2"></i> Kết nối tài khoản mạng xã hội để đăng nhập nhanh hơn.
                             </div>
-                            
+
                             <!-- Google Account -->
                             <div class="card mb-3">
                                 <div class="card-body">
@@ -217,7 +229,7 @@ unset($_SESSION['password_errors']);
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="alert alert-warning mt-4">
                                 <i class="bi bi-exclamation-triangle me-2"></i> Nếu bạn đăng nhập bằng tài khoản xã hội và chưa đặt mật khẩu, bạn có thể tạo mật khẩu bằng cách sử dụng tính năng "Quên mật khẩu".
                             </div>

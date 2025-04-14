@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const sortField = playConfig.sortField;
     const sortDir = playConfig.sortDir; 
 
+    let lastPageCount = 8;
     let isLoading = false;
-    let allLoaded = currentPage >= totalPages;
+    let allLoaded = currentPage >= totalPages || lastPageCount < 8;
 
     // Function to check if we need to load more content
     function checkScroll() {
-        if (isLoading || allLoaded) return;
+        if (isLoading || allLoaded || lastPageCount < 8) return;
 
         // Calculate the position where loading should trigger (near bottom of page)
         const scrollPosition = window.scrollY + window.innerHeight;
@@ -69,8 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         // Update current page and check if we've loaded all pages
                         currentPage = nextPage;
-                        allLoaded = currentPage >= data.pagination.total_pages;
+                        allLoaded = currentPage >= data.pagination.total_pages || data.plays.length < 8; 
+                    } else {
+                        allLoaded = true; // No more plays to load
+                        if (currentPage === 1 && playsContainer.querySelectorAll('.play-card').length === 0) {
+                            const noMorePlays = document.createElement('div');
+                            noMorePlays.className = 'col-12 text-center my-4';
+                            noMorePlays.innerHTML = '<p>Không còn vở kịch nào</p>';
+                            playsContainer.appendChild(noMorePlays);
+                        }
                     }
+
 
                     // Reset loading state after a short delay
                     setTimeout(() => {
@@ -98,9 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h5 class="card-title">${play.title}</h5>
                         <p class="fw-bold mb-1">Từ ${play.formatted_price}đ</p>
                         <p class="date-info"><i class="bi bi-calendar-event me-2"></i>${play.formatted_date}</p>
-                        ${showTheaterName ? `<small class="text-muted d-block mt-2">
-                            <i class="bi bi-building"></i> ${play.theater_name}
-                        </small>` : ''}
                     </div>
                 </div>
             </a>

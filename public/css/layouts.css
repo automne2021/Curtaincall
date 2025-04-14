@@ -126,6 +126,8 @@ footer .input-group .btn:hover {
     background-color: #AFE3CE;
     padding: 8px;
     height: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-logo {
@@ -140,6 +142,23 @@ footer .input-group .btn:hover {
     margin-right: 40px;
     display: flex;
     align-items: center;
+}
+
+.navbar .d-flex[role="search"] {
+    max-width: 280px;
+    flex-basis: 280px;
+    flex-grow: 0;
+}
+
+.navbar-nav,
+.offcanvas-body {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.dropdown-toggle.utility-btn {
+    height: 100%;
+    padding: 8px 12px;
 }
 
 .nav-link {
@@ -191,7 +210,6 @@ footer .input-group .btn:hover {
     background-color: #075E54;
 }
 
-/* Add these styles to fix the dropdown underline and hover behavior */
 
 /* Make dropdown toggle underline consistent with other nav links by overriding previous rules */
 .navbar-nav .nav-item.dropdown .nav-link::after {
@@ -308,7 +326,6 @@ footer .input-group .btn:hover {
     border: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 8px;
-    border-top: 1px solid #075E54;
     margin-top: 8px !important;
 }
 
@@ -350,7 +367,7 @@ footer .input-group .btn:hover {
 }
 
 /* Styling for input group buttons */
-.input-group .btn:hover{
+.input-group .btn:hover {
     color: #075E54;
 }
 
@@ -384,13 +401,20 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 40px;
 }
 
 .login-divider {
     background-color: white !important;
     opacity: 1 !important;
     width: 2px;
+}
+
+.login-btn .dropdown,
+.login-btn .utility-btn {
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .utility-btn {
@@ -407,6 +431,20 @@ main {
 
 .utility-btn:hover {
     color: #075E54;
+}
+
+/* User avatar styles */
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.dropdown-menu-end {
+    right: 0;
+    left: auto;
 }
 
 /* Add these styles to fix the navbar toggler position */
