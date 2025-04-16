@@ -6,73 +6,99 @@ class Admin {
         $this->conn = $conn;
     }
     
-    public function login($username, $password) {
-        $sql = "SELECT * FROM admins WHERE username = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows == 1) {
-            $admin = $result->fetch_assoc();
-            if (password_verify($password, $admin['password'])) {
-                // Remove password before returning
-                unset($admin['password']);
-                return $admin;
+    public function getAdminByUsername($username) {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM admins WHERE username = ? LIMIT 1");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows > 0) {
+                return $result->fetch_assoc();
             }
+            
+            return null;
+        } catch (Exception $e) {
+            error_log("Error fetching admin: " . $e->getMessage());
+            return null;
         }
-        
-        return false;
     }
     
-    // Get statistics for dashboard
     public function getDashboardStats() {
-        // Users count
-        $sql_users = "SELECT COUNT(*) as total FROM users";
-        $result_users = $this->conn->query($sql_users);
-        $total_users = $result_users->fetch_assoc()['total'];
-        
-        // Plays count
-        $sql_plays = "SELECT COUNT(*) as total FROM plays";
-        $result_plays = $this->conn->query($sql_plays);
-        $total_plays = $result_plays->fetch_assoc()['total'];
-        
-        // Bookings count
-        $sql_bookings = "SELECT COUNT(*) as total FROM bookings";
-        $result_bookings = $this->conn->query($sql_bookings);
-        $total_bookings = $result_bookings->fetch_assoc()['total'];
-        
-        // Theaters count
-        $sql_theaters = "SELECT COUNT(*) as total FROM theaters";
-        $result_theaters = $this->conn->query($sql_theaters);
-        $total_theaters = $result_theaters->fetch_assoc()['total'];
-        
-        return [
-            'total_users' => $total_users,
-            'total_plays' => $total_plays,
-            'total_bookings' => $total_bookings,
-            'total_theaters' => $total_theaters
-        ];
+        try {
+            // Get total plays
+            $playStmt = $this->conn->prepare("SELECT COUNT(*) as count FROM plays");
+            $playStmt->execute();
+            $playResult = $playStmt->get_result();
+            $total_plays = $playResult->fetch_assoc()['count'] ?? 0;
+            
+            // Get total bookings
+            $bookingStmt = $this->conn->prepare("SELECT COUNT(*) as count FROM bookings");
+            $bookingStmt->execute();
+            $bookingResult = $bookingStmt->get_result();
+            $total_bookings = $bookingResult->fetch_assoc()['count'] ?? 0;
+            
+            // Get total users
+            $userStmt = $this->conn->prepare("SELECT COUNT(*) as count FROM users");
+            $userStmt->execute();
+            $userResult = $userStmt->get_result();
+            $total_users = $userResult->fetch_assoc()['count'] ?? 0;
+            
+            // Get monthly revenue
+            $revenueStmt = $this->conn->prepare("
+                SELECT SUM(amount) as total 
+                FROM bookings 
+                WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) 
+                AND YEAR(created_at) = YEAR(CURRENT_DATE())
+            ");
+            $revenueStmt->execute();
+            $revenueResult = $revenueStmt->get_result();
+            $monthly_revenue = $revenueResult->fetch_assoc()['total'] ?? 0;
+            
+            return [
+                'total_plays' => $total_plays,
+                'total_bookings' => $total_bookings,
+                'total_users' => $total_users,
+                'monthly_revenue' => $monthly_revenue
+            ];
+        } catch (Exception $e) {
+            error_log("Error getting dashboard stats: " . $e->getMessage());
+            return [
+                'total_plays' => 0,
+                'total_bookings' => 0,
+                'total_users' => 0,
+                'monthly_revenue' => 0
+            ];
+        }
     }
     
-    // Get recent bookings for dashboard
     public function getRecentBookings($limit = 5) {
-        $sql = "SELECT b.*, u.username, p.title as play_title 
+        try {
+            $stmt = $this->conn->prepare("
+                SELECT b.*, u.username, p.title as play_title, s.datetime as schedule_datetime,
+                       COUNT(bs.seat_id) as seat_count
                 FROM bookings b
                 JOIN users u ON b.user_id = u.user_id
                 JOIN plays p ON b.play_id = p.play_id
+                JOIN schedules s ON b.schedule_id = s.schedule_id
+                JOIN booking_seats bs ON b.booking_id = bs.booking_id
+                GROUP BY b.booking_id
                 ORDER BY b.created_at DESC
-                LIMIT ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $limit);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        $bookings = [];
-        while ($row = $result->fetch_assoc()) {
-            $bookings[] = $row;
+                LIMIT ?
+            ");
+            $stmt->bind_param("i", $limit);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $bookings = [];
+            while ($row = $result->fetch_assoc()) {
+                $bookings[] = $row;
+            }
+            
+            return $bookings;
+        } catch (Exception $e) {
+            error_log("Error fetching recent bookings: " . $e->getMessage());
+            return [];
         }
-        
-        return $bookings;
     }
 }

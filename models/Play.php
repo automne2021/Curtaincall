@@ -151,4 +151,146 @@ class Play
 
         return $result->fetch_assoc();
     }
+
+    public function createPlay($play_data) {
+        try {
+            $stmt = $this->conn->prepare("
+                INSERT INTO plays (title, description, theater_id, duration, director, cast, image, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
+            ");
+            
+            $stmt->bind_param(
+                "ssiisss", 
+                $play_data['title'], 
+                $play_data['description'], 
+                $play_data['theater_id'], 
+                $play_data['duration'], 
+                $play_data['director'], 
+                $play_data['cast'], 
+                $play_data['image']
+            );
+            
+            $stmt->execute();
+            
+            if ($stmt->affected_rows > 0) {
+                return $stmt->insert_id;
+            }
+            
+            return false;
+        } catch (Exception $e) {
+            error_log("Error creating play: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function updatePlay($play_data) {
+        try {
+            $stmt = $this->conn->prepare("
+                UPDATE plays 
+                SET title = ?, description = ?, theater_id = ?, duration = ?, director = ?, 
+                    cast = ?, image = ?, updated_at = NOW() 
+                WHERE play_id = ?
+            ");
+            
+            $stmt->bind_param(
+                "ssiisssi", 
+                $play_data['title'], 
+                $play_data['description'], 
+                $play_data['theater_id'], 
+                $play_data['duration'], 
+                $play_data['director'], 
+                $play_data['cast'], 
+                $play_data['image'], 
+                $play_data['play_id']
+            );
+            
+            $stmt->execute();
+            
+            return $stmt->affected_rows >= 0;
+        } catch (Exception $e) {
+            error_log("Error updating play: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deletePlay($play_id) {
+        try {
+            // Begin transaction
+            $this->conn->begin_transaction();
+            
+            // Delete schedules for this play
+            $scheduleStmt = $this->conn->prepare("DELETE FROM schedules WHERE play_id = ?");
+            $scheduleStmt->bind_param("i", $play_id);
+            $scheduleStmt->execute();
+            
+            // Delete the play
+            $playStmt = $this->conn->prepare("DELETE FROM plays WHERE play_id = ?");
+            $playStmt->bind_param("i", $play_id);
+            $playStmt->execute();
+            $result = $playStmt->affected_rows > 0;
+            
+            $this->conn->commit();
+            return $result;
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            error_log("Error deleting play: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getPopularPlays($limit = 5) {
+        try {
+            $stmt = $this->conn->prepare("
+                SELECT p.*, COUNT(b.booking_id) as booking_count 
+                FROM plays p
+                LEFT JOIN bookings b ON p.play_id = b.play_id
+                GROUP BY p.play_id
+                ORDER BY booking_count DESC
+                LIMIT ?
+            ");
+            
+            $stmt->bind_param("i", $limit);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $plays = [];
+            while ($row = $result->fetch_assoc()) {
+                $plays[] = $row;
+            }
+            
+            return $plays;
+        } catch (Exception $e) {
+            error_log("Error fetching popular plays: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getAllPlays() {
+        try {
+            $stmt = $this->conn->prepare("
+                SELECT p.*, t.name as theater_name
+                FROM plays p
+                LEFT JOIN theaters t ON p.theater_id = t.theater_id
+                ORDER BY p.created_at DESC
+            ");
+            
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            // DEBUG
+            if ($result->num_rows == 0) {
+                error_log("Warning: No plays found in database");
+            }
+            
+            $plays = [];
+            while ($row = $result->fetch_assoc()) {
+                $plays[] = $row;
+            }
+            
+            return $plays;
+        } catch (Exception $e) {
+            error_log("Error in getAllPlays: " . $e->getMessage());
+            return [];
+        }
+    }
 }
