@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\Users\VY\Downloads\curtaincall\index.php
 session_start();
 
 // Define application path constants

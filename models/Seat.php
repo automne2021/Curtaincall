@@ -141,4 +141,41 @@ class Seat {
         $stmt->bind_param("ssss", $status, $play_id, $theater_id, $seat_id);
         return $stmt->execute();
     }
+
+    public function getSeatPrice($theater_id, $seat_id) {
+        try {
+            // Get the seat type from seat_maps
+            $seatTypeStmt = $this->conn->prepare("
+                SELECT seat_type FROM seat_maps 
+                WHERE theater_id = ? AND seat_id = ?
+            ");
+            $seatTypeStmt->bind_param("ss", $theater_id, $seat_id);
+            $seatTypeStmt->execute();
+            $seatTypeResult = $seatTypeStmt->get_result();
+            
+            if ($seatTypeResult->num_rows === 0) {
+                return 0; // Seat not found
+            }
+            
+            $seatType = $seatTypeResult->fetch_assoc()['seat_type'];
+            
+            // Get the price for this seat type
+            $priceStmt = $this->conn->prepare("
+                SELECT price FROM seat_prices 
+                WHERE theater_id = ? AND seat_type = ?
+            ");
+            $priceStmt->bind_param("ss", $theater_id, $seatType);
+            $priceStmt->execute();
+            $priceResult = $priceStmt->get_result();
+            
+            if ($priceResult->num_rows === 0) {
+                return 0; // Price not found
+            }
+            
+            return $priceResult->fetch_assoc()['price'];
+        } catch (Exception $e) {
+            error_log("Error getting seat price: " . $e->getMessage());
+            return 0;
+        }
+    }
 }

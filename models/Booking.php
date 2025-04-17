@@ -6,11 +6,11 @@ class Booking {
         $this->conn = $conn;
     }
     
-    public function createBooking($user_id, $play_id, $theater_id, $seat_id, $expires_at) {
-        $sql = "INSERT INTO bookings (user_id, play_id, theater_id, seat_id, status, expires_at) 
-                VALUES (?, ?, ?, ?, 'Pending', ?)";
+    public function createBooking($user_id, $play_id, $theater_id, $seat_id, $expires_at, $amount) {
+        $sql = "INSERT INTO bookings (user_id, play_id, theater_id, seat_id, status, expires_at, amount) 
+                VALUES (?, ?, ?, ?, 'Pending', ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("issss", $user_id, $play_id, $theater_id, $seat_id, $expires_at);
+        $stmt->bind_param("issssd", $user_id, $play_id, $theater_id, $seat_id, $expires_at, $amount);
         return $stmt->execute();
     }
     
