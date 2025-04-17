@@ -1,0 +1,223 @@
+/* Custom Dashboard Styles */
+.dashboard-wrapper {
+    background-color: #f8f9fa;
+    padding-bottom: 2rem;
+}
+
+.dashboard-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: none;
+    height: 100%;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card .card-body {
+    padding: 1.5rem;
+}
+
+.dashboard-icon {
+    font-size: 2.2rem;
+    opacity: 0.8;
+    color: #075E54;
+}
+
+.dashboard-stats-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    color: #6c757d;
+}
+
+.dashboard-stats-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 0;
+}
+
+.dashboard-stats-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: none;
+    height: 100%;
+    border-left: 0.25rem solid transparent;
+    overflow: hidden;
+}
+
+.dashboard-stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-stats-card.border-primary {
+    border-left-color: #075E54;
+}
+
+.dashboard-stats-card.border-success {
+    border-left-color: #198754;
+}
+
+.dashboard-stats-card.border-info {
+    border-left-color: #0dcaf0;
+}
+
+.dashboard-stats-card.border-warning {
+    border-left-color: #ffc107;
+}
+
+.data-table .table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.data-table .table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+}
+
+.data-table .table td {
+    vertical-align: middle;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.data-table .table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table .table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(175, 227, 206, 0.15) !important;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.chart-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #075E54;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.chart-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 50px;
+    background-color: #AFE3CE;
+}
+
+.chart-area, .chart-pie {
+    height: 300px;
+    position: relative;
+}
+
+.data-table {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.data-table:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.data-table-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.data-table-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #075E54;
+    margin-bottom: 0;
+}
+
+.data-table-body {
+    padding: 1.5rem;
+}
+
+.status-paid {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.status-pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.status-expired {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.view-all-btn {
+    text-decoration: none;
+    color: #075E54;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.view-all-btn:hover {
+    color: #053f38;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .dashboard-stats-value {
+        font-size: 1.5rem;
+    }
+    
+    .dashboard-icon {
+        font-size: 1.8rem;
+    }
+}

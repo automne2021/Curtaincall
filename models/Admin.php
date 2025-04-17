@@ -75,14 +75,10 @@ class Admin {
     public function getRecentBookings($limit = 5) {
         try {
             $stmt = $this->conn->prepare("
-                SELECT b.*, u.username, p.title as play_title, s.datetime as schedule_datetime,
-                       COUNT(bs.seat_id) as seat_count
+                SELECT b.*, u.username, p.title as play_title
                 FROM bookings b
                 JOIN users u ON b.user_id = u.user_id
                 JOIN plays p ON b.play_id = p.play_id
-                JOIN schedules s ON b.schedule_id = s.schedule_id
-                JOIN booking_seats bs ON b.booking_id = bs.booking_id
-                GROUP BY b.booking_id
                 ORDER BY b.created_at DESC
                 LIMIT ?
             ");
@@ -99,6 +95,78 @@ class Admin {
         } catch (Exception $e) {
             error_log("Error fetching recent bookings: " . $e->getMessage());
             return [];
+        }
+    }
+
+    public function getMonthlyRevenueData() {
+        try {
+            // Get revenue data for the last 6 months
+            $stmt = $this->conn->prepare("
+                SELECT 
+                    DATE_FORMAT(created_at, '%Y-%m') as month,
+                    SUM(amount) as revenue
+                FROM bookings
+                WHERE status = 'Paid'
+                AND created_at >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+                GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+                ORDER BY month ASC
+            ");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $months = [];
+            $revenues = [];
+            
+            while ($row = $result->fetch_assoc()) {
+                $dateObj = DateTime::createFromFormat('Y-m', $row['month']);
+                $months[] = $dateObj->format('M Y'); // Format as "Jan 2025"
+                $revenues[] = (float)$row['revenue'];
+            }
+            
+            return [
+                'labels' => $months,
+                'data' => $revenues
+            ];
+        } catch (Exception $e) {
+            error_log("Error getting monthly revenue data: " . $e->getMessage());
+            return [
+                'labels' => [],
+                'data' => []
+            ];
+        }
+    }
+    
+    public function getBookingsByStatusData() {
+        try {
+            // Get booking counts by status
+            $stmt = $this->conn->prepare("
+                SELECT 
+                    status,
+                    COUNT(*) as count
+                FROM bookings
+                GROUP BY status
+            ");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $statuses = [];
+            $counts = [];
+            
+            while ($row = $result->fetch_assoc()) {
+                $statuses[] = $row['status'];
+                $counts[] = (int)$row['count'];
+            }
+            
+            return [
+                'labels' => $statuses,
+                'data' => $counts
+            ];
+        } catch (Exception $e) {
+            error_log("Error getting bookings by status data: " . $e->getMessage());
+            return [
+                'labels' => [],
+                'data' => []
+            ];
         }
     }
 }

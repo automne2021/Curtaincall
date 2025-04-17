@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="public/css/admin.css" rel="stylesheet">
+    <link href="public/css/admin-dashboard.css" rel="stylesheet">
     <link rel="shortcut icon" href="public/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -18,9 +19,7 @@
                     <img src="public/images/logo.png" alt="CurtainCall" height="30" class="me-2">
                     <h3>CurtainCall</h3>
                 </div>
-                <div class="sidebar-brand-icon">
-                    <i class="bi bi-ticket-detailed-fill"></i>
-                </div>
+                
             </div>
             <ul class="list-unstyled components">
                 <li class="<?= strpos($_GET['route'] ?? '', 'dashboard') !== false ? 'active' : '' ?>">

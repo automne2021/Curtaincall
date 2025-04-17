@@ -77,6 +77,10 @@ class AdminController {
         $recent_bookings = $this->adminModel->getRecentBookings(5);
         $popular_plays = $this->playModel->getPopularPlays(5);
         
+        // Get graph data
+        $revenue_chart_data = $this->adminModel->getMonthlyRevenueData();
+        $bookings_chart_data = $this->adminModel->getBookingsByStatusData();
+        
         include 'views/admin/layouts/header.php';
         include 'views/admin/dashboard.php';
         include 'views/admin/layouts/footer.php';
