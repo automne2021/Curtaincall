@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 07, 2025 lúc 04:05 AM
+-- Thời gian đã tạo: Th4 08, 2025 lúc 09:08 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`admin_id`, `username`, `password`, `email`, `created_at`) VALUES
-(1, 'admin', '$2y$10$SfhYIDtn.iOuCW7zfoFLuuZHX6lja4lF4XA4JqNmpiH/.P3zB8JCa', 'admin@curtaincall.com', '2025-04-06 22:41:32');
+(1, 'admin', '$2y$10$Tn/0xi2s.OElsEgYTieQX.mcyzYyuBcGYHB8f3eQKkaBH8JRvhh8e', 'admin@curtaincall.com', '2025-04-06 22:41:32');
 
 -- --------------------------------------------------------
 
@@ -65,10 +65,10 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`booking_id`, `user_id`, `play_id`, `theater_id`, `seat_id`, `status`, `expires_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'SKN01', 'SKN', 'E6', 'Pending', '2025-04-07 04:03:18', '2025-04-07 01:48:18', '2025-04-07 01:48:18'),
-(2, 1, 'THN01', 'THN', 'D6', 'Pending', '2025-04-07 04:07:26', '2025-04-07 01:52:26', '2025-04-07 01:52:26'),
-(3, 1, 'THN01', 'THN', 'E6', 'Pending', '2025-04-07 04:07:26', '2025-04-07 01:52:26', '2025-04-07 01:52:26'),
-(4, 1, 'IDE08', 'IDE', 'A10', 'Pending', '2025-04-07 04:09:45', '2025-04-07 01:54:45', '2025-04-07 01:54:45');
+(9, 1, 'IDE08', 'IDE', 'A6', 'Paid', '2025-04-07 10:13:02', '2025-04-07 02:58:02', '2025-04-07 03:08:17'),
+(11, 1, 'IDE08', 'IDE', 'D5', 'Paid', '2025-04-07 10:13:02', '2025-04-07 02:58:02', '2025-04-07 03:08:43'),
+(13, 2, 'SKN02', 'SKN', 'D4', 'Paid', '2025-04-07 11:13:15', '2025-04-07 03:58:15', '2025-04-07 03:58:27'),
+(15, 2, 'SKN01', 'SKN', 'D8', 'Paid', '2025-04-07 11:32:51', '2025-04-07 04:17:51', '2025-04-07 04:17:55');
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ INSERT INTO `plays` (`play_id`, `title`, `description`, `image`, `theater_id`, `
 ('THN04', '[Nhà hát Thanh Niên] Hài Kịch: Tung Hoành Pattaya', 'Tác giả: Nguyễn Duy Xăng - Hiếu Nghĩa - Long Duy\nĐạo diễn:  Hồng Ngọc\nDiễn viên: Huỳnh Nhựt, Hải Triều, Tuấn Kiệt, Mai Bảo Vinh, Long Chun, Bé 7, Giỏi Lee, Duy Tiến, Huỳnh Thi, Huyền Duy, Lê Nghĩa và Khương Ngọc.', 'public\\images\\plays\\TungHoanhPattaya.jpg', 'THN', 0),
 ('THĐ00', 'SÂN KHẤU THIÊN ĐĂNG - VỞ KỊCH: CÔ GIÁO DUYÊN', '...', 'public\\images\\plays\\CoGiaoDuyen.jpg', 'THĐ', 0),
 ('THĐ01', 'SÂN KHẤU THIÊN ĐĂNG: NGŨ QUÝ TƯƠNG PHÙNG', 'Sân khấu Nghệ Thuật Thiên Đăng trân trọng giới thiệu đến quý khán giả vở hài kịch dân gian\n\"NGŨ QUÝ TƯƠNG PHÙNG\"   -- Phiên Bản Mới Nhất --\n\nTác giả: TUẤN KHÔI - HƯƠNG GIANG\nĐạo diễn: TUẤN KHÔI\nVới sự tham gia của các nghệ sĩ: NSƯT THÀNH LỘC, NSƯT HỮU CHÂU, LƯƠNG THẾ THÀNH, HƯƠNG GIANG, HUY TỨ, TRƯƠNG HẠ, QUỐC TRUNG, KIỀU NGÂN, TRANG TUYỀN, MẠNH HÙNG, HOÀNG KHANH\n\nTrân trọng kính mời quý khán giả.\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.', 'public\\images\\plays\\NguQuyTuongPhung.jpg', 'THĐ', 0),
-('THĐ02', 'SÂN KHẤU THIÊN ĐĂNG: CHUYẾN ĐÒ ĐỊNH MỆNH', 'Sân khấu Kịch Thiên Đăng trân trọng giới thiệu vở diễn MỚI NHẨT\r\n\"CHUYẾN ĐÒ ĐỊNH MỆNH\"\nTác phẩm mới được dàn dựng bởi Đạo diễn - Nhà Giáo - NSND TRẦN MINH NGỌC\r\nTác giả : NGUYỄN HUY THIỆP\n\nVới sự tham gia của các diễn viên: NSUT THÀNH LỘC - NSUT HỮU CHÂU - NSƯT MẠNH HÙNG\nCác diễn viên: HƯƠNG GIANG, TRANG TUYỀN, LƯƠNG THẾ THÀNH, HỒNG NGỌC, HOÀNG KHANH\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.\n\nTrân trọng kính mời quý khách!', 'public\\images\\plays\\ChuyenDoDinhMenh.jpg', 'THĐ', 0),
+('THĐ02', 'SÂN KHẤU THIÊN ĐĂNG: CHUYẾN ĐÒ ĐỊNH MỆNH', 'Sân khấu Kịch Thiên Đăng trân trọng giới thiệu vở diễn MỚI NHẨT\r\n\"CHUYẾN ĐÒ ĐỊNH MỆNH\"\nTác phẩm mới được dàn dựng bởi Đạo diễn - Nhà Giáo - NSND TRẦN MINH NGỌC\r\nTác giả : NGUYỄN HUY THIỆP\n\nVới sự tham gia của các diễn viên: NSUT THÀNH LỘC - NSUT HỮU CHÂU - NSƯT MẠNH HÙNG\nCác diễn viên: HƯƠNG GIANG, TRANG TUYỀN, LƯƠNG THẾ THÀNH, HỒNG NGỌC, HOÀNG KHANH\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.\n\nTrân trọng kính mời quý khách!', 'public\\images\\plays\\ChuyenDoDM.jpg', 'THĐ', 0),
 ('THĐ03', 'SÂN KHẤU THIÊN ĐĂNG: NHỮNG CON MA NHÀ HÁT', '...', 'public\\images\\plays\\MaNhaHat.jpg', 'THĐ', 0);
 
 -- --------------------------------------------------------
@@ -576,12 +576,12 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('IDE', 'IDE07', 'E8', 'Available'),
 ('IDE', 'IDE07', 'E9', 'Available'),
 ('IDE', 'IDE08', 'A1', 'Available'),
-('IDE', 'IDE08', 'A10', 'Pending'),
+('IDE', 'IDE08', 'A10', 'Available'),
 ('IDE', 'IDE08', 'A2', 'Available'),
 ('IDE', 'IDE08', 'A3', 'Available'),
 ('IDE', 'IDE08', 'A4', 'Available'),
 ('IDE', 'IDE08', 'A5', 'Available'),
-('IDE', 'IDE08', 'A6', 'Available'),
+('IDE', 'IDE08', 'A6', 'Pending'),
 ('IDE', 'IDE08', 'A7', 'Available'),
 ('IDE', 'IDE08', 'A8', 'Available'),
 ('IDE', 'IDE08', 'A9', 'Available'),
@@ -610,7 +610,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('IDE', 'IDE08', 'D2', 'Available'),
 ('IDE', 'IDE08', 'D3', 'Available'),
 ('IDE', 'IDE08', 'D4', 'Available'),
-('IDE', 'IDE08', 'D5', 'Available'),
+('IDE', 'IDE08', 'D5', 'Pending'),
 ('IDE', 'IDE08', 'D6', 'Available'),
 ('IDE', 'IDE08', 'D7', 'Available'),
 ('IDE', 'IDE08', 'D8', 'Available'),
@@ -713,7 +713,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('SKN', 'SKN01', 'D5', 'Available'),
 ('SKN', 'SKN01', 'D6', 'Available'),
 ('SKN', 'SKN01', 'D7', 'Available'),
-('SKN', 'SKN01', 'D8', 'Available'),
+('SKN', 'SKN01', 'D8', 'Pending'),
 ('SKN', 'SKN01', 'D9', 'Available'),
 ('SKN', 'SKN01', 'E1', 'Available'),
 ('SKN', 'SKN01', 'E10', 'Available'),
@@ -721,7 +721,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('SKN', 'SKN01', 'E3', 'Available'),
 ('SKN', 'SKN01', 'E4', 'Available'),
 ('SKN', 'SKN01', 'E5', 'Available'),
-('SKN', 'SKN01', 'E6', 'Pending'),
+('SKN', 'SKN01', 'E6', 'Available'),
 ('SKN', 'SKN01', 'E7', 'Available'),
 ('SKN', 'SKN01', 'E8', 'Available'),
 ('SKN', 'SKN01', 'E9', 'Available'),
@@ -759,7 +759,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('SKN', 'SKN02', 'D10', 'Available'),
 ('SKN', 'SKN02', 'D2', 'Available'),
 ('SKN', 'SKN02', 'D3', 'Available'),
-('SKN', 'SKN02', 'D4', 'Available'),
+('SKN', 'SKN02', 'D4', 'Pending'),
 ('SKN', 'SKN02', 'D5', 'Available'),
 ('SKN', 'SKN02', 'D6', 'Available'),
 ('SKN', 'SKN02', 'D7', 'Available'),
@@ -1011,7 +1011,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('THN', 'THN01', 'D3', 'Available'),
 ('THN', 'THN01', 'D4', 'Available'),
 ('THN', 'THN01', 'D5', 'Available'),
-('THN', 'THN01', 'D6', 'Pending'),
+('THN', 'THN01', 'D6', 'Available'),
 ('THN', 'THN01', 'D7', 'Available'),
 ('THN', 'THN01', 'D8', 'Available'),
 ('THN', 'THN01', 'D9', 'Available'),
@@ -1021,7 +1021,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('THN', 'THN01', 'E3', 'Available'),
 ('THN', 'THN01', 'E4', 'Available'),
 ('THN', 'THN01', 'E5', 'Available'),
-('THN', 'THN01', 'E6', 'Pending'),
+('THN', 'THN01', 'E6', 'Available'),
 ('THN', 'THN01', 'E7', 'Available'),
 ('THN', 'THN01', 'E8', 'Available'),
 ('THN', 'THN01', 'E9', 'Available'),
@@ -1707,21 +1707,24 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `email` varchar(30) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `fullname` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
   `address` text DEFAULT NULL,
   `avatar` varchar(255) DEFAULT 'public/images/avatars/default.png',
   `reset_token` varchar(255) DEFAULT NULL,
-  `reset_expires` datetime DEFAULT NULL
+  `reset_expires` datetime DEFAULT NULL,
+  `google_id` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `created_at`, `fullname`, `phone`, `address`, `avatar`, `reset_token`, `reset_expires`) VALUES
-(1, 'user1', '$2y$10$UB221x3XCJb.jwss6AUS4ew.btMD2jtg87Z0sX6UJy9g02xiy/Vdm', 'user1@gmail.com', '2025-04-06 23:40:53', NULL, NULL, NULL, 'public/images/avatars/default.png', NULL, NULL),
-(2, 'user2', '$2y$10$sWC0LI3SrheESc2wOyl2qunqWF7jJC6UkTvuF5RH2rEF6EGq38ysm', 'user2@gmail.com', '2025-04-06 23:58:47', 'Nguyen Van A', '0123456789', '268 Ly Thuong Kiet', 'public/images/avatars/default.png', NULL, NULL);
+INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `created_at`, `name`, `phone`, `address`, `avatar`, `reset_token`, `reset_expires`, `google_id`) VALUES
+(1, 'user1', '$2y$10$2rG1e/2nVzKbIIM0Rdn.B.4aB1KEvfX0uJnhlis7IYJgXf.LsNBEW', 'user1@gmail.com', '2025-04-06 23:40:53', NULL, NULL, NULL, 'public/images/avatars/default.png', NULL, NULL, NULL),
+(2, 'user2', '$2y$10$puM7Ga5HQIP0hNGug7PkP.XDwtYWjEwm21ZLyfVKHXusEG3234VrG', 'user2@gmail.com', '2025-04-06 23:58:47', 'Nguyen Van A', '0123456789', '268 Ly Thuong Kiet', 'public/images/avatars/default.png', NULL, NULL, NULL),
+(3, 'khanhvy', '$2y$10$tYcQAMVx5XKGepnClazeAev0CxEN033aH6VAFm95zKCLM23i9FMKm', 'vhkhanhvy25082601@gmail.com', '2025-04-07 22:08:44', 'Khánh Vy', NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocKkBPXHVxIv9AyzaF_gIoHH5YWYxmOtphqA8VCIdtIhVg5TFbY=s96-c', NULL, NULL, '114875941151678575320'),
+(4, 'nhanphan', '$2y$10$PXGudNK5Js93jFoWcCYjuOLB5OY8oNy9ptjy3hMElArfpPiJ8aMIq', 'phankhanhnhan01@gmail.com', '2025-04-08 07:01:57', 'Nhân Phan', NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', NULL, NULL, '103729317953199544120');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1802,13 +1805,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT cho bảng `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

@@ -30,7 +30,7 @@ $adminExists = $conn->query("SELECT * FROM `admins` WHERE `username` = 'admin'")
 if (!$adminExists) {
     // Create admin user
     // Using a pre-generated hash for 'admin123'
-    $password = '$2y$10$SfhYIDtn.iOuCW7zfoFLuuZHX6lja4lF4XA4JqNmpiH/.P3zB8JCa';
+    $password = '$2y$10$Tn/0xi2s.OElsEgYTieQX.mcyzYyuBcGYHB8f3eQKkaBH8JRvhh8e';
     $email = 'admin@curtaincall.com';
     
     $insertAdmin = "INSERT INTO `admins` (`username`, `password`, `email`) VALUES ('admin', ?, ?)";

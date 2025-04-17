@@ -38,16 +38,19 @@ class AdminController {
             exit;
         }
         
-        // Handle login form submission
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
             
-            // Validate login
-            $admin = $this->adminModel->login($username, $password);
+            $admin = $this->adminModel->getAdminByUsername($username);
             
-            if ($admin) {
-                $_SESSION['admin'] = $admin;
+            if ($admin && password_verify($password, $admin['password'])) {
+                // Set admin session
+                $_SESSION['admin'] = [
+                    'admin_id' => $admin['admin_id'],
+                    'username' => $admin['username']
+                ];
+                
                 header('Location: index.php?route=admin/dashboard');
                 exit;
             } else {
@@ -55,7 +58,6 @@ class AdminController {
             }
         }
         
-        // Display login form
         include 'views/admin/login.php';
     }
     
@@ -75,9 +77,9 @@ class AdminController {
         $recent_bookings = $this->adminModel->getRecentBookings(5);
         $popular_plays = $this->playModel->getPopularPlays(5);
         
-        include 'views/admin/layouts/admin_header.php';
+        include 'views/admin/layouts/header.php';
         include 'views/admin/dashboard.php';
-        include 'views/admin/layouts/admin_footer.php';
+        include 'views/admin/layouts/footer.php';
     }
     
     // PLAYS MANAGEMENT
@@ -88,60 +90,110 @@ class AdminController {
         
         $plays = $this->playModel->getAllPlays();
         
-        include 'views/admin/layouts/admin_header.php';
+        include 'views/admin/layouts/header.php';
         include 'views/admin/plays/index.php';
-        include 'views/admin/layouts/admin_footer.php';
+        include 'views/admin/layouts/footer.php';
     }
     
     // Create new play
     public function createPlay() {
         $this->checkAdminAuth();
         
-        $theaters = $this->theaterModel->getAllTheaters();
-        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Handle image upload
-            $image = null;
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'public/images/plays/';
-                $temp_name = $_FILES['image']['tmp_name'];
-                $name = basename($_FILES['image']['name']);
-                $file_ext = pathinfo($name, PATHINFO_EXTENSION);
-                $filename = uniqid() . '.' . $file_ext;
-                $target_file = $upload_dir . $filename;
+            // Validate form data
+            $errors = [];
+            
+            if (empty($_POST['title'])) {
+                $errors['title'] = 'Title is required';
+            }
+            
+            if (empty($_POST['theater_id'])) {
+                $errors['theater_id'] = 'Theater is required';
+            }
+            
+            if (empty($_POST['duration']) || !is_numeric($_POST['duration'])) {
+                $errors['duration'] = 'Valid duration is required';
+            }
+            
+            if (empty($_POST['description'])) {
+                $errors['description'] = 'Description is required';
+            }
+            
+            // Handle image upload if present
+            $image_path = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+                $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+                $filename = $_FILES['image']['name'];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 
-                if (move_uploaded_file($temp_name, $target_file)) {
-                    $image = $target_file;
+                if (!in_array(strtolower($ext), $allowed)) {
+                    $errors['image'] = 'Invalid image format. Allowed: JPG, JPEG, PNG, GIF';
+                } else {
+                    $upload_dir = 'public/images/plays/';
+                    
+                    // Create directory if it doesn't exist
+                    if (!file_exists($upload_dir)) {
+                        mkdir($upload_dir, 0777, true);
+                    }
+                    
+                    $new_filename = uniqid() . '.' . $ext;
+                    $destination = $upload_dir . $new_filename;
+                    
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
+                        $image_path = $destination;
+                    } else {
+                        $errors['image'] = 'Failed to upload image';
+                    }
                 }
             }
             
-            $play_data = [
-                'title' => $_POST['title'],
-                'description' => $_POST['description'],
-                'duration' => $_POST['duration'],
-                'theater_id' => $_POST['theater_id'],
-                'director' => $_POST['director'] ?? '',
-                'cast' => $_POST['cast'] ?? '',
-                'image' => $image
-            ];
-            
-            $play_id = $this->playModel->createPlay($play_data);
-            
-            if ($play_id) {
-                $_SESSION['success_message'] = 'Play created successfully';
-                header('Location: index.php?route=admin/plays');
-                exit;
+            if (empty($errors)) {
+                // Prepare play data
+                $play_data = [
+                    'title' => $_POST['title'],
+                    'description' => $_POST['description'],
+                    'theater_id' => $_POST['theater_id'],
+                    'duration' => $_POST['duration'],
+                    'director' => $_POST['director'] ?? null,
+                    'cast' => $_POST['cast'] ?? null,
+                    'image' => $image_path
+                ];
+                
+                $play_id = $this->playModel->createPlay($play_data);
+                
+                if ($play_id) {
+                    $_SESSION['success_message'] = 'Play created successfully';
+                    header('Location: index.php?route=admin/plays');
+                    exit;
+                } else {
+                    $_SESSION['error_message'] = 'Error creating play';
+                    
+                    // If image was uploaded but DB insert failed, delete the uploaded image
+                    if ($image_path && file_exists($image_path)) {
+                        unlink($image_path);
+                    }
+                }
             } else {
-                $_SESSION['error_message'] = 'Error creating play';
+                $_SESSION['error_message'] = 'Please fix the errors in the form';
+                $_SESSION['form_errors'] = $errors;
+                $_SESSION['form_data'] = $_POST;
+                
+                // If image was uploaded but validation failed, delete the uploaded image
+                if (isset($image_path) && file_exists($image_path)) {
+                    unlink($image_path);
+                }
             }
         }
         
-        include 'views/admin/layouts/admin_header.php';
-        include 'views/admin/plays/create.php';
-        include 'views/admin/layouts/admin_footer.php';
+        // Get theaters for dropdown
+        $theaters = $this->theaterModel->getAllTheaters();
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/plays/createPlay.php';
+        include 'views/admin/layouts/footer.php';
     }
     
-    // Edit play
+    // Edit existing play
     public function editPlay() {
         $this->checkAdminAuth();
         
@@ -153,48 +205,112 @@ class AdminController {
         }
         
         $play = $this->playModel->getPlayById($play_id);
-        $theaters = $this->theaterModel->getAllTheaters();
+        if (!$play) {
+            $_SESSION['error_message'] = 'Play not found';
+            header('Location: index.php?route=admin/plays');
+            exit;
+        }
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Handle image upload
-            $image = $play['image']; // Default to current image
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'public/images/plays/';
-                $temp_name = $_FILES['image']['tmp_name'];
-                $name = basename($_FILES['image']['name']);
-                $file_ext = pathinfo($name, PATHINFO_EXTENSION);
-                $filename = uniqid() . '.' . $file_ext;
-                $target_file = $upload_dir . $filename;
+            // Validate form data
+            $errors = [];
+            
+            if (empty($_POST['title'])) {
+                $errors['title'] = 'Title is required';
+            }
+            
+            if (empty($_POST['theater_id'])) {
+                $errors['theater_id'] = 'Theater is required';
+            }
+            
+            if (empty($_POST['duration']) || !is_numeric($_POST['duration'])) {
+                $errors['duration'] = 'Valid duration is required';
+            }
+            
+            if (empty($_POST['description'])) {
+                $errors['description'] = 'Description is required';
+            }
+            
+            // Handle image upload if present
+            $image_path = $play['image']; // Keep existing image by default
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+                $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+                $filename = $_FILES['image']['name'];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
                 
-                if (move_uploaded_file($temp_name, $target_file)) {
-                    $image = $target_file;
+                if (!in_array(strtolower($ext), $allowed)) {
+                    $errors['image'] = 'Invalid image format. Allowed: JPG, JPEG, PNG, GIF';
+                } else {
+                    $upload_dir = 'public/images/plays/';
+                    
+                    // Create directory if it doesn't exist
+                    if (!file_exists($upload_dir)) {
+                        mkdir($upload_dir, 0777, true);
+                    }
+                    
+                    $new_filename = uniqid() . '.' . $ext;
+                    $destination = $upload_dir . $new_filename;
+                    
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
+                        $image_path = $destination;
+                    } else {
+                        $errors['image'] = 'Failed to upload image';
+                    }
                 }
             }
             
-            $play_data = [
-                'title' => $_POST['title'],
-                'description' => $_POST['description'],
-                'duration' => $_POST['duration'],
-                'theater_id' => $_POST['theater_id'],
-                'director' => $_POST['director'] ?? '',
-                'cast' => $_POST['cast'] ?? '',
-                'image' => $image
-            ];
-            
-            $success = $this->playModel->updatePlay($play_id, $play_data);
-            
-            if ($success) {
-                $_SESSION['success_message'] = 'Play updated successfully';
-                header('Location: index.php?route=admin/plays');
-                exit;
+            if (empty($errors)) {
+                // Prepare play data
+                $play_data = [
+                    'play_id' => $play_id,
+                    'title' => $_POST['title'],
+                    'description' => $_POST['description'],
+                    'theater_id' => $_POST['theater_id'],
+                    'duration' => $_POST['duration'],
+                    'director' => $_POST['director'] ?? null,
+                    'cast' => $_POST['cast'] ?? null,
+                    'image' => $image_path
+                ];
+                
+                $old_image_path = $play['image'];
+                $success = $this->playModel->updatePlay($play_data);
+                
+                if ($success) {
+                    $_SESSION['success_message'] = 'Play updated successfully';
+                    
+                    // Delete old image if it was replaced and exists
+                    if ($image_path != $old_image_path && $old_image_path && file_exists($old_image_path)) {
+                        unlink($old_image_path);
+                    }
+                    
+                    header('Location: index.php?route=admin/plays');
+                    exit;
+                } else {
+                    $_SESSION['error_message'] = 'Error updating play';
+                    
+                    // If a new image was uploaded but DB update failed, delete the new image
+                    if ($image_path != $old_image_path && $image_path && file_exists($image_path)) {
+                        unlink($image_path);
+                    }
+                }
             } else {
-                $_SESSION['error_message'] = 'Error updating play';
+                $_SESSION['error_message'] = 'Please fix the errors in the form';
+                $_SESSION['form_errors'] = $errors;
+                $_SESSION['form_data'] = $_POST;
+                
+                // If a new image was uploaded but validation failed, delete the newly uploaded image
+                if (isset($destination) && file_exists($destination) && $destination != $play['image']) {
+                    unlink($destination);
+                }
             }
         }
         
-        include 'views/admin/layouts/admin_header.php';
-        include 'views/admin/plays/edit.php';
-        include 'views/admin/layouts/admin_footer.php';
+        // Get theaters for dropdown
+        $theaters = $this->theaterModel->getAllTheaters();
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/plays/editPlay.php';
+        include 'views/admin/layouts/footer.php';
     }
     
     // Delete play
@@ -204,6 +320,14 @@ class AdminController {
         $play_id = $_GET['id'] ?? null;
         if (!$play_id) {
             $_SESSION['error_message'] = 'No play ID specified';
+            header('Location: index.php?route=admin/plays');
+            exit;
+        }
+        
+        // Get the play to access its image path
+        $play = $this->playModel->getPlayById($play_id);
+        if (!$play) {
+            $_SESSION['error_message'] = 'Play not found';
             header('Location: index.php?route=admin/plays');
             exit;
         }
@@ -220,6 +344,11 @@ class AdminController {
         $success = $this->playModel->deletePlay($play_id);
         
         if ($success) {
+            // Delete image file if it exists
+            if ($play['image'] && file_exists($play['image'])) {
+                unlink($play['image']);
+            }
+            
             $_SESSION['success_message'] = 'Play deleted successfully';
         } else {
             $_SESSION['error_message'] = 'Error deleting play';
@@ -228,7 +357,4 @@ class AdminController {
         header('Location: index.php?route=admin/plays');
         exit;
     }
-    
-    // THEATERS MANAGEMENT - Similar methods for other entities
-    // Add similar methods for theaters, schedules, users, bookings
 }

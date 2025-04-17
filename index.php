@@ -30,6 +30,14 @@ $routes['user/google-login'] = ['controller' => 'UserController', 'action' => 'g
 $routes['user/google-callback'] = ['controller' => 'UserController', 'action' => 'googleCallback'];
 $routes['user/disconnectGoogle'] = ['controller' => 'UserController', 'action' => 'disconnectGoogle'];
 
+$routes['admin/login'] = ['controller' => 'AdminController', 'action' => 'login'];
+$routes['admin/logout'] = ['controller' => 'AdminController', 'action' => 'logout'];
+$routes['admin/dashboard'] = ['controller' => 'AdminController', 'action' => 'dashboard'];
+$routes['admin/plays'] = ['controller' => 'AdminController', 'action' => 'plays'];
+$routes['admin/createPlay'] = ['controller' => 'AdminController', 'action' => 'createPlay'];
+$routes['admin/editPlay'] = ['controller' => 'AdminController', 'action' => 'editPlay'];
+$routes['admin/deletePlay'] = ['controller' => 'AdminController', 'action' => 'deletePlay'];
+
 // Parse the route
 $parts = explode('/', trim($route, '/'));
 $controller = ucfirst(strtolower($parts[0] ?? 'home')) . 'Controller';
