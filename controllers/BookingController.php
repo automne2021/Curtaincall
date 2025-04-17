@@ -205,12 +205,14 @@ class BookingController {
         // Create bookings for each selected seat
         $success = true;
         foreach ($selected_seats as $seat_id) {
+            $seat_price = $this->seatModel->getSeatPrice($theater_id, $seat_id);
             $result = $this->bookingModel->createBooking(
                 $user_id,
                 $play_id,
                 $theater_id,
                 $seat_id,
-                $expires_at
+                $expires_at,
+                $seat_price
             );
             
             if (!$result) {

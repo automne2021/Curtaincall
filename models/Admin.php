@@ -31,7 +31,7 @@ class Admin {
             $playStmt->execute();
             $playResult = $playStmt->get_result();
             $total_plays = $playResult->fetch_assoc()['count'] ?? 0;
-            
+            error_log("Total plays query result: " . $total_plays);
             // Get total bookings
             $bookingStmt = $this->conn->prepare("SELECT COUNT(*) as count FROM bookings");
             $bookingStmt->execute();
@@ -64,7 +64,7 @@ class Admin {
         } catch (Exception $e) {
             error_log("Error getting dashboard stats: " . $e->getMessage());
             return [
-                'total_plays' => 0,
+                'total_plays' => $e->getMessage(),
                 'total_bookings' => 0,
                 'total_users' => 0,
                 'monthly_revenue' => 0

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 08, 2025 lúc 09:08 AM
+-- Thời gian đã tạo: Th4 17, 2025 lúc 01:23 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -57,18 +57,17 @@ CREATE TABLE `bookings` (
   `status` enum('Pending','Paid','Expired','Cancelled') DEFAULT 'Pending',
   `expires_at` datetime NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `amount` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `bookings`
 --
 
-INSERT INTO `bookings` (`booking_id`, `user_id`, `play_id`, `theater_id`, `seat_id`, `status`, `expires_at`, `created_at`, `updated_at`) VALUES
-(9, 1, 'IDE08', 'IDE', 'A6', 'Paid', '2025-04-07 10:13:02', '2025-04-07 02:58:02', '2025-04-07 03:08:17'),
-(11, 1, 'IDE08', 'IDE', 'D5', 'Paid', '2025-04-07 10:13:02', '2025-04-07 02:58:02', '2025-04-07 03:08:43'),
-(13, 2, 'SKN02', 'SKN', 'D4', 'Paid', '2025-04-07 11:13:15', '2025-04-07 03:58:15', '2025-04-07 03:58:27'),
-(15, 2, 'SKN01', 'SKN', 'D8', 'Paid', '2025-04-07 11:32:51', '2025-04-07 04:17:51', '2025-04-07 04:17:55');
+INSERT INTO `bookings` (`booking_id`, `user_id`, `play_id`, `theater_id`, `seat_id`, `status`, `expires_at`, `created_at`, `updated_at`, `amount`) VALUES
+(17, 1, 'IDE08', 'IDE', 'C3', 'Paid', '2025-04-17 18:32:04', '2025-04-17 11:17:04', '2025-04-17 11:17:16', 270000.00),
+(18, 1, 'IDE08', 'IDE', 'E4', 'Paid', '2025-04-17 18:32:04', '2025-04-17 11:17:04', '2025-04-17 11:17:23', 320000.00);
 
 -- --------------------------------------------------------
 
@@ -598,7 +597,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('IDE', 'IDE08', 'C1', 'Available'),
 ('IDE', 'IDE08', 'C10', 'Available'),
 ('IDE', 'IDE08', 'C2', 'Available'),
-('IDE', 'IDE08', 'C3', 'Available'),
+('IDE', 'IDE08', 'C3', 'Pending'),
 ('IDE', 'IDE08', 'C4', 'Available'),
 ('IDE', 'IDE08', 'C5', 'Available'),
 ('IDE', 'IDE08', 'C6', 'Available'),
@@ -619,7 +618,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('IDE', 'IDE08', 'E10', 'Available'),
 ('IDE', 'IDE08', 'E2', 'Available'),
 ('IDE', 'IDE08', 'E3', 'Available'),
-('IDE', 'IDE08', 'E4', 'Available'),
+('IDE', 'IDE08', 'E4', 'Pending'),
 ('IDE', 'IDE08', 'E5', 'Available'),
 ('IDE', 'IDE08', 'E6', 'Available'),
 ('IDE', 'IDE08', 'E7', 'Available'),
@@ -1805,7 +1804,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT cho bảng `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
