@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\xampp\htdocs\Curtaincall\views\auth\login-modal.php
 $login_errors = $_SESSION['login_errors'] ?? [];
 $login_data = $_SESSION['login_data'] ?? [];
 // Clear session data after use
@@ -18,6 +17,9 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                 <?php endif; ?>
 
                 <form id="loginForm" action="<?= BASE_URL ?>index.php?route=user/login" method="POST">
+                    <?php if (isset($_SESSION['redirect_after_login'])): ?>
+                        <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SESSION['redirect_after_login']) ?>">
+                    <?php endif; ?>
                     <div class="mb-3">
                         <input placeholder="Email hoặc Tên đăng nhập" type="text" class="form-control" id="login" name="login" value="<?= htmlspecialchars($login_data['login'] ?? '') ?>">
                         <?php if (!empty($login_errors['login'])): ?>
@@ -38,7 +40,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                                 Quên mật khẩu?
                             </a>
                         </div>
-                        <button type="submit" class="btn btn-lg auth-btn">Đăng nhập</button>
+                        <button type="submit" class="btn btn-md auth-btn">Đăng nhập</button>
                     </div>
                 </form>
 
@@ -49,10 +51,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                 </div>
 
                 <!-- Social Login Buttons -->
-                <div class="d-grid gap-2">
-                    <a href="<?= BASE_URL ?>index.php?route=user/facebook-login" class="btn social-btn facebook-btn">
-                        <i class="bi bi-facebook text-primary me-2"></i> Tiếp tục với Facebook
-                    </a>
+                <div class="d-grid">
                     <a href="<?= BASE_URL ?>index.php?route=user/google-login" class="btn social-btn google-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48" class="me-2">
                             <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>

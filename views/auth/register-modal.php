@@ -19,41 +19,41 @@ unset($_SESSION['register_errors'], $_SESSION['form_data']);
 
                 <form id="registerForm" action="<?= BASE_URL ?>index.php?route=user/register" method="POST">
                     <div class="mb-3">
-                        <input placeholder="Tên đăng nhập" type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($form_data['username'] ?? '') ?>">
+                        <input placeholder="Tên đăng nhập" type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($form_data['username'] ?? '') ?>" required>
                         <?php if (!empty($register_errors['username'])): ?>
                             <small class="text-danger"><?= $register_errors['username'] ?></small>
                         <?php endif; ?>
                         <small id="usernameError" class="text-danger"></small>
                     </div>
-                    
+
                     <div class="mb-3">
-                        <input placeholder="Email" type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($form_data['email'] ?? '') ?>">
+                        <input placeholder="Email" type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($form_data['email'] ?? '') ?>" required>
                         <?php if (!empty($register_errors['email'])): ?>
                             <small class="text-danger"><?= $register_errors['email'] ?></small>
                         <?php endif; ?>
                         <small id="emailError" class="text-danger"></small>
                     </div>
-                    
+
                     <div class="mb-3">
-                        <input placeholder="Mật khẩu" type="password" class="form-control" id="password" name="password">
+                        <input placeholder="Mật khẩu" type="password" class="form-control" id="password" name="password" required>
                         <?php if (!empty($register_errors['password'])): ?>
                             <small class="text-danger"><?= $register_errors['password'] ?></small>
                         <?php endif; ?>
                         <small id="passwordError" class="text-danger"></small>
                     </div>
-                    
+
                     <div class="mb-3">
-                        <input placeholder="Nhập lại mật khẩu" type="password" class="form-control" id="confirm_password" name="confirm_password">
+                        <input placeholder="Nhập lại mật khẩu" type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                         <?php if (!empty($register_errors['confirm_password'])): ?>
                             <small class="text-danger"><?= $register_errors['confirm_password'] ?></small>
                         <?php endif; ?>
                         <small id="confirmError" class="text-danger"></small>
                     </div>
-                    
+
                     <div class="mb-4">
                         <p class="text-muted small">Bằng việc tạo tài khoản, bạn đồng ý với <a href="#" class="text-decoration-none">Điều khoản dịch vụ</a> và <a href="#" class="text-decoration-none">Chính sách bảo mật</a>.</p>
                     </div>
-                    
+
                     <div class="d-grid">
                         <button type="submit" class="btn btn-lg auth-btn">Đăng ký</button>
                     </div>

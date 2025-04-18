@@ -1,4 +1,19 @@
 /* Breadcrumb Styles */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.breadcrumb-item a {
+    color: #075E54;
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d;
+}
+
 .booking-breadcrumb {
     margin: 20px 0 40px;
 }

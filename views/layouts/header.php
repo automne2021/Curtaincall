@@ -16,19 +16,25 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="public/css/style.css">
     <link rel="stylesheet" href="public/css/layouts.css">
+    <link rel="stylesheet" href="public/css/search.css">
     <link rel="stylesheet" href="public/css/auth.css">
+    <link rel="stylesheet" href="public/css/breadcrumb.css">
+    <link rel="stylesheet" href="public/css/play-details.css">
     <link rel="stylesheet" href="public/css/profile.css">
     <link rel="stylesheet" href="public/css/booking.css">
-    <link rel="stylesheet" href="public/css/breadcrumb.css">
     <link rel="stylesheet" href="public/css/payment-success.css">
     <link rel="stylesheet" href="public/css/contact.css">
 
-    <script src="public/js/auth-validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="public/ckeditor5-builder-45.0.0/ckeditor5/ckeditor5.js"></script>
+
+    <script src="public/js/auth-validation.js" defer></script>
+    <script src="public/js/alert.js" defer></script>
+    <script src="public/js/live-search.js" defer></script>
+    <script src="public/js/schedule.js" defer></script>
 </head>
 
 <body class="<?= $isBookingPage ? 'booking-page' : '' ?>">
@@ -75,18 +81,20 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
                             </li>
                         </ul>
 
-                        <form class="d-flex" role="search" method="GET" action="index.php">
+                        <form id="live-search" class="d-flex search-container" role="search" method="GET" action="index.php">
                             <input type="hidden" name="route" value="play/search">
                             <div class="input-group">
                                 <span class="input-group-text bg-white border-end-0">
                                     <i class="bi bi-search text-muted"></i>
                                 </span>
                                 <input
+                                    id="search-input"
                                     class="form-control border-start-0 border-end-0 ps-0"
                                     type="search"
                                     name="query"
                                     placeholder="Bạn tìm gì hôm nay?"
-                                    aria-label="Search">
+                                    aria-label="Search"
+                                    autocomplete="off">
                                 <span class="input-group-text bg-white border-start-0">
                                     <span class="vr my-1 me-2 text-muted"></span>
                                     <button type="submit" class="btn p-0 bg-transparent">
@@ -94,6 +102,7 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
                                     </button>
                                 </span>
                             </div>
+                            <div id="search-hints" class="search-hints d-none"></div>
                         </form>
 
                         <div class="login-btn mx-2">
@@ -171,31 +180,3 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
             <?php endif; ?>
         </div>
     <?php endif; ?>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Find all alert notifications
-            const alerts = document.querySelectorAll('.alert');
-
-            // Set timeout for each alert
-            alerts.forEach(function(alert) {
-                setTimeout(function() {
-                    // Create fade out effect
-                    alert.style.transition = 'opacity 1s';
-                    alert.style.opacity = '0';
-
-                    // Remove the element after the fade completes
-                    setTimeout(function() {
-                        // Use Bootstrap's alert dismiss method if available
-                        if (typeof bootstrap !== 'undefined') {
-                            const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
-                            bsAlert.close();
-                        } else {
-                            // Fallback to manual removal
-                            alert.remove();
-                        }
-                    }, 1000);
-                }, 3000); // 5 seconds before starting the fade
-            });
-        });
-    </script>

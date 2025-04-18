@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\Users\VY\Downloads\curtaincall\config\database.php
 
 // Database connection parameters
 $servername = "localhost";
