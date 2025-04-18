@@ -92,7 +92,7 @@ class Booking {
     public function checkPlayHasBookings($play_id) {
         $sql = "SELECT COUNT(*) as count FROM bookings WHERE play_id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $play_id);
+        $stmt->bind_param("s", $play_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();

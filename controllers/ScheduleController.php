@@ -137,7 +137,7 @@ class ScheduleController
 
     /**
      * Tìm kiếm lịch chiếu
-     */
+     
     public function search()
     {
         $query = isset($_GET['query']) ? $_GET['query'] : '';
@@ -155,4 +155,5 @@ class ScheduleController
         include 'views/schedules/search_results.php';
         include 'views/layouts/footer.php';
     }
+        */
 }

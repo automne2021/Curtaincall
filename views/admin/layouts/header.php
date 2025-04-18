@@ -10,6 +10,7 @@
     <link href="public/css/admin-dashboard.css" rel="stylesheet">
     <link href="public/css/pagination.css" rel="stylesheet">
     <link href="public/css/admin-allplays.css" rel="stylesheet">
+    <link href="public/css/admin-alltheaters.css" rel="stylesheet">
     <link rel="shortcut icon" href="public/images/favicon.ico" type="image/x-icon">
 
     <?php

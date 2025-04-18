@@ -24,8 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function initializeEditors() {
+        const editorInstances = [];
+        
         editorElements.forEach((element, index) => {
             console.log('Initializing editor #' + index);
+            
+            // Remove required attribute from textarea to prevent form validation issues
+            element.removeAttribute('required');
             
             ClassicEditor
                 .create(element, {
@@ -68,8 +73,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(editor => {
                     console.log('CKEditor initialized successfully');
-                    // Store the editor instance on the original textarea
+                    
+                    // Find the form that contains this editor
+                    const form = element.closest('form');
+                    if (form) {
+                        // Add a custom validation function to the form
+                        form.addEventListener('submit', function(e) {
+                            // Update the textarea value with the editor content
+                            element.value = editor.getData();
+                            
+                            // Check if the content is empty and the original element was required
+                            if (element.hasAttribute('data-required') && editor.getData().trim() === '') {
+                                // Show validation error
+                                e.preventDefault();
+                                
+                                // Focus the editor
+                                editor.editing.view.focus();
+                                
+                                // Show error message
+                                let errorMsg = element.nextElementSibling;
+                                if (!errorMsg || !errorMsg.classList.contains('invalid-feedback')) {
+                                    errorMsg = document.createElement('div');
+                                    errorMsg.classList.add('invalid-feedback');
+                                    errorMsg.style.display = 'block';
+                                    element.insertAdjacentElement('afterend', errorMsg);
+                                }
+                                errorMsg.textContent = 'This field is required';
+                                
+                                // Add invalid class to the editor
+                                editor.editing.view.change(writer => {
+                                    writer.addClass('is-invalid', editor.editing.view.document.getRoot());
+                                });
+                            }
+                        });
+                    }
+                    
+                    // Store the editor instance
                     element.ckeditorInstance = editor;
+                    editorInstances.push(editor);
+                    
+                    // If the element was required, store this information as a data attribute
+                    if (element.required) {
+                        element.setAttribute('data-required', 'true');
+                    }
                 })
                 .catch(error => {
                     console.error('CKEditor initialization error:', error);

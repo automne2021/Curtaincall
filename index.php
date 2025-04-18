@@ -29,23 +29,39 @@ $routes['user/google-login'] = ['controller' => 'UserController', 'action' => 'g
 $routes['user/google-callback'] = ['controller' => 'UserController', 'action' => 'googleCallback'];
 $routes['user/disconnectGoogle'] = ['controller' => 'UserController', 'action' => 'disconnectGoogle'];
 
+// Admin routes
 $routes['admin/login'] = ['controller' => 'AdminController', 'action' => 'login'];
 $routes['admin/logout'] = ['controller' => 'AdminController', 'action' => 'logout'];
 $routes['admin/dashboard'] = ['controller' => 'AdminController', 'action' => 'dashboard'];
+// Plays management routes
 $routes['admin/plays'] = ['controller' => 'AdminController', 'action' => 'plays'];
 $routes['admin/createPlay'] = ['controller' => 'AdminController', 'action' => 'createPlay'];
 $routes['admin/editPlay'] = ['controller' => 'AdminController', 'action' => 'editPlay'];
 $routes['admin/deletePlay'] = ['controller' => 'AdminController', 'action' => 'deletePlay'];
+// Theater management routes
+$routes['admin/theaters'] = ['controller' => 'TheaterController', 'action' => 'theaters'];
+$routes['admin/createTheater'] = ['controller' => 'TheaterController', 'action' => 'createTheater'];
+$routes['admin/editTheater'] = ['controller' => 'TheaterController', 'action' => 'editTheater'];
+$routes['admin/deleteTheater'] = ['controller' => 'TheaterController', 'action' => 'deleteTheater'];
 
-// Parse the route
-$parts = explode('/', trim($route, '/'));
-$controller = ucfirst(strtolower($parts[0] ?? 'home')) . 'Controller';
-$action = strtolower($parts[1] ?? 'index');
-$params = array_slice($parts, 2);
 
-// Use default controller if not specified
-if ($controller === 'Controller') {
-    $controller = 'HomeController';
+// Check if the current route exists in the predefined routes
+if (isset($routes[$route])) {
+    // Use the predefined controller and action
+    $controller = $routes[$route]['controller'];
+    $action = $routes[$route]['action'];
+    $params = []; // No additional parameters for predefined routes
+} else {
+    // Parse the route (original logic)
+    $parts = explode('/', trim($route, '/'));
+    $controller = ucfirst(strtolower($parts[0] ?? 'home')) . 'Controller';
+    $action = strtolower($parts[1] ?? 'index');
+    $params = array_slice($parts, 2);
+
+    // Use default controller if not specified
+    if ($controller === 'Controller') {
+        $controller = 'HomeController';
+    }
 }
 
 // Include the requested controller

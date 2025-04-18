@@ -1,0 +1,57 @@
+/* Theater management specific styles */
+.table-modern .theater-id,
+#theatersTable .theater-id {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    color: #075E54;
+    font-size: 0.9rem;
+}
+
+.theater-title {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Theater capacity styles */
+.capacity-badge {
+    background-color: rgba(7, 94, 84, 0.1);
+    color: #075E54;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+/* Theater location styles */
+.location-text {
+    display: flex;
+    align-items: center;
+    color: #555;
+}
+
+.location-text i {
+    margin-right: 5px;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Theater card hover effect */
+.theater-card {
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.theater-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Theater ID input styling */
+#theater_id {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}

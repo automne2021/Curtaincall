@@ -105,7 +105,7 @@
                 <textarea class="form-control ckeditor <?= isset($_SESSION['form_errors']['description']) ? 'is-invalid' : '' ?>" 
                         id="description" name="description" rows="10" 
                         data-placeholder="Enter play description here..."
-                        required><?= htmlspecialchars($_SESSION['form_data']['description'] ?? '') ?></textarea>
+                        required><?= $_SESSION['form_data']['description'] ?? '' ?></textarea>
                 <?php if (isset($_SESSION['form_errors']['description'])): ?>
                     <div class="invalid-feedback"><?= $_SESSION['form_errors']['description'] ?></div>
                 <?php endif; ?>
