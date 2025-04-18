@@ -38,12 +38,21 @@ $routes['admin/plays'] = ['controller' => 'AdminController', 'action' => 'plays'
 $routes['admin/createPlay'] = ['controller' => 'AdminController', 'action' => 'createPlay'];
 $routes['admin/editPlay'] = ['controller' => 'AdminController', 'action' => 'editPlay'];
 $routes['admin/deletePlay'] = ['controller' => 'AdminController', 'action' => 'deletePlay'];
+$routes['admin/viewPlay'] = ['controller' => 'AdminController', 'action' => 'viewPlay'];
 // Theater management routes
 $routes['admin/theaters'] = ['controller' => 'TheaterController', 'action' => 'theaters'];
 $routes['admin/createTheater'] = ['controller' => 'TheaterController', 'action' => 'createTheater'];
 $routes['admin/editTheater'] = ['controller' => 'TheaterController', 'action' => 'editTheater'];
 $routes['admin/deleteTheater'] = ['controller' => 'TheaterController', 'action' => 'deleteTheater'];
-
+$routes['admin/viewTheater'] = ['controller' => 'TheaterController', 'action' => 'viewTheater'];
+// Booking management routes
+$routes['admin/bookings'] = ['controller' => 'BookingController', 'action' => 'bookings'];
+$routes['admin/viewBooking'] = ['controller' => 'BookingController', 'action' => 'viewBooking'];
+// User management routes
+$routes['admin/users'] = ['controller' => 'UserController', 'action' => 'users'];
+$routes['admin/viewUser'] = ['controller' => 'UserController', 'action' => 'viewUser'];
+$routes['admin/deleteUser'] = ['controller' => 'UserController', 'action' => 'deleteUser'];
+$routes['admin/userBookings'] = ['controller' => 'UserController', 'action' => 'userBookings'];
 
 // Check if the current route exists in the predefined routes
 if (isset($routes[$route])) {

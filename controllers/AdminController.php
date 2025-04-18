@@ -499,8 +499,35 @@ class AdminController {
         exit;
     }
 
+    public function viewPlay() {
+        $this->checkAdminAuth();
+        
+        $play_id = $_GET['id'] ?? null;
+        if (!$play_id) {
+            $_SESSION['error_message'] = 'No play ID specified';
+            header('Location: index.php?route=admin/plays');
+            exit;
+        }
+        
+        $play = $this->playModel->getPlayById($play_id);
+        if (!$play) {
+            $_SESSION['error_message'] = 'Play not found';
+            header('Location: index.php?route=admin/plays');
+            exit;
+        }
+        
+        // Get the schedule for this play
+        $schedule = $this->scheduleModel->getScheduleByPlayId($play_id);
+        
+        // Get theater information
+        $theater = $this->theaterModel->getTheaterById($play['theater_id']);
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/plays/viewPlay.php';
+        include 'views/admin/layouts/footer.php';
+    }
+
     private function sanitizeHtml($html) {
-        // Allow a more comprehensive set of HTML tags that are needed for formatting
         $allowedTags = '<p><br><h1><h2><h3><h4><h5><h6><strong><b><em><i><u><ul><ol><li><blockquote><table><thead><tbody><tr><td><th><hr><span><div><img><a><code><pre><sup><sub><strike><del><ins>';
         
         // First, strip all tags except allowed ones

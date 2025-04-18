@@ -4,6 +4,7 @@ require_once 'models/Theater.php';
 require_once 'models/Schedule.php';
 require_once 'models/Seat.php';
 require_once 'models/Booking.php';
+require_once 'models/User.php';
 
 class BookingController
 {
@@ -13,6 +14,7 @@ class BookingController
     private $scheduleModel;
     private $seatModel;
     private $bookingModel;
+    private $userModel;
 
     public function __construct($conn)
     {
@@ -22,6 +24,80 @@ class BookingController
         $this->scheduleModel = new Schedule($conn);
         $this->seatModel = new Seat($conn);
         $this->bookingModel = new Booking($conn);
+        $this->userModel = new User($conn);
+    }
+
+    // Helper method to check if admin is logged in
+    private function checkAdminAuth() {
+        if (!isset($_SESSION['admin'])) {
+            header('Location: index.php?route=admin/login');
+            exit;
+        }
+    }
+    
+    // List all bookings
+    public function bookings() {
+        $this->checkAdminAuth();
+        
+        // Get current page from query string, default to 1 if not set
+        $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+        $per_page = 10;
+        
+        // Get paginated bookings
+        $result = $this->bookingModel->getPaginatedBookings($page, $per_page);
+        $bookings = $result['bookings'];
+        $pagination = $result['pagination'];
+        
+        // Set base URL for pagination
+        $base_url = BASE_URL . 'index.php?route=admin/bookings';
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/bookings/bookings.php';
+        include 'views/admin/layouts/footer.php';
+    }
+    
+    // View a single booking
+    public function viewBooking() {
+        $this->checkAdminAuth();
+        
+        $booking_id = $_GET['id'] ?? null;
+        if (!$booking_id) {
+            $_SESSION['error_message'] = 'No booking ID specified';
+            header('Location: index.php?route=admin/bookings');
+            exit;
+        }
+        
+        $booking = $this->bookingModel->getBookingDetailsById($booking_id);
+        if (!$booking) {
+            $_SESSION['error_message'] = 'Booking not found';
+            header('Location: index.php?route=admin/bookings');
+            exit;
+        }
+        
+        // Get user details
+        $user = $this->userModel->getUserById($booking['user_id']);
+        
+        // Get theater details
+        $theater = $this->theaterModel->getTheaterById($booking['theater_id']);
+        
+        // Get seat map for this theater
+        $seatMap = $this->seatModel->getSeatMapByTheater($booking['theater_id']);
+        
+        // Get seat prices by type for display
+        $seatPrices = $this->seatModel->getSeatPrices($booking['theater_id']);
+        
+        // Create a mapping of seat types to prices for display
+        $seatTypes = [];
+        foreach ($seatPrices as $type => $price) {
+            $seatTypes[$type] = $price;
+        }
+        
+        // Get all booked seats for this play (to show on the seat map)
+        $bookedSeats = $this->bookingModel->getBookedSeatsByPlay($booking['play_id']);
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/bookings/viewBooking.php';
+        include 'views/admin/layouts/footer.php';
     }
 
     // Step 1: Show booking form with play details and schedule selection

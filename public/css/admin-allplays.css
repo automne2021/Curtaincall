@@ -291,6 +291,16 @@
     vertical-align: -2px;
 }
 
+.btn-view {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+.btn-view:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
 .empty-table {
     padding: 40px !important;
     text-align: center;

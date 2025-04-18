@@ -1,6 +1,7 @@
 <?php
 require_once 'models/Theater.php';
 require_once 'models/Play.php';
+require_once 'models/Seat.php';
 
 class TheaterController {
     private $conn;
@@ -199,5 +200,40 @@ class TheaterController {
         
         header('Location: index.php?route=admin/theaters');
         exit;
+    }
+
+    public function viewTheater() {
+        $this->checkAdminAuth();
+        
+        $theater_id = $_GET['id'] ?? null;
+        if (!$theater_id) {
+            $_SESSION['error_message'] = 'No theater ID specified';
+            header('Location: index.php?route=admin/theaters');
+            exit;
+        }
+        
+        $theater = $this->theaterModel->getTheaterById($theater_id);
+        if (!$theater) {
+            $_SESSION['error_message'] = 'Theater not found';
+            header('Location: index.php?route=admin/theaters');
+            exit;
+        }
+        
+        // Get seat map for this theater
+        $seatModel = new Seat($this->conn);
+        $seatMap = $seatModel->getSeatMapByTheater($theater_id);
+        
+        // Get seat prices by type
+        $seatPrices = $seatModel->getSeatPrices($theater_id);
+        
+        // Create a mapping of seat types to prices for display
+        $seatTypes = [];
+        foreach ($seatPrices as $type => $price) {
+            $seatTypes[$type] = $price;
+        }
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/theaters/viewTheater.php';
+        include 'views/admin/layouts/footer.php';
     }
 }

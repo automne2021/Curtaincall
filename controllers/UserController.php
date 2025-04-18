@@ -649,4 +649,128 @@ class UserController
         header('Location: index.php?route=user/profile');
         exit;
     }
+
+    // List all users for admin
+    public function users() {
+        // Check admin auth
+        if (!isset($_SESSION['admin'])) {
+            header('Location: index.php?route=admin/login');
+            exit;
+        }
+        
+        // Get current page from query string, default to 1 if not set
+        $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+        $per_page = 10;
+        
+        // Get paginated users
+        $result = $this->userModel->getPaginatedUsers($page, $per_page);
+        $users = $result['users'];
+        $pagination = $result['pagination'];
+        
+        // Set base URL for pagination
+        $base_url = BASE_URL . 'index.php?route=admin/users';
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/users/users.php';
+        include 'views/admin/layouts/footer.php';
+    }
+
+    // View single user for admin
+    public function viewUser() {
+        // Check admin auth
+        if (!isset($_SESSION['admin'])) {
+            header('Location: index.php?route=admin/login');
+            exit;
+        }
+        
+        $user_id = $_GET['id'] ?? null;
+        if (!$user_id) {
+            $_SESSION['error_message'] = 'No user ID specified';
+            header('Location: index.php?route=admin/users');
+            exit;
+        }
+        
+        $user = $this->userModel->getUserById($user_id);
+        if (!$user) {
+            $_SESSION['error_message'] = 'User not found';
+            header('Location: index.php?route=admin/users');
+            exit;
+        }
+        
+        // Get user's bookings
+        require_once 'models/Booking.php';
+        $bookingModel = new Booking($this->conn);
+        $userBookings = $bookingModel->getBookingsByUserId($user_id);
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/users/viewUser.php';
+        include 'views/admin/layouts/footer.php';
+    }
+
+    // Delete user for admin
+    public function deleteUser() {
+        // Check admin auth
+        if (!isset($_SESSION['admin'])) {
+            header('Location: index.php?route=admin/login');
+            exit;
+        }
+        
+        $user_id = $_GET['id'] ?? null;
+        if (!$user_id) {
+            $_SESSION['error_message'] = 'No user ID specified';
+            header('Location: index.php?route=admin/users');
+            exit;
+        }
+        
+        $user = $this->userModel->getUserById($user_id);
+        if (!$user) {
+            $_SESSION['error_message'] = 'User not found';
+            header('Location: index.php?route=admin/users');
+            exit;
+        }
+        
+        // Delete user
+        $success = $this->userModel->deleteUser($user_id);
+        
+        if ($success) {
+            $_SESSION['success_message'] = 'User deleted successfully';
+        } else {
+            $_SESSION['error_message'] = 'Error deleting user';
+        }
+        
+        header('Location: index.php?route=admin/users');
+        exit;
+    }
+
+    // View user bookings for admin
+    public function userBookings() {
+        // Check admin auth
+        if (!isset($_SESSION['admin'])) {
+            header('Location: index.php?route=admin/login');
+            exit;
+        }
+        
+        $user_id = $_GET['id'] ?? null;
+        if (!$user_id) {
+            $_SESSION['error_message'] = 'No user ID specified';
+            header('Location: index.php?route=admin/users');
+            exit;
+        }
+        
+        $user = $this->userModel->getUserById($user_id);
+        if (!$user) {
+            $_SESSION['error_message'] = 'User not found';
+            header('Location: index.php?route=admin/users');
+            exit;
+        }
+        
+        // Get user's bookings
+        require_once 'models/Booking.php';
+        $bookingModel = new Booking($this->conn);
+        $bookings = $bookingModel->getBookingsByUserId($user_id);
+        
+        include 'views/admin/layouts/header.php';
+        include 'views/admin/users/userBookings.php';
+        include 'views/admin/layouts/footer.php';
+    }
 }

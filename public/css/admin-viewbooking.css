@@ -1,0 +1,276 @@
+/* Booking view page specific styles */
+.booking-view-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
+
+.booking-header {
+    position: relative;
+    padding: 2rem;
+    background-color: #075E54;
+    color: #fff;
+}
+
+.booking-header-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+}
+
+.booking-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.booking-status {
+    margin-top: 1rem;
+}
+
+.booking-id-badge {
+    display: inline-block;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.booking-content {
+    padding: 2rem;
+}
+
+.booking-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #075E54;
+    border-bottom: 2px solid #AFE3CE;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.booking-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-card {
+    flex: 1;
+    min-width: 200px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    background-color: #e9f7f4;
+}
+
+.info-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #075E54;
+}
+
+.info-card-title {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.info-card-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+.info-group {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.info-item {
+    margin-bottom: 0.75rem;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #6c757d;
+    display: inline-block;
+    width: 100px;
+}
+
+.info-value {
+    color: #212529;
+}
+
+.status-badge {
+    padding: 0.35rem 0.65rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+}
+
+.status-badge.status-paid {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.status-badge.status-pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.status-badge.status-expired {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Seat map styles - specific to admin-viewbooking */
+.admin-viewbooking .seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.admin-viewbooking .seat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.admin-viewbooking .row-label {
+    width: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.admin-viewbooking .seat-container {
+    margin: 4px;
+}
+
+.admin-viewbooking .seat {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    background-color: #e9ecef;
+    color: #212529;
+    font-size: 0.8rem;
+    position: relative;
+}
+
+.admin-viewbooking .seat.standard {
+    background-color: #AED6F1;
+    color: #154360;
+}
+
+.admin-viewbooking .seat.vip {
+    background-color: #F9E79F;
+    color: #7D6608;
+}
+
+.admin-viewbooking .seat.premium {
+    background-color: #D7BDE2;
+    color: #4A235A;
+}
+
+.admin-viewbooking .seat.booked {
+    background-color: #e0e0e0;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.admin-viewbooking .seat.selected {
+    background-color: #075E54;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(7, 94, 84, 0.5);
+    z-index: 1;
+}
+
+.admin-viewbooking .seat-number {
+    position: absolute;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.admin-viewbooking .seat-legend {
+    margin-bottom: 20px;
+}
+
+.admin-viewbooking .screen {
+    width: 80%;
+    height: 30px;
+    background-color: #eee;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    transform: perspective(100px) rotateX(-5deg);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+}
+
+.back-button {
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-button i {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .booking-header {
+        padding: 1.5rem;
+    }
+    
+    .booking-title {
+        font-size: 1.8rem;
+    }
+    
+    .booking-content {
+        padding: 1.5rem;
+    }
+    
+    .info-card {
+        min-width: 100%;
+    }
+    
+    .info-label {
+        width: 80px;
+    }
+}

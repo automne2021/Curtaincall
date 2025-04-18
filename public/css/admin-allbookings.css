@@ -1,0 +1,57 @@
+/* Bookings management specific styles */
+.booking-id {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    color: #075E54;
+    font-size: 0.9rem;
+}
+
+/* Status badge styles */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.status-badge.status-paid {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.status-badge.status-pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.status-badge.status-expired {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Special hover effect for booking rows */
+#bookingsTable tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(7, 94, 84, 0.1);
+    background-color: rgba(175, 227, 206, 0.1) !important;
+}
+
+/* Animation for status badges */
+.status-badge {
+    transition: all 0.3s ease;
+}
+
+#bookingsTable tbody tr:hover .status-badge.status-paid {
+    background-color: rgba(25, 135, 84, 0.2);
+}
+
+#bookingsTable tbody tr:hover .status-badge.status-pending {
+    background-color: rgba(255, 193, 7, 0.2);
+}
+
+#bookingsTable tbody tr:hover .status-badge.status-expired {
+    background-color: rgba(220, 53, 69, 0.2);
+}

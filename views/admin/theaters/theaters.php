@@ -32,6 +32,10 @@
                                 <td class="theater-title"><?= htmlspecialchars($theater['name']) ?></td>
                                 <td><?= htmlspecialchars($theater['location']) ?></td>
                                 <td class="text-center action-buttons">
+                                    <a href="<?= BASE_URL ?>index.php?route=admin/viewTheater&id=<?= $theater['theater_id'] ?>" 
+                                        class="btn btn-icon btn-view" data-bs-toggle="tooltip" title="View">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
                                     <a href="<?= BASE_URL ?>index.php?route=admin/editTheater&id=<?= $theater['theater_id'] ?>" 
                                     class="btn btn-icon btn-edit" data-bs-toggle="tooltip" title="Edit">
                                         <i class="bi bi-pencil"></i>

@@ -1,0 +1,85 @@
+/* User management specific styles */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: #adb5bd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.user-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.user-email {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+.created-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+#usersTable tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(7, 94, 84, 0.1);
+    background-color: rgba(175, 227, 206, 0.1) !important;
+}
+
+.user-role {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.role-admin {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.role-user {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+.user-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.user-filter .btn {
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.user-filter .btn.active {
+    background-color: #075E54;
+    color: white;
+}
