@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 17, 2025 lúc 01:23 PM
+-- Thời gian đã tạo: Th4 18, 2025 lúc 01:59 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -89,30 +89,30 @@ CREATE TABLE `plays` (
 --
 
 INSERT INTO `plays` (`play_id`, `title`, `description`, `image`, `theater_id`, `views`) VALUES
-('IDE00', 'Nhà Hát Kịch IDECAF: Đức Thượng Công Tả Quân LÊ VĂN DUYỆT', '...', 'public\\images\\plays\\LeVanDuyet.jpg', 'IDE', 0),
-('IDE01', 'Nhà Hát Kịch IDECAF: Một Ngày Làm VUA', '- Tác giả: Viễn Hùng\r\n-\nĐạo diễn: Hùng Lâm - Đình Toàn\n- Diễn viên: Đình Toàn, Quốc Thịnh, Quang Thảo, Đại Nghĩa, Hồng Ánh, Mỹ Duyên, Cẩm Hò, Bạch Long, Tâm Anh, Quốc Tuấn, Bảo Cường, Phước Lộc, Thái Hiển, Trúc My, Hoài Trang, Phạm Hạnh, Bích Trâm.', 'public\\images\\plays\\MotNgayLamVua.jpg', 'IDE', 0),
-('IDE02', 'Nhà Hát Kịch IDECAF: VÀNG ơi là VÀNG!', '...', 'public\\images\\plays\\VANG.jpg', 'IDE', 0),
-('IDE03', 'Nhà Hát Kịch IDECAF: 12 Bà Mụ', '...', 'public\\images\\plays\\12BaMu.jpg', 'IDE', 0),
-('IDE04', 'Nhà Hát Kịch IDECAF: LƯƠNG SƠN BÁ CHÚC ANH ĐÀI ngoại truyện', 'Tác giả: Trung Tín\r\nĐạo diễn: Đình Toàn\r\nDiễn viên: Đình Toàn - Trà Ngọc - Đại Nghĩa - Đông Hải - Cẩm Hò - Trịnh Minh Dũng - Quang Thảo - Mỹ Duyên - Quốc Tuấn - Phi Nga - Tâm Anh - Quách Bình - Trung Tín - Mai Phượng - Thiên Trang - Việt Trang.', 'public\\images\\plays\\LuongSonBa.jpg', 'IDE', 0),
-('IDE05', 'Nhà Hát Kịch IDECAF: TẤM CÁM ĐẠI CHIẾN!', '- Tác giả: Bảo Ngọc - Hùng Lâm\n- Đạo diễn: Hùng Lâm\n- Diễn viên: Đình Toàn, Đại Nghĩa, Tuyền Mập, Mỹ Duyên, Hòa Hiệp, Bạch Long, Trịnh Minh Dũng, Đông Hải, Tâm Anh, Mai Phượng, Thiên Trang, Cẩm Hò, Việt Trang và Nhà Hát Thiếu Nhi Nụ Cười', 'public\\images\\plays\\TamCamDaiChien.jpg', 'IDE', 0),
-('IDE06', 'Nhà Hát Kịch IDECAF: THUỐC ĐẮNG GIÃ TẬT', '...', 'public\\images\\plays\\ThuocDangGiaTat.jpg', 'IDE', 0),
-('IDE07', 'Nhà Hát Kịch IDECAF: Dưới Bóng Giai Nhân', '...', 'public\\images\\plays\\DuoiBongGiaiNhan.jpg', 'IDE', 0),
-('IDE08', 'Nhà Hát Kịch IDECAF: Cái gì Vui Vẻ thì mình Ưu Tiên', '...', 'public\\images\\plays\\CaigiVUIVE.jpg', 'IDE', 0),
-('SKN00', 'Sân khấu 5B : Kịch thiếu nhi \"ĐẠI NÁO LONG CUNG\"', '..', 'public\\images\\plays\\DaiNaoLongCung.jpg', 'SKN', 0),
-('SKN01', 'Sân khấu 5B : Kịch thiếu nhi \"CÂY BÚT THẦN\"', '...', 'public\\images\\plays\\CayButThan.jpg', 'SKN', 0),
-('SKN02', 'Sân khấu 5B : Kịch thiếu nhi \"TRẠM CỨU HỘ ĐỘNG VẬT\"', '...', 'public\\images\\plays\\TramCuuHoDV.jpg', 'SKN', 0),
-('THM00', 'SKNT TRƯƠNG HÙNG MINH : CẦU DỪA ĐỦ XÀI', '...', 'public\\images\\plays\\CauDuaDuXai.jpg', 'THM', 0),
-('THM01', 'SKNT TRƯƠNG HÙNG MINH : NGÀY MAI NGƯỜI TA LẤY CHỒNG', '...', 'public\\images\\plays\\NgtaLayChong.jpg', 'THM', 0),
-('THM02', 'SKNT TRƯƠNG HÙNG MINH : BỖNG DƯNG TRÚNG SỐ', '...', 'public\\images\\plays\\BongDungTrungSo.jpg', 'THM', 0),
-('THN00', '[Nhà hát Thanh Niên] Hài Kịch: Đại Minh Tinh', '...', 'public\\images\\plays\\DaiMinhTinh.jpg', 'THN', 0),
-('THN01', '[Nhà Hát THANH NIÊN] Hài Kịch: Đại Hội Yêu Quái - 7 Con Yêu Nhền Nhện', '...', 'public\\images\\plays\\7NhenNhen.jpg', 'THN', 0),
-('THN02', '[Nhà Hát THANH NIÊN] Hài kịch: Thanh Xà Bạch Xà ngoại truyện', '...', 'public\\images\\plays\\ThanhXaBachXa.jpg', 'THN', 0),
-('THN03', '[Nhà Hát THANH NIÊN] Hài kịch: Lạc lối ở BangKok', '- Tác giả: Nguyễn Bảo Ngọc\n- Đạo diễn: Hồng Ngọc\n- Diễn viên: Khương Ngọc, BB Trần, Ngọc Phước, Tuấn Kiệt, Long Chun, Bé 7, Mai Bảo Vinh, Duy Tiến, Huỳnh Thi, Tạ Lâm, Vương Chí Nam, Mạnh Lân, Phạm Gia Minh...', 'public\\images\\plays\\LacLoiBangkok.jpg', 'THN', 0),
-('THN04', '[Nhà hát Thanh Niên] Hài Kịch: Tung Hoành Pattaya', 'Tác giả: Nguyễn Duy Xăng - Hiếu Nghĩa - Long Duy\nĐạo diễn:  Hồng Ngọc\nDiễn viên: Huỳnh Nhựt, Hải Triều, Tuấn Kiệt, Mai Bảo Vinh, Long Chun, Bé 7, Giỏi Lee, Duy Tiến, Huỳnh Thi, Huyền Duy, Lê Nghĩa và Khương Ngọc.', 'public\\images\\plays\\TungHoanhPattaya.jpg', 'THN', 0),
-('THĐ00', 'SÂN KHẤU THIÊN ĐĂNG - VỞ KỊCH: CÔ GIÁO DUYÊN', '...', 'public\\images\\plays\\CoGiaoDuyen.jpg', 'THĐ', 0),
-('THĐ01', 'SÂN KHẤU THIÊN ĐĂNG: NGŨ QUÝ TƯƠNG PHÙNG', 'Sân khấu Nghệ Thuật Thiên Đăng trân trọng giới thiệu đến quý khán giả vở hài kịch dân gian\n\"NGŨ QUÝ TƯƠNG PHÙNG\"   -- Phiên Bản Mới Nhất --\n\nTác giả: TUẤN KHÔI - HƯƠNG GIANG\nĐạo diễn: TUẤN KHÔI\nVới sự tham gia của các nghệ sĩ: NSƯT THÀNH LỘC, NSƯT HỮU CHÂU, LƯƠNG THẾ THÀNH, HƯƠNG GIANG, HUY TỨ, TRƯƠNG HẠ, QUỐC TRUNG, KIỀU NGÂN, TRANG TUYỀN, MẠNH HÙNG, HOÀNG KHANH\n\nTrân trọng kính mời quý khán giả.\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.', 'public\\images\\plays\\NguQuyTuongPhung.jpg', 'THĐ', 0),
-('THĐ02', 'SÂN KHẤU THIÊN ĐĂNG: CHUYẾN ĐÒ ĐỊNH MỆNH', 'Sân khấu Kịch Thiên Đăng trân trọng giới thiệu vở diễn MỚI NHẨT\r\n\"CHUYẾN ĐÒ ĐỊNH MỆNH\"\nTác phẩm mới được dàn dựng bởi Đạo diễn - Nhà Giáo - NSND TRẦN MINH NGỌC\r\nTác giả : NGUYỄN HUY THIỆP\n\nVới sự tham gia của các diễn viên: NSUT THÀNH LỘC - NSUT HỮU CHÂU - NSƯT MẠNH HÙNG\nCác diễn viên: HƯƠNG GIANG, TRANG TUYỀN, LƯƠNG THẾ THÀNH, HỒNG NGỌC, HOÀNG KHANH\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.\n\nTrân trọng kính mời quý khách!', 'public\\images\\plays\\ChuyenDoDM.jpg', 'THĐ', 0),
-('THĐ03', 'SÂN KHẤU THIÊN ĐĂNG: NHỮNG CON MA NHÀ HÁT', '...', 'public\\images\\plays\\MaNhaHat.jpg', 'THĐ', 0);
+('IDE00', 'Đức Thượng Công Tả Quân LÊ VĂN DUYỆT', 'SÂN KHẤU SỬ VIỆT HỌC ĐƯỜNG\r\n\r\n<b>ĐỨC THƯỢNG CÔNG TẢ QUÂN LÊ VĂN DUYỆT\r\n\r\n-------- NGƯỜI MANG 9 ÁN TỬ --------</b>\r\n\r\n- Tác giả: <b>Phạm Văn Quý</b>\r\n\r\n- Đạo diễn: <b>Hoàng Duẩn</b>\r\n\r\n- Diễn viên: <b>Đình Toàn, Đại Nghĩa, Quang Thảo, Hoàng Trinh, Mỹ Duyên, Quốc Thịnh, Hòa Hiệp, Đông Hải, Kan Lê, Quốc Tuấn, Tâm Anh, Công Tôn Nghĩa, Trúc My, Bảo Cường, Hồng Phước, Phương Nguyễn, Thanh Anh, Phạm Hùng và Nhà Hát Thiếu Nhi NỤ CƯỜI.</b>', 'public\\images\\plays\\LeVanDuyet.jpg', 'IDE', 0),
+('IDE01', 'Một Ngày Làm VUA', '- Tác giả: Viễn Hùng\r\n-\nĐạo diễn: Hùng Lâm - Đình Toàn\n- Diễn viên: Đình Toàn, Quốc Thịnh, Quang Thảo, Đại Nghĩa, Hồng Ánh, Mỹ Duyên, Cẩm Hò, Bạch Long, Tâm Anh, Quốc Tuấn, Bảo Cường, Phước Lộc, Thái Hiển, Trúc My, Hoài Trang, Phạm Hạnh, Bích Trâm.', 'public\\images\\plays\\MotNgayLamVua.jpg', 'IDE', 0),
+('IDE02', 'VÀNG ơi là VÀNG!', '...', 'public\\images\\plays\\VANG.jpg', 'IDE', 0),
+('IDE03', '12 Bà Mụ', '...', 'public\\images\\plays\\12BaMu.jpg', 'IDE', 0),
+('IDE04', 'LƯƠNG SƠN BÁ CHÚC ANH ĐÀI ngoại truyện', 'Tác giả: Trung Tín\r\nĐạo diễn: Đình Toàn\r\nDiễn viên: Đình Toàn - Trà Ngọc - Đại Nghĩa - Đông Hải - Cẩm Hò - Trịnh Minh Dũng - Quang Thảo - Mỹ Duyên - Quốc Tuấn - Phi Nga - Tâm Anh - Quách Bình - Trung Tín - Mai Phượng - Thiên Trang - Việt Trang.', 'public\\images\\plays\\LuongSonBa.jpg', 'IDE', 0),
+('IDE05', 'TẤM CÁM ĐẠI CHIẾN!', '- Tác giả: Bảo Ngọc - Hùng Lâm\n- Đạo diễn: Hùng Lâm\n- Diễn viên: Đình Toàn, Đại Nghĩa, Tuyền Mập, Mỹ Duyên, Hòa Hiệp, Bạch Long, Trịnh Minh Dũng, Đông Hải, Tâm Anh, Mai Phượng, Thiên Trang, Cẩm Hò, Việt Trang và Nhà Hát Thiếu Nhi Nụ Cười', 'public\\images\\plays\\TamCamDaiChien.jpg', 'IDE', 0),
+('IDE06', 'THUỐC ĐẮNG GIÃ TẬT', '...', 'public\\images\\plays\\ThuocDangGiaTat.jpg', 'IDE', 0),
+('IDE07', 'Dưới Bóng Giai Nhân', '...', 'public\\images\\plays\\DuoiBongGiaiNhan.jpg', 'IDE', 0),
+('IDE08', 'Cái gì Vui Vẻ thì mình Ưu Tiên', '<i style=\"font-size:20px\">Cái gì <b>Vui Vẻ</b> thì mình <b>Ưu Tiên</b></i><br><br>\r\n\r\nTác giả và Đạo diễn: <b>Tâm Anh</b><br>\r\nDiễn viên: <b>Quang Thảo, Hoàng Trinh, Thanh Thủy, Quốc Thịnh, Đình Toàn, Hồng Ánh, Đại Nghĩa, Ngọc Nguyên, Tuyền Mập, Cẩm Hò, Hữu Đạt, Kan Lê, Minh Sang, Trúc My, Kim Thanh.</b>', 'public\\images\\plays\\CaigiVUIVE.jpg', 'IDE', 0),
+('SKN00', 'Kịch thiếu nhi \"ĐẠI NÁO LONG CUNG\"', '..', 'public\\images\\plays\\DaiNaoLongCung.jpg', 'SKN', 0),
+('SKN01', 'Kịch thiếu nhi \"CÂY BÚT THẦN\"', '...', 'public\\images\\plays\\CayButThan.jpg', 'SKN', 0),
+('SKN02', 'Kịch thiếu nhi \"TRẠM CỨU HỘ ĐỘNG VẬT\"', '...', 'public\\images\\plays\\TramCuuHoDV.jpg', 'SKN', 0),
+('THM00', 'CẦU DỪA ĐỦ XÀI', '...', 'public\\images\\plays\\CauDuaDuXai.jpg', 'THM', 0),
+('THM01', 'NGÀY MAI NGƯỜI TA LẤY CHỒNG', '...', 'public\\images\\plays\\NgtaLayChong.jpg', 'THM', 0),
+('THM02', 'BỖNG DƯNG TRÚNG SỐ', '...', 'public\\images\\plays\\BongDungTrungSo.jpg', 'THM', 0),
+('THN00', 'Đại Minh Tinh', '...', 'public\\images\\plays\\DaiMinhTinh.jpg', 'THN', 0),
+('THN01', 'Đại Hội Yêu Quái - 7 Con Yêu Nhền Nhện', '...', 'public\\images\\plays\\7NhenNhen.jpg', 'THN', 0),
+('THN02', 'Thanh Xà Bạch Xà ngoại truyện', '...', 'public\\images\\plays\\ThanhXaBachXa.jpg', 'THN', 0),
+('THN03', 'Lạc lối ở BangKok', '- Tác giả: Nguyễn Bảo Ngọc\n- Đạo diễn: Hồng Ngọc\n- Diễn viên: Khương Ngọc, BB Trần, Ngọc Phước, Tuấn Kiệt, Long Chun, Bé 7, Mai Bảo Vinh, Duy Tiến, Huỳnh Thi, Tạ Lâm, Vương Chí Nam, Mạnh Lân, Phạm Gia Minh...', 'public\\images\\plays\\LacLoiBangkok.jpg', 'THN', 0),
+('THN04', 'Tung Hoành Pattaya', 'Tác giả: Nguyễn Duy Xăng - Hiếu Nghĩa - Long Duy\nĐạo diễn:  Hồng Ngọc\nDiễn viên: Huỳnh Nhựt, Hải Triều, Tuấn Kiệt, Mai Bảo Vinh, Long Chun, Bé 7, Giỏi Lee, Duy Tiến, Huỳnh Thi, Huyền Duy, Lê Nghĩa và Khương Ngọc.', 'public\\images\\plays\\TungHoanhPattaya.jpg', 'THN', 0),
+('THĐ00', 'CÔ GIÁO DUYÊN', '...', 'public\\images\\plays\\CoGiaoDuyen.jpg', 'THĐ', 0),
+('THĐ01', 'NGŨ QUÝ TƯƠNG PHÙNG', 'Sân khấu Nghệ Thuật Thiên Đăng trân trọng giới thiệu đến quý khán giả vở hài kịch dân gian\n\"NGŨ QUÝ TƯƠNG PHÙNG\"   -- Phiên Bản Mới Nhất --\n\nTác giả: TUẤN KHÔI - HƯƠNG GIANG\nĐạo diễn: TUẤN KHÔI\nVới sự tham gia của các nghệ sĩ: NSƯT THÀNH LỘC, NSƯT HỮU CHÂU, LƯƠNG THẾ THÀNH, HƯƠNG GIANG, HUY TỨ, TRƯƠNG HẠ, QUỐC TRUNG, KIỀU NGÂN, TRANG TUYỀN, MẠNH HÙNG, HOÀNG KHANH\n\nTrân trọng kính mời quý khán giả.\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.', 'public\\images\\plays\\NguQuyTuongPhung.jpg', 'THĐ', 0),
+('THĐ02', 'CHUYẾN ĐÒ ĐỊNH MỆNH', 'Sân khấu Kịch Thiên Đăng trân trọng giới thiệu vở diễn MỚI NHẨT\r\n\"CHUYẾN ĐÒ ĐỊNH MỆNH\"\nTác phẩm mới được dàn dựng bởi Đạo diễn - Nhà Giáo - NSND TRẦN MINH NGỌC\r\nTác giả : NGUYỄN HUY THIỆP\n\nVới sự tham gia của các diễn viên: NSUT THÀNH LỘC - NSUT HỮU CHÂU - NSƯT MẠNH HÙNG\nCác diễn viên: HƯƠNG GIANG, TRANG TUYỀN, LƯƠNG THẾ THÀNH, HỒNG NGỌC, HOÀNG KHANH\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.\n\nTrân trọng kính mời quý khách!', 'public\\images\\plays\\ChuyenDoDM.jpg', 'THĐ', 0),
+('THĐ03', 'NHỮNG CON MA NHÀ HÁT', '...', 'public\\images\\plays\\MaNhaHat.jpg', 'THĐ', 0);
 
 -- --------------------------------------------------------
 

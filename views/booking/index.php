@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-primary text-white">
@@ -32,12 +32,12 @@
                     <?php else: ?>
                         <form action="index.php?route=booking/selectSeats" method="POST">
                             <input type="hidden" name="play_id" value="<?= $play['play_id'] ?>">
-                            
+
                             <div class="form-group mb-4">
                                 <label for="schedule" class="form-label">Select Date and Time:</label>
                                 <select name="schedule_date" id="schedule_date" class="form-select mb-3" required>
                                     <option value="">Select a date</option>
-                                    <?php 
+                                    <?php
                                     $dates = [];
                                     foreach ($schedules as $schedule) {
                                         $date = $schedule['date'];
@@ -49,7 +49,7 @@
                                     }
                                     ?>
                                 </select>
-                                
+
                                 <div id="time-slots" class="d-none">
                                     <?php foreach ($dates as $date): ?>
                                         <div class="time-slot" data-date="<?= $date ?>">
@@ -57,12 +57,12 @@
                                             <div class="btn-group d-flex flex-wrap" role="group">
                                                 <?php foreach ($schedules as $schedule): ?>
                                                     <?php if ($schedule['date'] === $date): ?>
-                                                        <input type="radio" class="btn-check" name="schedule_time" 
-                                                            id="time_<?= $schedule['start_time'] ?>" 
+                                                        <input type="radio" class="btn-check" name="schedule_time"
+                                                            id="time_<?= $schedule['start_time'] ?>"
                                                             value="<?= $schedule['start_time'] ?>" required>
-                                                        <label class="btn btn-outline-primary mb-2 me-2" 
+                                                        <label class="btn btn-outline-primary mb-2 me-2"
                                                             for="time_<?= $schedule['start_time'] ?>">
-                                                            <?= date('g:i A', strtotime($schedule['start_time'])) ?> - 
+                                                            <?= date('g:i A', strtotime($schedule['start_time'])) ?> -
                                                             <?= date('g:i A', strtotime($schedule['end_time'])) ?>
                                                         </label>
                                                     <?php endif; ?>
@@ -72,7 +72,7 @@
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
+
                             <div class="d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary">Continue to Select Seats</button>
                             </div>
@@ -85,30 +85,30 @@
 </main>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const dateSelect = document.getElementById('schedule_date');
-    const timeSlots = document.getElementById('time-slots');
-    
-    dateSelect.addEventListener('change', function() {
-        const selectedDate = this.value;
-        
-        if (selectedDate) {
-            // Show the time-slots div
-            timeSlots.classList.remove('d-none');
-            
-            // Hide all time slot divs
-            document.querySelectorAll('.time-slot').forEach(slot => {
-                slot.style.display = 'none';
-            });
-            
-            // Show only the time slot div for the selected date
-            const selectedSlot = document.querySelector(`.time-slot[data-date="${selectedDate}"]`);
-            if (selectedSlot) {
-                selectedSlot.style.display = 'block';
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateSelect = document.getElementById('schedule_date');
+        const timeSlots = document.getElementById('time-slots');
+
+        dateSelect.addEventListener('change', function() {
+            const selectedDate = this.value;
+
+            if (selectedDate) {
+                // Show the time-slots div
+                timeSlots.classList.remove('d-none');
+
+                // Hide all time slot divs
+                document.querySelectorAll('.time-slot').forEach(slot => {
+                    slot.style.display = 'none';
+                });
+
+                // Show only the time slot div for the selected date
+                const selectedSlot = document.querySelector(`.time-slot[data-date="${selectedDate}"]`);
+                if (selectedSlot) {
+                    selectedSlot.style.display = 'block';
+                }
+            } else {
+                timeSlots.classList.add('d-none');
             }
-        } else {
-            timeSlots.classList.add('d-none');
-        }
+        });
     });
-});
 </script>
