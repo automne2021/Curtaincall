@@ -5,7 +5,7 @@
     --success-color: #198754;
     --danger-color: #dc3545;
     --sidebar-width: 250px;
-    --sidebar-collapsed-width: 80px;
+    --sidebar-collapsed-width: 100px;
     --header-height: 60px;
     --footer-height: 40px;
     --accent-color: #AFE3CE;
@@ -63,8 +63,8 @@ body {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: #075E54;
-    color: #fff;
+    background: #fff;
+    color: #075E54;
     transition: all 0.3s;
 }
 
@@ -74,9 +74,10 @@ body {
 
 .sidebar-header {
     padding: 20px;
-    background: #064941;
+    background: #075E54;
     text-align: center;
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
 }
 
 .sidebar-header h3 {
@@ -103,23 +104,26 @@ body {
 .sidebar ul li a {
     padding: 10px 20px;
     display: block;
-    color: rgba(255,255,255,0.8);
+    color: #075E54;
     text-decoration: none;
     transition: all 0.3s;
     border-left: 4px solid transparent;
+    font-weight: 500;
 }
 
 .sidebar ul li a i {
     margin-right: 10px;
     width: 25px;
     text-align: center;
+    color: #075E54
 }
 
 .sidebar ul li.active > a, 
 .sidebar ul li > a:hover {
-    color: #fff;
-    background: rgba(255,255,255,0.1);
-    border-left: 4px solid var(--accent-color);
+    color: #075E54; 
+    background: rgba(7, 94, 84, 0.1); 
+    border-left: 4px solid #075E54; 
+    font-weight: 700;
 }
 
 .sidebar.collapsed .sidebar-header h3,

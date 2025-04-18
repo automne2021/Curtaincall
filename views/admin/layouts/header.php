@@ -8,7 +8,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="public/css/admin.css" rel="stylesheet">
     <link href="public/css/admin-dashboard.css" rel="stylesheet">
+    <link href="public/css/pagination.css" rel="stylesheet">
+    <link href="public/css/admin-allplays.css" rel="stylesheet">
     <link rel="shortcut icon" href="public/images/favicon.ico" type="image/x-icon">
+
+    <?php
+    $current_route = $_GET['route'] ?? '';
+    // Include the CKEditor initialization script on pages that use rich text editing
+    if (strpos($current_route, 'createPlay') !== false || 
+        strpos($current_route, 'editPlay') !== false || 
+        strpos($current_route, 'createTheater') !== false || 
+        strpos($current_route, 'editTheater') !== false):
+    ?>
+    <script src="<?= BASE_URL ?>public/js/ckeditor-init.js"></script>
+    <?php endif; ?>
+</head>
 </head>
 <body>
     <div class="admin-wrapper">

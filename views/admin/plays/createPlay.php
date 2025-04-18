@@ -20,6 +20,19 @@
                 </div>
                 
                 <div class="col-md-6 mb-3">
+                    <label for="play_id" class="form-label">Play ID <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control <?= isset($_SESSION['form_errors']['play_id']) ? 'is-invalid' : '' ?>" 
+                           id="play_id" name="play_id" placeholder="e.g. IDE09" 
+                           value="<?= htmlspecialchars($_SESSION['form_data']['play_id'] ?? '') ?>" required>
+                    <small class="form-text text-muted">Format should match existing IDs (e.g., IDE09, THN05)</small>
+                    <?php if (isset($_SESSION['form_errors']['play_id'])): ?>
+                        <div class="invalid-feedback"><?= $_SESSION['form_errors']['play_id'] ?></div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
                     <label for="theater_id" class="form-label">Theater <span class="text-danger">*</span></label>
                     <select class="form-control <?= isset($_SESSION['form_errors']['theater_id']) ? 'is-invalid' : '' ?>" 
                             id="theater_id" name="theater_id" required>
@@ -35,18 +48,6 @@
                         <div class="invalid-feedback"><?= $_SESSION['form_errors']['theater_id'] ?></div>
                     <?php endif; ?>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="duration" class="form-label">Duration (minutes) <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control <?= isset($_SESSION['form_errors']['duration']) ? 'is-invalid' : '' ?>" 
-                           id="duration" name="duration" min="1" 
-                           value="<?= htmlspecialchars($_SESSION['form_data']['duration'] ?? '') ?>" required>
-                    <?php if (isset($_SESSION['form_errors']['duration'])): ?>
-                        <div class="invalid-feedback"><?= $_SESSION['form_errors']['duration'] ?></div>
-                    <?php endif; ?>
-                </div>
                 
                 <div class="col-md-6 mb-3">
                     <label for="image" class="form-label">Play Image</label>
@@ -59,25 +60,52 @@
                     <div id="imagePreviewContainer"></div>
                 </div>
             </div>
-            
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="director" class="form-label">Director</label>
-                    <input type="text" class="form-control" id="director" name="director" 
-                           value="<?= htmlspecialchars($_SESSION['form_data']['director'] ?? '') ?>">
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Schedule Information</h5>
                 </div>
-                
-                <div class="col-md-6 mb-3">
-                    <label for="cast" class="form-label">Cast</label>
-                    <input type="text" class="form-control" id="cast" name="cast" 
-                           value="<?= htmlspecialchars($_SESSION['form_data']['cast'] ?? '') ?>">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control <?= isset($_SESSION['form_errors']['date']) ? 'is-invalid' : '' ?>" 
+                                id="date" name="date" 
+                                value="<?= htmlspecialchars($_SESSION['form_data']['date'] ?? '') ?>" required>
+                            <?php if (isset($_SESSION['form_errors']['date'])): ?>
+                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['date'] ?></div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="start_time" class="form-label">Start Time <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control <?= isset($_SESSION['form_errors']['start_time']) ? 'is-invalid' : '' ?>" 
+                                id="start_time" name="start_time" 
+                                value="<?= htmlspecialchars($_SESSION['form_data']['start_time'] ?? '') ?>" required>
+                            <?php if (isset($_SESSION['form_errors']['start_time'])): ?>
+                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['start_time'] ?></div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="end_time" class="form-label">End Time <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control <?= isset($_SESSION['form_errors']['end_time']) ? 'is-invalid' : '' ?>" 
+                                id="end_time" name="end_time" 
+                                value="<?= htmlspecialchars($_SESSION['form_data']['end_time'] ?? '') ?>" required>
+                            <?php if (isset($_SESSION['form_errors']['end_time'])): ?>
+                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['end_time'] ?></div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="mb-3">
                 <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
-                <textarea class="form-control <?= isset($_SESSION['form_errors']['description']) ? 'is-invalid' : '' ?>" 
-                          id="description" name="description" rows="5" required><?= htmlspecialchars($_SESSION['form_data']['description'] ?? '') ?></textarea>
+                <textarea class="form-control ckeditor <?= isset($_SESSION['form_errors']['description']) ? 'is-invalid' : '' ?>" 
+                        id="description" name="description" rows="10" 
+                        data-placeholder="Enter play description here..."
+                        required><?= htmlspecialchars($_SESSION['form_data']['description'] ?? '') ?></textarea>
                 <?php if (isset($_SESSION['form_errors']['description'])): ?>
                     <div class="invalid-feedback"><?= $_SESSION['form_errors']['description'] ?></div>
                 <?php endif; ?>
@@ -91,6 +119,34 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate duration automatically when start or end times change
+    const startTimeInput = document.getElementById('start_time');
+    const endTimeInput = document.getElementById('end_time');
+    
+    function updateDuration() {
+        if (startTimeInput.value && endTimeInput.value) {
+            const startParts = startTimeInput.value.split(':');
+            const endParts = endTimeInput.value.split(':');
+            
+            const startMinutes = (parseInt(startParts[0]) * 60) + parseInt(startParts[1]);
+            const endMinutes = (parseInt(endParts[0]) * 60) + parseInt(endParts[1]);
+            
+            // Handle cases where the show goes past midnight
+            const durationMinutes = endMinutes < startMinutes ? 
+                (24 * 60 - startMinutes) + endMinutes : 
+                endMinutes - startMinutes;
+            
+            console.log(`Duration: ${durationMinutes} minutes`);
+        }
+    }
+    
+    startTimeInput.addEventListener('change', updateDuration);
+    endTimeInput.addEventListener('change', updateDuration);
+});
+</script>
 
 <?php
 // Clear form data and errors after displaying them

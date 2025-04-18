@@ -16,7 +16,7 @@ class PlayController
     }
 
     public function index()
-    {
+    {        
         $theater_id = isset($_GET['theater_id']) && $_GET['theater_id'] !== '' ? $_GET['theater_id'] : null;
         $sort_field = isset($_GET['sort']) ? $_GET['sort'] : 'date';
         $sort_dir = isset($_GET['dir']) ? strtolower($_GET['dir']) : 'desc';

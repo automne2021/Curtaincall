@@ -1,12 +1,6 @@
 <main class="container-fluid px-4">
     <?php include 'views/booking/breadcrumb.php'; ?>
     <div class="row">
-        <div class="col-12 mb-4">
-            <h2 class="section-title text-center">Confirm Booking</h2>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card">
                 <div class="card-header bg-primary text-white">

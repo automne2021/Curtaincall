@@ -159,28 +159,23 @@ class Play
     public function createPlay($play_data) {
         try {
             $stmt = $this->conn->prepare("
-                INSERT INTO plays (title, description, theater_id, duration, director, cast, image, created_at) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
+                INSERT INTO plays (play_id, title, description, theater_id, image, views) 
+                VALUES (?, ?, ?, ?, ?, ?)
             ");
             
             $stmt->bind_param(
-                "ssiisss", 
+                "sssssi", 
+                $play_data['play_id'], 
                 $play_data['title'], 
                 $play_data['description'], 
                 $play_data['theater_id'], 
-                $play_data['duration'], 
-                $play_data['director'], 
-                $play_data['cast'], 
-                $play_data['image']
+                $play_data['image'],
+                $play_data['views']
             );
             
             $stmt->execute();
             
-            if ($stmt->affected_rows > 0) {
-                return $stmt->insert_id;
-            }
-            
-            return false;
+            return $stmt->affected_rows > 0;
         } catch (Exception $e) {
             error_log("Error creating play: " . $e->getMessage());
             return false;
@@ -191,19 +186,15 @@ class Play
         try {
             $stmt = $this->conn->prepare("
                 UPDATE plays 
-                SET title = ?, description = ?, theater_id = ?, duration = ?, director = ?, 
-                    cast = ?, image = ?, updated_at = NOW() 
+                SET title = ?, description = ?, theater_id = ?, image = ?
                 WHERE play_id = ?
             ");
             
             $stmt->bind_param(
-                "ssiisssi", 
+                "sssss", 
                 $play_data['title'], 
                 $play_data['description'], 
                 $play_data['theater_id'], 
-                $play_data['duration'], 
-                $play_data['director'], 
-                $play_data['cast'], 
                 $play_data['image'], 
                 $play_data['play_id']
             );
@@ -222,14 +213,19 @@ class Play
             // Begin transaction
             $this->conn->begin_transaction();
             
+            // Delete related seats
+            $seatsStmt = $this->conn->prepare("DELETE FROM seats WHERE play_id = ?");
+            $seatsStmt->bind_param("s", $play_id);
+            $seatsStmt->execute();
+            
             // Delete schedules for this play
             $scheduleStmt = $this->conn->prepare("DELETE FROM schedules WHERE play_id = ?");
-            $scheduleStmt->bind_param("i", $play_id);
+            $scheduleStmt->bind_param("s", $play_id);
             $scheduleStmt->execute();
             
             // Delete the play
             $playStmt = $this->conn->prepare("DELETE FROM plays WHERE play_id = ?");
-            $playStmt->bind_param("i", $play_id);
+            $playStmt->bind_param("s", $play_id);
             $playStmt->execute();
             $result = $playStmt->affected_rows > 0;
             
@@ -269,15 +265,31 @@ class Play
         }
     }
 
-    public function getAllPlays() {
+    public function getAllPlays($page = 1, $per_page = 10) {
         try {
+            // Calculate offset for pagination
+            $offset = ($page - 1) * $per_page;
+            
+            // Query to count total plays
+            $countStmt = $this->conn->prepare("SELECT COUNT(*) as total FROM plays");
+            $countStmt->execute();
+            $total = $countStmt->get_result()->fetch_assoc()['total'];
+            
+            // Modified query to get duration from schedules table with pagination
             $stmt = $this->conn->prepare("
-                SELECT p.*, t.name as theater_name
+                SELECT p.play_id, p.title, p.description, p.image, 
+                       p.theater_id, p.views, 
+                       t.name as theater_name,
+                       TIMEDIFF(s.end_time, s.start_time) as duration
                 FROM plays p
                 LEFT JOIN theaters t ON p.theater_id = t.theater_id
-                ORDER BY p.created_at DESC
+                LEFT JOIN schedules s ON p.play_id = s.play_id
+                GROUP BY p.play_id
+                ORDER BY p.play_id DESC
+                LIMIT ? OFFSET ?
             ");
             
+            $stmt->bind_param("ii", $per_page, $offset);
             $stmt->execute();
             $result = $stmt->get_result();
             
@@ -288,13 +300,49 @@ class Play
             
             $plays = [];
             while ($row = $result->fetch_assoc()) {
-                $plays[] = $row;
+                $duration = 'N/A';
+                if ($row['duration']) {
+                    $time_parts = explode(':', $row['duration']);
+                    if (count($time_parts) === 3) {
+                        $hours = (int)$time_parts[0];
+                        $minutes = (int)$time_parts[1];
+                        $duration = ($hours * 60) + $minutes;
+                    }
+                }
+                
+                $plays[] = [
+                    'play_id' => $row['play_id'],
+                    'title' => $row['title'],
+                    'theater_id' => $row['theater_id'],
+                    'theater_name' => $row['theater_name'],
+                    'duration' => $duration,
+                    'image' => $row['image'],
+                    'description' => $row['description'],
+                    'views' => $row['views']
+                ];
             }
             
-            return $plays;
+            // Return both plays and pagination data
+            return [
+                'plays' => $plays,
+                'pagination' => [
+                    'total' => $total,
+                    'per_page' => $per_page,
+                    'current_page' => $page,
+                    'last_page' => ceil($total / $per_page)
+                ]
+            ];
         } catch (Exception $e) {
             error_log("Error in getAllPlays: " . $e->getMessage());
-            return [];
+            return [
+                'plays' => [],
+                'pagination' => [
+                    'total' => 0,
+                    'per_page' => $per_page,
+                    'current_page' => 1,
+                    'last_page' => 1
+                ]
+            ];
         }
     }
 }

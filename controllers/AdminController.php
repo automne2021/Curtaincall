@@ -6,6 +6,8 @@ class AdminController {
     private $theaterModel;
     private $bookingModel;
     private $userModel;
+    private $scheduleModel;
+    private $seatModel;
     
     public function __construct($conn) {
         require_once 'models/Admin.php';
@@ -13,6 +15,8 @@ class AdminController {
         require_once 'models/Theater.php';
         require_once 'models/Booking.php';
         require_once 'models/User.php';
+        require_once 'models/Schedule.php';
+        require_once 'models/Seat.php';
         
         $this->conn = $conn;
         $this->adminModel = new Admin($conn);
@@ -20,6 +24,8 @@ class AdminController {
         $this->theaterModel = new Theater($conn);
         $this->bookingModel = new Booking($conn);
         $this->userModel = new User($conn);
+        $this->scheduleModel = new Schedule($conn);
+        $this->seatModel = new Seat($conn);
     }
     
     // Helper method to check if admin is logged in
@@ -92,10 +98,17 @@ class AdminController {
     public function plays() {
         $this->checkAdminAuth();
         
-        $plays = $this->playModel->getAllPlays();
+        // Get current page from query string, default to 1 if not set
+        $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+        $per_page = 10;
+        
+        // Get paginated plays
+        $result = $this->playModel->getAllPlays($page, $per_page);
+        $plays = $result['plays'];
+        $pagination = $result['pagination'];
         
         include 'views/admin/layouts/header.php';
-        include 'views/admin/plays/index.php';
+        include 'views/admin/plays/plays.php';
         include 'views/admin/layouts/footer.php';
     }
     
@@ -111,17 +124,41 @@ class AdminController {
                 $errors['title'] = 'Title is required';
             }
             
+            if (empty($_POST['play_id'])) {
+                $errors['play_id'] = 'Play ID is required';
+            } else {
+                // Check if play_id follows the pattern (3 letters followed by 2 digits)
+                if (!preg_match('/^[A-Z]{3}\d{2}$/', $_POST['play_id'])) {
+                    $errors['play_id'] = 'Play ID must follow the pattern: 3 uppercase letters followed by 2 digits (e.g., IDE09)';
+                }
+                
+                // Check if play_id already exists
+                $existingPlay = $this->playModel->getPlayById($_POST['play_id']);
+                if ($existingPlay) {
+                    $errors['play_id'] = 'This Play ID already exists. Please use another one.';
+                }
+            }
+            
             if (empty($_POST['theater_id'])) {
                 $errors['theater_id'] = 'Theater is required';
             }
             
-            if (empty($_POST['duration']) || !is_numeric($_POST['duration'])) {
-                $errors['duration'] = 'Valid duration is required';
+            if (empty($_POST['date'])) {
+                $errors['date'] = 'Date is required';
+            }
+            
+            if (empty($_POST['start_time'])) {
+                $errors['start_time'] = 'Start time is required';
+            }
+            
+            if (empty($_POST['end_time'])) {
+                $errors['end_time'] = 'End time is required';
             }
             
             if (empty($_POST['description'])) {
                 $errors['description'] = 'Description is required';
             }
+            $_POST['description'] = $this->sanitizeHtml($_POST['description']);
             
             // Handle image upload if present
             $image_path = null;
@@ -152,25 +189,66 @@ class AdminController {
             }
             
             if (empty($errors)) {
-                // Prepare play data
-                $play_data = [
-                    'title' => $_POST['title'],
-                    'description' => $_POST['description'],
-                    'theater_id' => $_POST['theater_id'],
-                    'duration' => $_POST['duration'],
-                    'director' => $_POST['director'] ?? null,
-                    'cast' => $_POST['cast'] ?? null,
-                    'image' => $image_path
-                ];
+                // Begin transaction
+                $this->conn->begin_transaction();
                 
-                $play_id = $this->playModel->createPlay($play_data);
-                
-                if ($play_id) {
-                    $_SESSION['success_message'] = 'Play created successfully';
-                    header('Location: index.php?route=admin/plays');
-                    exit;
-                } else {
-                    $_SESSION['error_message'] = 'Error creating play';
+                try {
+                    // Prepare play data - removed director and cast fields
+                    $play_data = [
+                        'play_id' => $_POST['play_id'],
+                        'title' => $_POST['title'],
+                        'description' => $_POST['description'],
+                        'theater_id' => $_POST['theater_id'],
+                        'image' => $image_path,
+                        'views' => 0
+                    ];
+                    
+                    // Create the play
+                    $play_created = $this->playModel->createPlay($play_data);
+                    
+                    if ($play_created) {
+                        // Add schedule
+                        $schedule_data = [
+                            'play_id' => $_POST['play_id'],
+                            'date' => $_POST['date'],
+                            'start_time' => $_POST['start_time'],
+                            'end_time' => $_POST['end_time']
+                        ];
+                        
+                        $schedule_created = $this->scheduleModel->createSchedule($schedule_data);
+                        
+                        if ($schedule_created) {
+                            // Create seats based on theater's seat map
+                            $seat_map = $this->seatModel->getSeatMapByTheater($_POST['theater_id']);
+                            
+                            foreach ($seat_map as $seat) {
+                                $seat_data = [
+                                    'theater_id' => $_POST['theater_id'],
+                                    'play_id' => $_POST['play_id'],
+                                    'seat_id' => $seat['seat_id'],
+                                    'status' => 'Available'
+                                ];
+                                
+                                $this->seatModel->createSeat($seat_data);
+                            }
+                            
+                            // Commit transaction
+                            $this->conn->commit();
+                            
+                            $_SESSION['success_message'] = 'Play created successfully';
+                            header('Location: index.php?route=admin/plays');
+                            exit;
+                        } else {
+                            throw new Exception('Failed to create schedule');
+                        }
+                    } else {
+                        throw new Exception('Failed to create play');
+                    }
+                } catch (Exception $e) {
+                    // Rollback transaction on error
+                    $this->conn->rollback();
+                    
+                    $_SESSION['error_message'] = 'Error creating play: ' . $e->getMessage();
                     
                     // If image was uploaded but DB insert failed, delete the uploaded image
                     if ($image_path && file_exists($image_path)) {
@@ -196,7 +274,7 @@ class AdminController {
         include 'views/admin/plays/createPlay.php';
         include 'views/admin/layouts/footer.php';
     }
-    
+
     // Edit existing play
     public function editPlay() {
         $this->checkAdminAuth();
@@ -215,6 +293,9 @@ class AdminController {
             exit;
         }
         
+        // Get the schedule for this play
+        $schedule = $this->scheduleModel->getScheduleByPlayId($play_id);
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validate form data
             $errors = [];
@@ -227,14 +308,23 @@ class AdminController {
                 $errors['theater_id'] = 'Theater is required';
             }
             
-            if (empty($_POST['duration']) || !is_numeric($_POST['duration'])) {
-                $errors['duration'] = 'Valid duration is required';
+            if (empty($_POST['date'])) {
+                $errors['date'] = 'Date is required';
+            }
+            
+            if (empty($_POST['start_time'])) {
+                $errors['start_time'] = 'Start time is required';
+            }
+            
+            if (empty($_POST['end_time'])) {
+                $errors['end_time'] = 'End time is required';
             }
             
             if (empty($_POST['description'])) {
                 $errors['description'] = 'Description is required';
             }
-            
+            $_POST['description'] = $this->sanitizeHtml($_POST['description']);
+
             // Handle image upload if present
             $image_path = $play['image']; // Keep existing image by default
             if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
@@ -264,33 +354,80 @@ class AdminController {
             }
             
             if (empty($errors)) {
-                // Prepare play data
-                $play_data = [
-                    'play_id' => $play_id,
-                    'title' => $_POST['title'],
-                    'description' => $_POST['description'],
-                    'theater_id' => $_POST['theater_id'],
-                    'duration' => $_POST['duration'],
-                    'director' => $_POST['director'] ?? null,
-                    'cast' => $_POST['cast'] ?? null,
-                    'image' => $image_path
-                ];
+                // Begin transaction
+                $this->conn->begin_transaction();
                 
-                $old_image_path = $play['image'];
-                $success = $this->playModel->updatePlay($play_data);
-                
-                if ($success) {
-                    $_SESSION['success_message'] = 'Play updated successfully';
+                try {
+                    // Prepare play data - removed director and cast fields
+                    $play_data = [
+                        'play_id' => $play_id,
+                        'title' => $_POST['title'],
+                        'description' => $_POST['description'],
+                        'theater_id' => $_POST['theater_id'],
+                        'image' => $image_path
+                    ];
                     
-                    // Delete old image if it was replaced and exists
-                    if ($image_path != $old_image_path && $old_image_path && file_exists($old_image_path)) {
-                        unlink($old_image_path);
+                    $old_image_path = $play['image'];
+                    $theater_changed = $play['theater_id'] != $_POST['theater_id'];
+                    $success = $this->playModel->updatePlay($play_data);
+                    
+                    if ($success) {
+                        // Update schedule
+                        $schedule_data = [
+                            'play_id' => $play_id,
+                            'date' => $_POST['date'],
+                            'start_time' => $_POST['start_time'],
+                            'end_time' => $_POST['end_time']
+                        ];
+                        
+                        if ($schedule) {
+                            // Update existing schedule
+                            $this->scheduleModel->updateSchedule($schedule_data);
+                        } else {
+                            // Create new schedule if none exists
+                            $this->scheduleModel->createSchedule($schedule_data);
+                        }
+                        
+                        // If theater changed, update seats
+                        if ($theater_changed) {
+                            // Delete old seats
+                            $this->seatModel->deleteSeats($play_id);
+                            
+                            // Create new seats based on new theater's seat map
+                            $seat_map = $this->seatModel->getSeatMapByTheater($_POST['theater_id']);
+                            
+                            foreach ($seat_map as $seat) {
+                                $seat_data = [
+                                    'theater_id' => $_POST['theater_id'],
+                                    'play_id' => $play_id,
+                                    'seat_id' => $seat['seat_id'],
+                                    'status' => 'Available'
+                                ];
+                                
+                                $this->seatModel->createSeat($seat_data);
+                            }
+                        }
+                        
+                        // Commit transaction
+                        $this->conn->commit();
+                        
+                        $_SESSION['success_message'] = 'Play updated successfully';
+                        
+                        // Delete old image if it was replaced and exists
+                        if ($image_path != $old_image_path && $old_image_path && file_exists($old_image_path)) {
+                            unlink($old_image_path);
+                        }
+                        
+                        header('Location: index.php?route=admin/plays');
+                        exit;
+                    } else {
+                        throw new Exception('Failed to update play');
                     }
+                } catch (Exception $e) {
+                    // Rollback transaction on error
+                    $this->conn->rollback();
                     
-                    header('Location: index.php?route=admin/plays');
-                    exit;
-                } else {
-                    $_SESSION['error_message'] = 'Error updating play';
+                    $_SESSION['error_message'] = 'Error updating play: ' . $e->getMessage();
                     
                     // If a new image was uploaded but DB update failed, delete the new image
                     if ($image_path != $old_image_path && $image_path && file_exists($image_path)) {
@@ -360,5 +497,23 @@ class AdminController {
         
         header('Location: index.php?route=admin/plays');
         exit;
+    }
+
+    private function sanitizeHtml($html) {
+        // Allow a more comprehensive set of HTML tags that are needed for formatting
+        $allowedTags = '<p><br><h1><h2><h3><h4><h5><h6><strong><b><em><i><u><ul><ol><li><blockquote><table><thead><tbody><tr><td><th><hr><span><div><img><a><code><pre><sup><sub><strike><del><ins>';
+        
+        // First, strip all tags except allowed ones
+        $html = strip_tags($html, $allowedTags);
+        
+        // Remove any potential JavaScript event handlers
+        $html = preg_replace('/on\w+="[^"]*"/', '', $html);
+        $html = preg_replace('/on\w+=\'[^\']*\'/', '', $html);
+        
+        // Remove any src="javascript:" or href="javascript:"
+        $html = preg_replace('/(src|href)\s*=\s*"javascript:[^"]*"/i', '', $html);
+        $html = preg_replace('/(src|href)\s*=\s*\'javascript:[^\']*\'/i', '', $html);
+        
+        return $html;
     }
 }

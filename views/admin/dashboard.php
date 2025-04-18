@@ -3,64 +3,56 @@
 
     <div class="row">
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="dashboard-card">
+            <div class="dashboard-card border-primary">
                 <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-8">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <h6 class="dashboard-stats-title text-primary">Total Plays</h6>
                             <h2 class="dashboard-stats-value"><?= $stats['total_plays'] ?></h2>
                         </div>
-                        <div class="col-4 text-end">
-                            <i class="bi bi-film dashboard-icon"></i>
-                        </div>
+                        <i class="bi bi-film dashboard-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="dashboard-card">
+            <div class="dashboard-card border-success">
                 <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-8">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <h6 class="dashboard-stats-title text-success">Total Bookings</h6>
                             <h2 class="dashboard-stats-value"><?= $stats['total_bookings'] ?></h2>
                         </div>
-                        <div class="col-4 text-end">
-                            <i class="bi bi-journal-check dashboard-icon"></i>
-                        </div>
+                        <i class="bi bi-journal-check dashboard-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="dashboard-card">
+            <div class="dashboard-card border-info">
                 <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-8">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <h6 class="dashboard-stats-title text-info">Total Users</h6>
                             <h2 class="dashboard-stats-value"><?= $stats['total_users'] ?></h2>
                         </div>
-                        <div class="col-4 text-end">
-                            <i class="bi bi-people dashboard-icon"></i>
-                        </div>
+                        <i class="bi bi-people dashboard-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="dashboard-card">
+            <div class="dashboard-card border-warning">
                 <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-8">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <h6 class="dashboard-stats-title text-warning">Monthly Revenue</h6>
                             <h2 class="dashboard-stats-value"><?= number_format($stats['monthly_revenue']) ?> đ</h2>
                         </div>
-                        <div class="col-4 text-end">
-                            <i class="bi bi-currency-dollar dashboard-icon"></i>
-                        </div>
+                        <i class="bi bi-currency-dollar dashboard-icon"></i>
                     </div>
                 </div>
             </div>

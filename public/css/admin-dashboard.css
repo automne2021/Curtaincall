@@ -11,6 +11,8 @@
     transition: all 0.3s ease;
     border: none;
     height: 100%;
+    border-left: 0.25rem solid transparent;
+    overflow: hidden;
 }
 
 .dashboard-card:hover {
@@ -20,6 +22,23 @@
 
 .dashboard-card .card-body {
     padding: 1.5rem;
+}
+
+/* Add these border color classes */
+.dashboard-card.border-primary {
+    border-left-color: #075E54;
+}
+
+.dashboard-card.border-success {
+    border-left-color: #198754;
+}
+
+.dashboard-card.border-info {
+    border-left-color: #0dcaf0;
+}
+
+.dashboard-card.border-warning {
+    border-left-color: #ffc107;
 }
 
 .dashboard-icon {
@@ -42,38 +61,6 @@
     font-weight: 700;
     color: #212529;
     margin-bottom: 0;
-}
-
-.dashboard-stats-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    border: none;
-    height: 100%;
-    border-left: 0.25rem solid transparent;
-    overflow: hidden;
-}
-
-.dashboard-stats-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-stats-card.border-primary {
-    border-left-color: #075E54;
-}
-
-.dashboard-stats-card.border-success {
-    border-left-color: #198754;
-}
-
-.dashboard-stats-card.border-info {
-    border-left-color: #0dcaf0;
-}
-
-.dashboard-stats-card.border-warning {
-    border-left-color: #ffc107;
 }
 
 .data-table .table {

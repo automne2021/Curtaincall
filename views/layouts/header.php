@@ -63,7 +63,7 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
                                                 </a>
                                             </li>
                                         <?php endwhile; ?>
-                                        <?php $theaters_result->data_seek(0); // Reset result pointer 
+                                        <?php $theaters_result->data_seek(0);
                                         ?>
                                     <?php else: ?>
                                         <li><a class="dropdown-item" href="#">Không có nhà hát kịch nào được tìm thấy.</a></li>

@@ -20,6 +20,14 @@
                 </div>
                 
                 <div class="col-md-6 mb-3">
+                    <label for="play_id" class="form-label">Play ID</label>
+                    <input type="text" class="form-control" id="play_id" value="<?= htmlspecialchars($play['play_id']) ?>" readonly>
+                    <small class="form-text text-muted">Play ID cannot be changed</small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
                     <label for="theater_id" class="form-label">Theater <span class="text-danger">*</span></label>
                     <select class="form-control <?= isset($_SESSION['form_errors']['theater_id']) ? 'is-invalid' : '' ?>" 
                             id="theater_id" name="theater_id" required>
@@ -34,24 +42,12 @@
                         <div class="invalid-feedback"><?= $_SESSION['form_errors']['theater_id'] ?></div>
                     <?php endif; ?>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="duration" class="form-label">Duration (minutes) <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control <?= isset($_SESSION['form_errors']['duration']) ? 'is-invalid' : '' ?>" 
-                           id="duration" name="duration" min="1" 
-                           value="<?= isset($_SESSION['form_data']['duration']) ? htmlspecialchars($_SESSION['form_data']['duration']) : $play['duration'] ?>" required>
-                    <?php if (isset($_SESSION['form_errors']['duration'])): ?>
-                        <div class="invalid-feedback"><?= $_SESSION['form_errors']['duration'] ?></div>
-                    <?php endif; ?>
-                </div>
                 
                 <div class="col-md-6 mb-3">
                     <label for="image" class="form-label">Play Image</label>
                     <?php if (!empty($play['image'])): ?>
                     <div class="mb-2">
-                        <img src="<?= BASE_URL . $play['image'] ?>" alt="Current Image" id="imagePreview" style="max-height: 150px; max-width: 100%;">
+                        <img src="<?= BASE_URL . $play['image'] ?>" alt="Current Image" id="currentImagePreview" style="max-height: 150px; max-width: 100%;">
                     </div>
                     <?php endif; ?>
                     <input type="file" class="form-control <?= isset($_SESSION['form_errors']['image']) ? 'is-invalid' : '' ?>" 
@@ -63,25 +59,52 @@
                     <div id="imagePreviewContainer"></div>
                 </div>
             </div>
-            
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="director" class="form-label">Director</label>
-                    <input type="text" class="form-control" id="director" name="director" 
-                           value="<?= isset($_SESSION['form_data']['director']) ? htmlspecialchars($_SESSION['form_data']['director']) : htmlspecialchars($play['director'] ?? '') ?>">
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Schedule Information</h5>
                 </div>
-                
-                <div class="col-md-6 mb-3">
-                    <label for="cast" class="form-label">Cast</label>
-                    <input type="text" class="form-control" id="cast" name="cast" 
-                           value="<?= isset($_SESSION['form_data']['cast']) ? htmlspecialchars($_SESSION['form_data']['cast']) : htmlspecialchars($play['cast'] ?? '') ?>">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control <?= isset($_SESSION['form_errors']['date']) ? 'is-invalid' : '' ?>" 
+                                id="date" name="date" 
+                                value="<?= htmlspecialchars($_SESSION['form_data']['date'] ?? $schedule['date'] ?? '') ?>" required>
+                            <?php if (isset($_SESSION['form_errors']['date'])): ?>
+                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['date'] ?></div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="start_time" class="form-label">Start Time <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control <?= isset($_SESSION['form_errors']['start_time']) ? 'is-invalid' : '' ?>" 
+                                id="start_time" name="start_time" 
+                                value="<?= htmlspecialchars($_SESSION['form_data']['start_time'] ?? $schedule['start_time'] ?? '') ?>" required>
+                            <?php if (isset($_SESSION['form_errors']['start_time'])): ?>
+                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['start_time'] ?></div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="end_time" class="form-label">End Time <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control <?= isset($_SESSION['form_errors']['end_time']) ? 'is-invalid' : '' ?>" 
+                                id="end_time" name="end_time" 
+                                value="<?= htmlspecialchars($_SESSION['form_data']['end_time'] ?? $schedule['end_time'] ?? '') ?>" required>
+                            <?php if (isset($_SESSION['form_errors']['end_time'])): ?>
+                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['end_time'] ?></div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="mb-3">
                 <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
-                <textarea class="form-control <?= isset($_SESSION['form_errors']['description']) ? 'is-invalid' : '' ?>" 
-                          id="description" name="description" rows="5" required><?= isset($_SESSION['form_data']['description']) ? htmlspecialchars($_SESSION['form_data']['description']) : htmlspecialchars($play['description']) ?></textarea>
+                <textarea class="form-control ckeditor <?= isset($_SESSION['form_errors']['description']) ? 'is-invalid' : '' ?>" 
+                        id="description" name="description" rows="10" 
+                        data-placeholder="Enter play description here..."
+                        required><?= isset($_SESSION['form_data']['description']) ? $_SESSION['form_data']['description'] : $play['description'] ?></textarea>
                 <?php if (isset($_SESSION['form_errors']['description'])): ?>
                     <div class="invalid-feedback"><?= $_SESSION['form_errors']['description'] ?></div>
                 <?php endif; ?>
@@ -95,6 +118,34 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate duration automatically when start or end times change
+    const startTimeInput = document.getElementById('start_time');
+    const endTimeInput = document.getElementById('end_time');
+    
+    function updateDuration() {
+        if (startTimeInput.value && endTimeInput.value) {
+            const startParts = startTimeInput.value.split(':');
+            const endParts = endTimeInput.value.split(':');
+            
+            const startMinutes = (parseInt(startParts[0]) * 60) + parseInt(startParts[1]);
+            const endMinutes = (parseInt(endParts[0]) * 60) + parseInt(endParts[1]);
+            
+            // Handle cases where the show goes past midnight
+            const durationMinutes = endMinutes < startMinutes ? 
+                (24 * 60 - startMinutes) + endMinutes : 
+                endMinutes - startMinutes;
+            
+            console.log(`Duration: ${durationMinutes} minutes`);
+        }
+    }
+    
+    startTimeInput.addEventListener('change', updateDuration);
+    endTimeInput.addEventListener('change', updateDuration);
+});
+</script>
 
 <?php
 // Clear form data and errors after displaying them

@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initialize tooltips
-    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    if (typeof bootstrap !== 'undefined') {
-        tooltips.forEach(tooltip => {
-            new bootstrap.Tooltip(tooltip);
-        });
+    if (document.querySelector('.action-buttons')) {
+        const actionTooltips = document.querySelectorAll('.action-buttons [data-bs-toggle="tooltip"]');
+        if (typeof bootstrap !== 'undefined' && actionTooltips.length > 0) {
+            actionTooltips.forEach(tooltip => {
+                new bootstrap.Tooltip(tooltip);
+            });
+        }
     }
     
     // Initialize delete confirmation modal
@@ -32,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Handle file input preview for image uploads
     const imageInput = document.getElementById('image');
     const imagePreviewContainer = document.getElementById('imagePreviewContainer');
     
@@ -58,6 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Auto-dismiss alerts after 5 seconds
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+        setTimeout(function() {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }, 5000);
+    });
     
     // Initialize charts on dashboard if they exist
     if (typeof Chart !== 'undefined') {

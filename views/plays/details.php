@@ -61,7 +61,9 @@
     <div class="play-description my-4">
         <h5 class="section-title">Giới thiệu</h5>
         <hr class="section-divider">
-        <p class="description-content"><?= $play['description'] ?></p>
+        <div class="description-content">
+            <?= $play['description'] ?>
+        </div>
     </div>
 
     <?php if (isset($seats_result) && $seats_result->num_rows > 0): ?>

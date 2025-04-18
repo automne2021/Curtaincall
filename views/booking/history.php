@@ -106,27 +106,4 @@
     }, 30000);
     </script>
     <?php endif; ?>
-    
-    <!-- Add payment success toast notification -->
-    <?php if(isset($_GET['payment_success']) && $_GET['payment_success'] == 1): ?>
-    <div class="payment-toast" id="paymentSuccessToast">
-        <div class="toast-header">
-            <p class="toast-title"><i class="bi bi-check-circle-fill"></i> Payment Successful</p>
-            <button type="button" class="close-toast" onclick="document.getElementById('paymentSuccessToast').style.display='none';">&times;</button>
-        </div>
-        <div class="toast-body">
-            Your payment has been processed and your tickets are confirmed!
-        </div>
-    </div>
-
-    <script>
-    // Auto-hide the toast after 5 seconds
-    setTimeout(function() {
-        const toast = document.getElementById('paymentSuccessToast');
-        if (toast) {
-            toast.style.display = 'none';
-        }
-    }, 5000);
-    </script>
-    <?php endif; ?>
 </main>

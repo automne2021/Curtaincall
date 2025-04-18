@@ -12,7 +12,7 @@
                 <img src="<?= $play['image'] ?>" class="card-img-top" alt="<?= htmlspecialchars($play['title']) ?>">
                 <div class="card-body">
                     <h5 class="card-title"><?= htmlspecialchars($play['title']) ?></h5>
-                    <p class="card-text"><?= htmlspecialchars($play['description']) ?></p>
+                    <p class="card-text"><?= $play['description'] ?></p>
                     <p><strong>Theater:</strong> <?= htmlspecialchars($theater['name']) ?></p>
                     <p><strong>Location:</strong> <?= htmlspecialchars($theater['location']) ?></p>
                 </div>

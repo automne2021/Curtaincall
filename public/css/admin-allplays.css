@@ -1,0 +1,361 @@
+#playsTable tbody tr {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease;
+}
+
+#playsTable tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(7, 94, 84, 0.1);
+    background-color: rgba(175, 227, 206, 0.1) !important;
+    z-index: 1;
+    position: relative;
+}
+
+/* Button hover animations */
+.btn-primary {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.btn-primary:hover {
+    background-color: #064940; 
+    transform: none; 
+    box-shadow: none;
+}
+
+.btn-primary::after {
+    content: none;
+}
+
+.btn-primary:hover::after {
+    animation: none;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+/* Delete button pulse effect */
+.btn-danger {
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    animation: none;
+    background-color: #bd2130;
+}
+
+/* Card hover and entrance effects */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(7, 94, 84, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Page load animations */
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Table header style */
+#playsTable thead th {
+    position: relative;
+    padding-bottom: 12px;
+    color: #075E54; 
+    transition: none; 
+}
+
+#playsTable thead th::after {
+    content: none;
+}
+
+#playsTable thead th:hover::after {
+    width: 100%;
+}
+
+#playsTable thead th:hover {
+    color: #075E54;
+}
+
+/* Add/Edit Play button animation */
+.btn-primary i {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.btn-primary:hover i {
+    transform: rotate(90deg);
+}
+
+/* Card shadow on hover */
+.card.shadow {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card.shadow:hover {
+    box-shadow: 0 10px 20px rgba(7, 94, 84, 0.15) !important;
+}
+
+/* Focus effects for form controls */
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(7, 94, 84, 0.25);
+    border-color: #075E54;
+}
+
+/* Modal animation */
+.modal.fade .modal-dialog {
+    transition: opacity 0.2s ease;
+    transform: none;
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Initial load animation for the entire page */
+.admin-wrapper {
+    animation: slideIn 0.5s ease-out;
+}
+
+.table-modern {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: -10px;
+}
+
+.table-modern thead th {
+    border: none;
+    color: #075E54;
+    font-weight: 600;
+    padding: 16px 15px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: transparent;
+    font-family: 'Poppins', 'Segoe UI', sans-serif; 
+    border-bottom: 2px solid #f0f0f0;
+    transition: none;
+}
+
+.table-modern thead th::after,
+#playsTable thead th::after {
+    display: none;
+}
+
+.table-modern thead th:hover,
+#playsTable thead th:hover {
+    color: #075E54; 
+    transform: none;
+}
+
+.table-modern tbody tr {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 8px;
+    background-color: white;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.table-modern tbody tr:hover {
+    background-color: #fafffe;
+}
+
+.table-modern tbody td {
+    border: none;
+    padding: 16px;
+    vertical-align: middle;
+}
+
+.table-modern tbody tr td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.table-modern tbody tr td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.table-modern tbody tr,
+#playsTable tbody tr {
+    animation-delay: 0s !important;
+}
+
+.table-modern .play-id,
+#playsTable .play-id {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    color: #075E54;
+    font-size: 0.9rem;
+}
+
+.table-modern .play-title {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-weight: 500;
+    color: #333;
+}
+
+.table-modern thead tr,
+#playsTable thead tr {
+    animation: none;
+    transition: none;
+    box-shadow: none;
+}
+
+.table-modern thead tr:hover,
+#playsTable thead tr:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: transparent !important;
+}
+
+.action-buttons {
+    white-space: nowrap;
+}
+
+.btn-icon {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 3px;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-icon i {
+    font-size: 1rem;
+}
+
+.btn-edit {
+    background-color: rgba(7, 94, 84, 0.1);
+    color: #075E54;
+}
+
+.btn-edit:hover {
+    background-color: #075E54;
+    color: white;
+}
+
+.btn-delete {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.btn-delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-add {
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    background-color: #075E54;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add:hover {
+    background-color: #053f38;
+}
+
+.btn-add i {
+    margin-right: 6px;
+    font-size: 1.1rem;
+    vertical-align: -2px;
+}
+
+.empty-table {
+    padding: 40px !important;
+    text-align: center;
+}
+
+.empty-table i {
+    font-size: 2.5rem;
+    color: #dee2e6;
+    margin-bottom: 10px;
+}
+
+.empty-table p {
+    color: #adb5bd;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    overflow: hidden;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .btn-add span {
+        display: none;
+    }
+    
+    .btn-add {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .btn-add i {
+        margin-right: 0;
+    }
+    
+    .table-modern td,
+    .table-modern th {
+        padding: 12px 8px;
+    }
+}
+
+.fade-in {
+    animation: simpleFadeIn 0.4s ease-in-out;
+}
+
+@keyframes simpleFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

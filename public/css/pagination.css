@@ -1,0 +1,30 @@
+/* Pagination Styles */
+.pagination-info {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.pagination .page-link {
+    color: #075E54;
+    border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #075E54;
+    color: white;
+}
+
+.pagination .page-link:hover {
+    transform: none;
+    background-color: #e9ecef;
+}
+
+.pagination .page-link::after {
+    content: none;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+}

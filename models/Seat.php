@@ -5,6 +5,37 @@ class Seat {
     public function __construct($conn) {
         $this->conn = $conn;
     }
+
+    public function createSeat($seat_data) {
+        try {
+            $sql = "INSERT INTO seats (theater_id, play_id, seat_id, status) VALUES (?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssss", 
+                $seat_data['theater_id'], 
+                $seat_data['play_id'], 
+                $seat_data['seat_id'], 
+                $seat_data['status']
+            );
+            
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Error creating seat: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deleteSeats($play_id) {
+        try {
+            $sql = "DELETE FROM seats WHERE play_id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("s", $play_id);
+            
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Error deleting seats: " . $e->getMessage());
+            return false;
+        }
+    }
     
     public function getSeatMapByTheater($theater_id) {
         $sql = "SELECT * FROM seat_maps WHERE theater_id = ? ORDER BY seat_id ASC";

@@ -61,6 +61,20 @@ class BookingController {
         include 'views/booking/index.php';
         include 'views/layouts/footer.php';
     }
+
+    public function create() {
+        $play_id = $_GET['play_id'] ?? null;
+        
+        if (!$play_id) {
+            $_SESSION['error_message'] = 'Please select a play to book tickets';
+            header('Location: index.php');
+            exit;
+        }
+        
+        // Redirect to the index method with the play_id
+        header("Location: index.php?route=booking/index&play_id=$play_id");
+        exit;
+    }
     
     // Step 2: Select seats
     public function selectSeats() {
