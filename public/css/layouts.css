@@ -388,19 +388,29 @@ footer .input-group .btn:hover {
         height: auto;
         min-height: 60px;
     }
-
     .navbar-brand {
         margin-left: 10px;
         margin-right: 20px;
     }
-
+    .brand-text {
+        color: #AFE3CE;
+    }
     .navbar-logo {
         height: 40px;
         width: 45px;
     }
-
     .navbar .container-fluid {
         position: relative;;
+    }
+    .nav-item {
+        width: 100%;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 1.1rem;
     }
 
     .navbar-toggler {
@@ -441,24 +451,9 @@ footer .input-group .btn:hover {
     .offcanvas .dropdown-item {
         white-space: normal;
         word-wrap: break-word;
-        padding: 12px 20px;
-        border-bottom: 1px solid #e9ecef;
-    }
-    .offcanvas-body .dropdown-toggle::after {
-        float: right;
-        margin-top: 8px;
+        padding: 12px 25px;
     }
 
-    .nav-item {
-        width: 100%;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid #e5e5e5;
-    }
-
-    .nav-link {
-        padding: 0.5rem 1rem;
-        font-size: 1.1rem;
-    }
     .utility-btn {
         background-color: white;
         color: #AFE3CE;
@@ -469,6 +464,40 @@ footer .input-group .btn:hover {
     .login-divider {
         background-color: #AFE3CE !important;
     }
+
+    .offcanvas-body .dropdown-toggle::after {
+        float: right;
+        margin-top: 8px;
+    }
+    .offcanvas-body .dropdown-menu {
+        position: absolute !important;
+        float: none;
+        width: 100%;
+        margin-top: 0.5rem !important;
+        box-shadow: none;
+        border: 1px solid #e9ecef;
+        transform: none !important;
+    }
+    .offcanvas-body .dropdown-menu-end {
+        right: auto !important;
+        left: auto !important;
+    }
+    .offcanvas-body .dropdown .dropdown-item {
+        padding: 10px 15px;
+        white-space: normal;
+    }
+    .offcanvas-body .dropdown-toggle.utility-btn {
+        width: 100%;
+        justify-content: space-between;
+        padding: 25px 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        background-color: white;
+    }
+    .offcanvas-body .user-avatar {
+        width: 45px;
+        height: 45px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -478,7 +507,7 @@ footer .input-group .btn:hover {
     }
 
     .brand-text {
-        font-size: 18px;
+        color: #AFE3CE;
     }
 
     .navbar-toggler span {
