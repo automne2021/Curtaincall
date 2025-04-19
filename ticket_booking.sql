@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 18, 2025 lúc 01:59 AM
+-- Thời gian đã tạo: Th4 18, 2025 lúc 08:28 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -1690,7 +1690,7 @@ CREATE TABLE `theaters` (
 INSERT INTO `theaters` (`theater_id`, `name`, `location`) VALUES
 ('IDE', 'Nhà Hát Kịch IDECAF', 'Số 28 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh'),
 ('SKN', 'Nhà hát Kịch Sân khấu Nhỏ', '5B, Võ Văn Tần, Phường 06, Quận 3, Thành Phố Hồ Chí Minh'),
-('THM', 'SÂN KHẤU NGHỆ THUẬT TRƯƠNG HÙNG MINH', '22 VĨNH VIỄN, Phường 02, Quận 10, Thành Phố Hồ Chí Minh'),
+('THM', 'Sân Khấu Nghệ Thuật TRƯƠNG HÙNG MINH', '22 VĨNH VIỄN, Phường 02, Quận 10, Thành Phố Hồ Chí Minh'),
 ('THN', 'Nhà Hát THANH NIÊN', '4 Phạm Ngọc Thạch, Bến Nghé, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh'),
 ('THĐ', 'Sân Khấu Thiên Đăng', 'Tầng 12B tòa nhà IMC - 62 Trần Quang Khải, Phường Tân Định, Quận 1, Thành Phố Hồ Chí Minh');
 

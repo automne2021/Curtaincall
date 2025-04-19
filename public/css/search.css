@@ -1,7 +1,8 @@
-.navbar .d-flex[role="search"] {
+.search-container {
     max-width: 280px;
     flex-basis: 280px;
-    flex-grow: 0;
+    flex-grow: 1;
+    position: relative;
 }
 
 .navbar .input-group,
@@ -43,12 +44,6 @@ input[type="search"]::-webkit-search-cancel-button {
 
 input[type="search"]::-webkit-search-cancel-button:hover {
     opacity: 1;
-}
-
-/* Search hints dropdown */
-.search-container {
-    position: relative;
-    flex-grow: 1;
 }
 
 .search-hints {
@@ -98,26 +93,82 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .search-hints .search-icon {
     color: #a9a9a9;
 }
-
 .search-hints a {
     color: #333;
     display: block;
 }
+.search-hints .no-results {
+    padding: 10px 15px;
+    color: #999;
+    font-size: 14px;
+}
 
-/* Make results scrollable on mobile */
-@media (max-width: 768px) {
-    .navbar .d-flex[role="search"] {
-        position: absolute;
-        width: 20px;
-        transform: translateY(-50%);
-        right: 120px !important;
+
+
+@media (max-width: 992px) {
+    .search-container {
+        position: relative;
+        margin: 40px 0;
+        width: auto;
+        display: flex;
+        justify-content: center;
     }
 
-    .navbar .d-flex[role="search"] .form-control {
-        width: 90px;
+    .search-container .input-group {
+        width: auto;
     }
-    
+
+    .search-container .input-group-text i {
+        display: none;
+    }
+
+    .search-container .input-group-text:last-child button {
+        font-size: 0;
+        padding: 0 !important;
+    }
+
+    .search-container .input-group-text:last-child button::before {
+        content: "\F52A";
+        font-family: "bootstrap-icons";
+        font-size: 16px;
+        color: #333;
+    }
+
     .search-hints {
-        max-height: 70vh;
+        max-width: 100%;
+        left: 0;
+        right: 0;
+        position: absolute;
+        box-sizing: border-box;
     }
+}
+
+@media (max-width: 576px) {
+    .search-container {
+        position: relative;
+        width: auto;
+        right: auto;
+        
+    }
+    .search-container .input-group {
+        flex-wrap: nowrap;
+    }
+    .search-container .input-group-text,
+    .search-container .form-control {
+        padding: 0.375rem 0.5rem;
+    }
+    .search-container .input-group-text i{
+        display: none;
+    }
+    .search-container .input-group-text:last-child button {
+        font-size: 0;
+        padding: 0 !important;
+    }
+    .search-container .input-group-text:last-child button::before {
+        content: "\F52A";
+        font-family: "bootstrap-icons";
+        font-size: 16px;
+        color: #333;
+    }
+
 }

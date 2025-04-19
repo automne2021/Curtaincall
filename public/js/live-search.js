@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         // No results found
                         const noResults = document.createElement('div');
-                        noResults.className = 'p-3 text-center';
+                        noResults.className = 'no-results p-3 text-center';
                         noResults.textContent = 'Không tìm thấy kết quả phù hợp';
                         searchHints.appendChild(noResults);
                         searchHints.classList.remove('d-none');
