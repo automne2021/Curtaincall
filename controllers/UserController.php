@@ -95,59 +95,64 @@ class UserController
 
             $login = $this->sanitizeInput($_POST['login'] ?? '');
             $password = $_POST['password'] ?? '';
+            $remember = isset($_POST['remember']) ? true : false;
 
             // Basic validation
             if (empty($login)) {
-                $errors['login'] = 'Please enter your username or email';
+                $errors['login'] = 'Username or email is required';
             }
 
             if (empty($password)) {
-                $errors['password'] = 'Please enter your password';
+                $errors['password'] = 'Password is required';
             }
 
             if (empty($errors)) {
-                // Attempt to login
                 $user = $this->userModel->login($login, $password);
 
                 if ($user) {
-                    // Login successful
-                    $_SESSION['user'] = $user;
+                    // Set user session
+                    $_SESSION['user'] = [
+                        'user_id' => $user['user_id'],
+                        'username' => $user['username'],
+                        'email' => $user['email'],
+                        'fullname' => $user['name'] ?? $user['fullname'] ?? '',
+                        'avatar' => $user['avatar'] ?? null,
+                        'is_google_user' => !empty($user['google_id']),
+                        'role' => $user['role'] ?? 'user' // Store user role
+                    ];
 
-                    // Set success message
-                    $_SESSION['success_message'] = 'Login successful!';
+                    // If remember me is checked, set a persistent cookie
+                    if ($remember) {
+                        $token = bin2hex(random_bytes(32)); // Generate a secure random token
+                        $expires = time() + (30 * 24 * 60 * 60); // 30 days
+                        
+                        // Store the token in the database
+                        $this->userModel->storeRememberToken($user['user_id'], $token, $expires);
+                        
+                        // Set the cookie
+                        setcookie('remember_token', $token, $expires, '/', '', isset($_SERVER['HTTPS']), true);
+                    }
 
-                    // Get redirect URL
-                    $redirect = isset($_SESSION['redirect_after_login']) ? $_SESSION['redirect_after_login'] : 'index.php';
+                    // Redirect to previous page or home
+                    $redirect = $_SESSION['redirect_after_login'] ?? 'index.php';
                     unset($_SESSION['redirect_after_login']);
 
                     // Check if this is an AJAX request
                     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-                        // Return JSON response for AJAX
-                        header('Content-Type: application/json');
-                        echo json_encode([
-                            'success' => true,
-                            'redirect' => $redirect
-                        ]);
+                        echo json_encode(['success' => true, 'redirect' => $redirect]);
                         exit;
                     }
 
-                    // Regular form submission - redirect
                     header('Location: ' . $redirect);
                     exit;
                 } else {
-                    $errors['general'] = 'Invalid username or password';
-                    error_log("Login failed for user: $login - Invalid credentials");
+                    $errors['general'] = 'Invalid username/email or password';
                 }
             }
 
             // Check if this is an AJAX request
             if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-                // Return JSON response for AJAX with errors
-                header('Content-Type: application/json');
-                echo json_encode([
-                    'success' => false,
-                    'errors' => $errors
-                ]);
+                echo json_encode(['success' => false, 'errors' => $errors]);
                 exit;
             }
 
@@ -167,12 +172,25 @@ class UserController
 
     public function logout()
     {
+        // Clear the remember_token cookie if it exists
+        if (isset($_COOKIE['remember_token'])) {
+            $token = $_COOKIE['remember_token'];
+            
+            // Remove token from database
+            if (isset($_SESSION['user']['user_id'])) {
+                $this->userModel->deleteRememberToken($_SESSION['user']['user_id'], $token);
+            }
+            
+            // Clear cookie by expiring it
+            setcookie('remember_token', '', time() - 3600, '/', '', isset($_SERVER['HTTPS']), true);
+        }
+        
         // Destroy the user session
         unset($_SESSION['user']);
-
+        
         // Set logged-out message
         $_SESSION['success_message'] = 'You have been logged out successfully.';
-
+        
         // Redirect to home page
         header('Location: index.php');
         exit;

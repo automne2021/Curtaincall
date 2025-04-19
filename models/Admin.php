@@ -169,4 +169,64 @@ class Admin {
             ];
         }
     }
+
+    public function storeRememberToken($admin_id, $token, $expires) {
+        try {
+            // First, delete any existing tokens for this admin
+            $deleteStmt = $this->conn->prepare("DELETE FROM admin_tokens WHERE admin_id = ?");
+            $deleteStmt->bind_param("i", $admin_id);
+            $deleteStmt->execute();
+            
+            // Now insert the new token
+            $expires_at = date('Y-m-d H:i:s', $expires);
+            $stmt = $this->conn->prepare("INSERT INTO admin_tokens (admin_id, token, expires_at) VALUES (?, ?, ?)");
+            $stmt->bind_param("iss", $admin_id, $token, $expires_at);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log('Error storing admin remember token: ' . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function getAdminByRememberToken($token) {
+        try {
+            $current_time = date('Y-m-d H:i:s');
+            $stmt = $this->conn->prepare("
+                SELECT a.* 
+                FROM admins a
+                JOIN admin_tokens t ON a.admin_id = t.admin_id
+                WHERE t.token = ? AND t.expires_at > ?
+            ");
+            $stmt->bind_param("ss", $token, $current_time);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows === 0) {
+                return null;
+            }
+            
+            return $result->fetch_assoc();
+        } catch (Exception $e) {
+            error_log('Error getting admin by remember token: ' . $e->getMessage());
+            return null;
+        }
+    }
+    
+    public function deleteRememberToken($admin_id, $token = null) {
+        try {
+            if ($token) {
+                // Delete specific token
+                $stmt = $this->conn->prepare("DELETE FROM admin_tokens WHERE admin_id = ? AND token = ?");
+                $stmt->bind_param("is", $admin_id, $token);
+            } else {
+                // Delete all tokens for admin
+                $stmt = $this->conn->prepare("DELETE FROM admin_tokens WHERE admin_id = ?");
+                $stmt->bind_param("i", $admin_id);
+            }
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log('Error deleting admin remember token: ' . $e->getMessage());
+            return false;
+        }
+    }
 }

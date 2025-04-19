@@ -47,6 +47,7 @@ class AdminController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
+            $remember = isset($_POST['remember']) ? true : false;
             
             $admin = $this->adminModel->getAdminByUsername($username);
             
@@ -54,8 +55,21 @@ class AdminController {
                 // Set admin session
                 $_SESSION['admin'] = [
                     'admin_id' => $admin['admin_id'],
-                    'username' => $admin['username']
+                    'username' => $admin['username'],
+                    'email' => $admin['email']
                 ];
+                
+                // If remember me is checked, set a persistent cookie
+                if ($remember) {
+                    $token = bin2hex(random_bytes(32));
+                    $expires = time() + (30 * 24 * 60 * 60); // 30 days
+                    
+                    // Store the token in the database
+                    $this->adminModel->storeRememberToken($admin['admin_id'], $token, $expires);
+                    
+                    // Set the cookie
+                    setcookie('admin_remember_token', $token, $expires, '/', '', isset($_SERVER['HTTPS']), true);
+                }
                 
                 header('Location: index.php?route=admin/dashboard');
                 exit;
@@ -67,8 +81,20 @@ class AdminController {
         include 'views/admin/login.php';
     }
     
-    // Logout
     public function logout() {
+        // Clear the admin_remember_token cookie if it exists
+        if (isset($_COOKIE['admin_remember_token'])) {
+            $token = $_COOKIE['admin_remember_token'];
+            
+            // Remove token from database
+            if (isset($_SESSION['admin']['admin_id'])) {
+                $this->adminModel->deleteRememberToken($_SESSION['admin']['admin_id'], $token);
+            }
+            
+            // Clear cookie by expiring it
+            setcookie('admin_remember_token', '', time() - 3600, '/', '', isset($_SERVER['HTTPS']), true);
+        }
+        
         unset($_SESSION['admin']);
         header('Location: index.php?route=admin/login');
         exit;

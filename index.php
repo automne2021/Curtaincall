@@ -20,6 +20,62 @@ require_once 'helpers/sort_helpers.php';
 require_once 'config/database.php';
 require_once 'config/config.php';
 
+// Check for remember token cookie and auto-login if applicable
+if (!isset($_SESSION['user']) && isset($_COOKIE['remember_token'])) {
+    $token = $_COOKIE['remember_token'];
+    
+    // Load user model and check token
+    require_once 'models/User.php';
+    $userModel = new User($conn);
+    $user = $userModel->getUserByRememberToken($token);
+    
+    if ($user) {
+        // Auto login the user
+        $_SESSION['user'] = [
+            'user_id' => $user['user_id'],
+            'username' => $user['username'],
+            'email' => $user['email'],
+            'fullname' => $user['name'] ?? $user['fullname'] ?? '',
+            'avatar' => $user['avatar'] ?? null,
+            'is_google_user' => !empty($user['google_id']),
+            'role' => $user['role'] ?? 'user'
+        ];
+        
+        // Refresh the token
+        $new_token = bin2hex(random_bytes(32));
+        $expires = time() + (30 * 24 * 60 * 60); // 30 days
+        
+        $userModel->storeRememberToken($user['user_id'], $new_token, $expires);
+        setcookie('remember_token', $new_token, $expires, '/', '', isset($_SERVER['HTTPS']), true);
+    }
+}
+
+// Check for admin remember token cookie and auto-login if applicable
+if (!isset($_SESSION['admin']) && isset($_COOKIE['admin_remember_token'])) {
+    $token = $_COOKIE['admin_remember_token'];
+    
+    // Load admin model and check token
+    require_once 'models/Admin.php';
+    $adminModel = new Admin($conn);
+    $admin = $adminModel->getAdminByRememberToken($token);
+    
+    if ($admin) {
+        // Auto login the admin
+        $_SESSION['admin'] = [
+            'admin_id' => $admin['admin_id'],
+            'username' => $admin['username'],
+            'email' => $admin['email']
+        ];
+        
+        // Refresh the token
+        $new_token = bin2hex(random_bytes(32));
+        $expires = time() + (30 * 24 * 60 * 60); // 30 days
+        
+        $adminModel->storeRememberToken($admin['admin_id'], $new_token, $expires);
+        setcookie('admin_remember_token', $new_token, $expires, '/', '', isset($_SERVER['HTTPS']), true);
+    }
+}
+
 // Simple routing mechanism
 $route = isset($_GET['route']) ? $_GET['route'] : 'home';
 $routes['payment/process'] = ['controller' => 'PaymentController', 'action' => 'process'];

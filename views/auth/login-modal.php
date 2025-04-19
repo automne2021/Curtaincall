@@ -34,6 +34,10 @@ unset($_SESSION['login_errors'], $_SESSION['login_data']);
                         <?php endif; ?>
                         <small id="passwordError" class="text-danger"></small>
                     </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">Ghi nhớ đăng nhập</label>
+                    </div>
                     <div class="d-grid">
                         <div class="d-flex justify-content-end mb-2">
                             <a href="<?= BASE_URL ?>index.php?route=user/forgot-password" class="text-primary text-decoration-none small">
