@@ -215,6 +215,23 @@
     font-size: 16px;
 }
 
+.buy-ticket-btn {
+    color: white;
+    background-color: #075E54;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.buy-ticket-btn:hover {
+    background-color: #AFE3CE;
+    color: #075E54;
+    transform: translateY(-2px);
+}
+
 
 @media (max-width: 768px) {
 

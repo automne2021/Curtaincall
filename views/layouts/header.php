@@ -27,11 +27,13 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
     <link rel="stylesheet" href="public/css/booking.css">
     <link rel="stylesheet" href="public/css/payment-success.css">
     <link rel="stylesheet" href="public/css/contact.css">
+    <link rel="stylesheet" href="public/css/pagination.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="public/ckeditor5-builder-45.0.0/ckeditor5/ckeditor5.js"></script>
 
-    <script src="public/js/auth-validation.js" defer></script>
+    <script src="public/js/login-validation.js" defer></script>
+    <script src="public/js/register-validation.js" defer></script>
     <script src="public/js/alert.js" defer></script>
     <script src="public/js/live-search.js" defer></script>
     <script src="public/js/schedule.js" defer></script>
@@ -82,7 +84,7 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
                         </ul>
 
                         <form id="live-search" class="d-flex search-container" role="search" method="GET" action="index.php">
-                            <input type="hidden" name="route" value="play/search">
+                            <input type="hidden" name="route" value="search/index">
                             <div class="input-group">
                                 <span class="input-group-text bg-white border-end-0">
                                     <i class="bi bi-search text-muted"></i>

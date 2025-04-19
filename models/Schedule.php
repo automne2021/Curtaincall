@@ -67,4 +67,37 @@ class Schedule {
         $stmt->bind_param("s", $play_id);
         return $stmt->execute();
     }
+
+    public function updateOrCreateSchedules($play_id, $schedules) {
+        try {
+            // Begin transaction
+            $this->conn->begin_transaction();
+            
+            // Delete existing schedules for this play
+            $this->deleteSchedulesByPlayId($play_id);
+            
+            // Insert new schedules
+            $insertStmt = $this->conn->prepare("
+                INSERT INTO schedules (play_id, date, start_time, end_time) 
+                VALUES (?, ?, ?, ?)
+            ");
+            
+            foreach ($schedules as $schedule) {
+                $insertStmt->bind_param("ssss", 
+                    $play_id,
+                    $schedule['date'], 
+                    $schedule['start_time'], 
+                    $schedule['end_time']
+                );
+                $insertStmt->execute();
+            }
+            
+            $this->conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            error_log("Error updating schedules: " . $e->getMessage());
+            return false;
+        }
+    }
 }

@@ -1,0 +1,197 @@
+/* User view page specific styles */
+.admin-viewuser .user-view-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
+
+.admin-viewuser .user-header {
+    position: relative;
+    padding: 2rem;
+    background-color: #075E54;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.admin-viewuser .user-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.admin-viewuser .avatar-placeholder-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.admin-viewuser .user-header-content {
+    flex: 1;
+}
+
+.admin-viewuser .user-name-large {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.admin-viewuser .user-email-large {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.admin-viewuser .user-id-badge {
+    display: inline-block;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.admin-viewuser .user-content {
+    padding: 2rem;
+}
+
+.admin-viewuser .user-section {
+    margin-bottom: 2rem;
+}
+
+.admin-viewuser .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #075E54;
+    border-bottom: 2px solid #AFE3CE;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.admin-viewuser .info-group {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.admin-viewuser .info-item {
+    margin-bottom: 0.75rem;
+}
+
+.admin-viewuser .info-label {
+    font-weight: 600;
+    color: #6c757d;
+    display: inline-block;
+    width: 130px;
+}
+
+.admin-viewuser .info-value {
+    color: #212529;
+}
+
+.admin-viewuser .user-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.admin-viewuser .user-actions .btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+.admin-viewuser .user-bookings {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.admin-viewuser .booking-count {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #075E54;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.admin-viewuser .booking-item {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.admin-viewuser .booking-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.admin-viewuser .booking-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.admin-viewuser .booking-details {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.admin-viewuser .booking-status {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.admin-viewuser .back-button {
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.admin-viewuser .back-button i {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .admin-viewuser .user-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+    }
+    
+    .admin-viewuser .user-name-large {
+        font-size: 1.5rem;
+    }
+    
+    .admin-viewuser .user-content {
+        padding: 1.5rem;
+    }
+    
+    .admin-viewuser .info-label {
+        width: 100%;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+}

@@ -219,4 +219,142 @@ class User {
         
         return $result->fetch_assoc();
     }
+
+    public function getPaginatedUsers($page = 1, $per_page = 10) {
+        try {
+            // Calculate offset for pagination
+            $offset = ($page - 1) * $per_page;
+            
+            // Count total users
+            $countStmt = $this->conn->prepare("SELECT COUNT(*) as total FROM users");
+            $countStmt->execute();
+            $total = $countStmt->get_result()->fetch_assoc()['total'];
+            
+            // Get users with pagination
+            $stmt = $this->conn->prepare("
+                SELECT * FROM users
+                ORDER BY created_at DESC
+                LIMIT ? OFFSET ?
+            ");
+            
+            $stmt->bind_param("ii", $per_page, $offset);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $users = [];
+            while ($row = $result->fetch_assoc()) {
+                $users[] = $row;
+            }
+            
+            // Return both users and pagination data
+            return [
+                'users' => $users,
+                'pagination' => [
+                    'total' => $total,
+                    'per_page' => $per_page,
+                    'current_page' => $page,
+                    'last_page' => ceil($total / $per_page)
+                ]
+            ];
+        } catch (Exception $e) {
+            error_log("Error in getPaginatedUsers: " . $e->getMessage());
+            return [
+                'users' => [],
+                'pagination' => [
+                    'total' => 0,
+                    'per_page' => $per_page,
+                    'current_page' => 1,
+                    'last_page' => 1
+                ]
+            ];
+        }
+    }
+    
+    public function deleteUser($user_id) {
+        try {
+            // Start transaction
+            $this->conn->begin_transaction();
+            
+            // Delete user's bookings first
+            $bookingsStmt = $this->conn->prepare("DELETE FROM bookings WHERE user_id = ?");
+            $bookingsStmt->bind_param("i", $user_id);
+            $bookingsStmt->execute();
+            
+            // Then delete the user
+            $userStmt = $this->conn->prepare("DELETE FROM users WHERE user_id = ?");
+            $userStmt->bind_param("i", $user_id);
+            $userStmt->execute();
+            $result = $userStmt->affected_rows > 0;
+            
+            // Commit transaction
+            $this->conn->commit();
+            
+            return $result;
+        } catch (Exception $e) {
+            // Rollback on error
+            $this->conn->rollback();
+            error_log("Error deleting user: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function storeRememberToken($user_id, $token, $expires) {
+        try {
+            // First, delete any existing tokens for this user
+            $deleteStmt = $this->conn->prepare("DELETE FROM user_tokens WHERE user_id = ?");
+            $deleteStmt->bind_param("i", $user_id);
+            $deleteStmt->execute();
+            
+            // Now insert the new token
+            $expires_at = date('Y-m-d H:i:s', $expires);
+            $stmt = $this->conn->prepare("INSERT INTO user_tokens (user_id, token, expires_at) VALUES (?, ?, ?)");
+            $stmt->bind_param("iss", $user_id, $token, $expires_at);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log('Error storing remember token: ' . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function getUserByRememberToken($token) {
+        try {
+            $current_time = date('Y-m-d H:i:s');
+            $stmt = $this->conn->prepare("
+                SELECT u.* 
+                FROM users u
+                JOIN user_tokens t ON u.user_id = t.user_id
+                WHERE t.token = ? AND t.expires_at > ?
+            ");
+            $stmt->bind_param("ss", $token, $current_time);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows === 0) {
+                return null;
+            }
+            
+            return $result->fetch_assoc();
+        } catch (Exception $e) {
+            error_log('Error getting user by remember token: ' . $e->getMessage());
+            return null;
+        }
+    }
+    
+    public function deleteRememberToken($user_id, $token = null) {
+        try {
+            if ($token) {
+                // Delete specific token
+                $stmt = $this->conn->prepare("DELETE FROM user_tokens WHERE user_id = ? AND token = ?");
+                $stmt->bind_param("is", $user_id, $token);
+            } else {
+                // Delete all tokens for user
+                $stmt = $this->conn->prepare("DELETE FROM user_tokens WHERE user_id = ?");
+                $stmt->bind_param("i", $user_id);
+            }
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log('Error deleting remember token: ' . $e->getMessage());
+            return false;
+        }
+    }
 }

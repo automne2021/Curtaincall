@@ -1,0 +1,208 @@
+/* Play view page specific styles */
+.play-view-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
+
+.play-header {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    height: 320px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.play-header-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.play-header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+    z-index: 2;
+}
+
+.play-header-content {
+    position: relative;
+    z-index: 3;
+    padding: 2rem;
+    width: 100%;
+    color: #fff;
+}
+
+.play-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.play-theater {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.play-id-badge {
+    display: inline-block;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.play-content {
+    padding: 2rem;
+}
+
+.play-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #075E54;
+    border-bottom: 2px solid #AFE3CE;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.play-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-card {
+    flex: 1;
+    min-width: 200px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    background-color: #e9f7f4;
+}
+
+.info-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #075E54;
+}
+
+.info-card-title {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.info-card-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+.btn-view {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+.btn-view:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.play-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.play-actions .btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+.play-description {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+/* Ensure images in description don't overflow */
+.play-description img {
+    max-width: 100%;
+    height: auto;
+}
+
+.back-button {
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-button i {
+    margin-right: 0.5rem;
+}
+
+.schedule-item {
+    position: relative;
+    transition: all 0.3s ease;
+}
+.schedule-item:hover {
+    background-color: rgba(7, 94, 84, 0.05);
+}
+.schedule-item .remove-schedule {
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+.schedule-item:hover .remove-schedule {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .play-header {
+        height: 250px;
+    }
+    
+    .play-title {
+        font-size: 1.8rem;
+    }
+    
+    .play-content {
+        padding: 1.5rem;
+    }
+    
+    .info-card {
+        min-width: 100%;
+    }
+}

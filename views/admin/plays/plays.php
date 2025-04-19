@@ -14,14 +14,13 @@
                         <th>ID</th>
                         <th>Title</th>
                         <th>Theater</th>
-                        <th>Duration (min)</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($plays)): ?>
                         <tr>
-                            <td colspan="5" class="text-center empty-table">
+                            <td colspan="4" class="text-center empty-table">
                                 <i class="bi bi-exclamation-circle"></i>
                                 <p>No plays found</p>
                             </td>
@@ -32,8 +31,14 @@
                             <td class="play-id"><?= htmlspecialchars($play['play_id'] ?? 'N/A') ?></td>
                             <td class="play-title"><?= htmlspecialchars($play['title'] ?? 'No Title') ?></td>
                             <td><?= htmlspecialchars($play['theater_name'] ?? 'Unknown Theater') ?></td>
-                            <td><?= htmlspecialchars($play['duration'] ?? 'N/A') ?></td>
                             <td class="text-center action-buttons">
+                                <a href="<?= BASE_URL ?>index.php?route=admin/viewPlay&id=<?= $play['play_id'] ?>" 
+                                   class="btn btn-icon btn-view" 
+                                   data-bs-toggle="tooltip" 
+                                   data-bs-placement="top" 
+                                   title="View Play">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                                 <a href="<?= BASE_URL ?>index.php?route=admin/editPlay&id=<?= $play['play_id'] ?>" 
                                    class="btn btn-icon btn-edit" 
                                    data-bs-toggle="tooltip" 

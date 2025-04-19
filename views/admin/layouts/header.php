@@ -10,6 +10,26 @@
     <link href="public/css/admin-dashboard.css" rel="stylesheet">
     <link href="public/css/pagination.css" rel="stylesheet">
     <link href="public/css/admin-allplays.css" rel="stylesheet">
+    <?php if (strpos($_GET['route'] ?? '', 'viewPlay') !== false): ?>
+    <link href="public/css/admin-viewplay.css" rel="stylesheet">
+    <?php endif; ?>
+    <?php if (strpos($_GET['route'] ?? '', 'viewTheater') !== false): ?>
+    <link href="public/css/admin-viewtheater.css" rel="stylesheet">
+    <?php endif; ?>
+    <?php if (strpos($_GET['route'] ?? '', 'bookings') !== false): ?>
+    <link href="public/css/admin-allbookings.css" rel="stylesheet">
+    <?php endif; ?>
+    <?php if (strpos($_GET['route'] ?? '', 'viewBooking') !== false): ?>
+    <link href="public/css/admin-viewbooking.css" rel="stylesheet">
+    <?php endif; ?>
+    <?php if (strpos($_GET['route'] ?? '', 'users') !== false): ?>
+    <link href="public/css/admin-allusers.css" rel="stylesheet">
+    <?php endif; ?>
+    <?php if (strpos($_GET['route'] ?? '', 'viewUser') !== false): ?>
+    <link href="public/css/admin-viewuser.css" rel="stylesheet">
+    <?php endif; ?>
+
+    <link href="public/css/admin-alltheaters.css" rel="stylesheet">
     <link rel="shortcut icon" href="public/images/favicon.ico" type="image/x-icon">
 
     <?php
@@ -22,9 +42,15 @@
     ?>
     <script src="<?= BASE_URL ?>public/js/ckeditor-init.js"></script>
     <?php endif; ?>
-</head>
-</head>
+    <script src="<?= BASE_URL ?>public/js/schedule-addremove.js"></script>
+    </head>
+<?php if (strpos($_GET['route'] ?? '', 'viewBooking') !== false): ?>
+<body class="admin-viewbooking">
+<?php elseif (strpos($_GET['route'] ?? '', 'viewUser') !== false): ?>
+<body class="admin-viewuser">
+<?php else: ?>
 <body>
+<?php endif; ?>
     <div class="admin-wrapper">
         <!-- Sidebar -->
         <nav id="sidebar" class="sidebar">
@@ -49,11 +75,6 @@
                 <li class="<?= strpos($_GET['route'] ?? '', 'theaters') !== false ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>index.php?route=admin/theaters">
                         <i class="bi bi-building"></i> Theaters
-                    </a>
-                </li>
-                <li class="<?= strpos($_GET['route'] ?? '', 'schedules') !== false ? 'active' : '' ?>">
-                    <a href="<?= BASE_URL ?>index.php?route=admin/schedules">
-                        <i class="bi bi-calendar-event"></i> Schedules
                     </a>
                 </li>
                 <li class="<?= strpos($_GET['route'] ?? '', 'bookings') !== false ? 'active' : '' ?>">

@@ -62,40 +62,97 @@
             </div>
 
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Schedule Information</h5>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="addScheduleBtn">
+                        <i class="bi bi-plus-circle"></i> Add Schedule
+                    </button>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control <?= isset($_SESSION['form_errors']['date']) ? 'is-invalid' : '' ?>" 
-                                id="date" name="date" 
-                                value="<?= htmlspecialchars($_SESSION['form_data']['date'] ?? '') ?>" required>
-                            <?php if (isset($_SESSION['form_errors']['date'])): ?>
-                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['date'] ?></div>
-                            <?php endif; ?>
+                    <div id="schedules-container">
+                        <!-- Initial schedule form -->
+                        <div class="schedule-item mb-3 border-bottom pb-3">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="date_0" class="form-label">Date <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control <?= isset($_SESSION['form_errors']['date_0']) ? 'is-invalid' : '' ?>" 
+                                        id="date_0" name="schedules[0][date]" 
+                                        value="<?= htmlspecialchars($_SESSION['form_data']['schedules'][0]['date'] ?? '') ?>" required>
+                                    <?php if (isset($_SESSION['form_errors']['date_0'])): ?>
+                                        <div class="invalid-feedback"><?= $_SESSION['form_errors']['date_0'] ?></div>
+                                    <?php endif; ?>
+                                </div>
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="start_time_0" class="form-label">Start Time <span class="text-danger">*</span></label>
+                                    <input type="time" class="form-control <?= isset($_SESSION['form_errors']['start_time_0']) ? 'is-invalid' : '' ?>" 
+                                        id="start_time_0" name="schedules[0][start_time]" 
+                                        value="<?= htmlspecialchars($_SESSION['form_data']['schedules'][0]['start_time'] ?? '') ?>" required>
+                                    <?php if (isset($_SESSION['form_errors']['start_time_0'])): ?>
+                                        <div class="invalid-feedback"><?= $_SESSION['form_errors']['start_time_0'] ?></div>
+                                    <?php endif; ?>
+                                </div>
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="end_time_0" class="form-label">End Time <span class="text-danger">*</span></label>
+                                    <input type="time" class="form-control <?= isset($_SESSION['form_errors']['end_time_0']) ? 'is-invalid' : '' ?>" 
+                                        id="end_time_0" name="schedules[0][end_time]" 
+                                        value="<?= htmlspecialchars($_SESSION['form_data']['schedules'][0]['end_time'] ?? '') ?>" required>
+                                    <?php if (isset($_SESSION['form_errors']['end_time_0'])): ?>
+                                        <div class="invalid-feedback"><?= $_SESSION['form_errors']['end_time_0'] ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="col-md-4 mb-3">
-                            <label for="start_time" class="form-label">Start Time <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control <?= isset($_SESSION['form_errors']['start_time']) ? 'is-invalid' : '' ?>" 
-                                id="start_time" name="start_time" 
-                                value="<?= htmlspecialchars($_SESSION['form_data']['start_time'] ?? '') ?>" required>
-                            <?php if (isset($_SESSION['form_errors']['start_time'])): ?>
-                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['start_time'] ?></div>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <div class="col-md-4 mb-3">
-                            <label for="end_time" class="form-label">End Time <span class="text-danger">*</span></label>
-                            <input type="time" class="form-control <?= isset($_SESSION['form_errors']['end_time']) ? 'is-invalid' : '' ?>" 
-                                id="end_time" name="end_time" 
-                                value="<?= htmlspecialchars($_SESSION['form_data']['end_time'] ?? '') ?>" required>
-                            <?php if (isset($_SESSION['form_errors']['end_time'])): ?>
-                                <div class="invalid-feedback"><?= $_SESSION['form_errors']['end_time'] ?></div>
-                            <?php endif; ?>
-                        </div>
+                        <!-- Additional schedules will be added here by JavaScript -->
+                        <?php 
+                        // Display existing schedules if any from the form data
+                        if (isset($_SESSION['form_data']['schedules']) && count($_SESSION['form_data']['schedules']) > 1): 
+                            for ($i = 1; $i < count($_SESSION['form_data']['schedules']); $i++):
+                        ?>
+                            <div class="schedule-item mb-3 border-bottom pb-3">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="date_<?= $i ?>" class="form-label">Date <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control <?= isset($_SESSION['form_errors']['date_' . $i]) ? 'is-invalid' : '' ?>" 
+                                            id="date_<?= $i ?>" name="schedules[<?= $i ?>][date]" 
+                                            value="<?= htmlspecialchars($_SESSION['form_data']['schedules'][$i]['date'] ?? '') ?>" required>
+                                        <?php if (isset($_SESSION['form_errors']['date_' . $i])): ?>
+                                            <div class="invalid-feedback"><?= $_SESSION['form_errors']['date_' . $i] ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="start_time_<?= $i ?>" class="form-label">Start Time <span class="text-danger">*</span></label>
+                                        <input type="time" class="form-control <?= isset($_SESSION['form_errors']['start_time_' . $i]) ? 'is-invalid' : '' ?>" 
+                                            id="start_time_<?= $i ?>" name="schedules[<?= $i ?>][start_time]" 
+                                            value="<?= htmlspecialchars($_SESSION['form_data']['schedules'][$i]['start_time'] ?? '') ?>" required>
+                                        <?php if (isset($_SESSION['form_errors']['start_time_' . $i])): ?>
+                                            <div class="invalid-feedback"><?= $_SESSION['form_errors']['start_time_' . $i] ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="end_time_<?= $i ?>" class="form-label">End Time <span class="text-danger">*</span></label>
+                                        <input type="time" class="form-control <?= isset($_SESSION['form_errors']['end_time_' . $i]) ? 'is-invalid' : '' ?>" 
+                                            id="end_time_<?= $i ?>" name="schedules[<?= $i ?>][end_time]" 
+                                            value="<?= htmlspecialchars($_SESSION['form_data']['schedules'][$i]['end_time'] ?? '') ?>" required>
+                                        <?php if (isset($_SESSION['form_errors']['end_time_' . $i])): ?>
+                                            <div class="invalid-feedback"><?= $_SESSION['form_errors']['end_time_' . $i] ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-sm btn-outline-danger remove-schedule">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        <?php 
+                            endfor; 
+                        endif; 
+                        ?>
                     </div>
                 </div>
             </div>
@@ -105,7 +162,7 @@
                 <textarea class="form-control ckeditor <?= isset($_SESSION['form_errors']['description']) ? 'is-invalid' : '' ?>" 
                         id="description" name="description" rows="10" 
                         data-placeholder="Enter play description here..."
-                        required><?= htmlspecialchars($_SESSION['form_data']['description'] ?? '') ?></textarea>
+                        required><?= $_SESSION['form_data']['description'] ?? '' ?></textarea>
                 <?php if (isset($_SESSION['form_errors']['description'])): ?>
                     <div class="invalid-feedback"><?= $_SESSION['form_errors']['description'] ?></div>
                 <?php endif; ?>
@@ -120,33 +177,7 @@
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Calculate duration automatically when start or end times change
-    const startTimeInput = document.getElementById('start_time');
-    const endTimeInput = document.getElementById('end_time');
-    
-    function updateDuration() {
-        if (startTimeInput.value && endTimeInput.value) {
-            const startParts = startTimeInput.value.split(':');
-            const endParts = endTimeInput.value.split(':');
-            
-            const startMinutes = (parseInt(startParts[0]) * 60) + parseInt(startParts[1]);
-            const endMinutes = (parseInt(endParts[0]) * 60) + parseInt(endParts[1]);
-            
-            // Handle cases where the show goes past midnight
-            const durationMinutes = endMinutes < startMinutes ? 
-                (24 * 60 - startMinutes) + endMinutes : 
-                endMinutes - startMinutes;
-            
-            console.log(`Duration: ${durationMinutes} minutes`);
-        }
-    }
-    
-    startTimeInput.addEventListener('change', updateDuration);
-    endTimeInput.addEventListener('change', updateDuration);
-});
-</script>
+<script src="<?= BASE_URL ?>public/js/schedule-addremove.js"></script>
 
 <?php
 // Clear form data and errors after displaying them

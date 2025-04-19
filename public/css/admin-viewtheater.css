@@ -1,0 +1,228 @@
+/* Theater view page specific styles */
+.theater-view-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
+
+.theater-header {
+    position: relative;
+    padding: 2rem;
+    background-color: #075E54;
+    color: #fff;
+}
+
+.theater-header-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+}
+
+.theater-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.theater-location {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.theater-id-badge {
+    display: inline-block;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.theater-content {
+    padding: 2rem;
+}
+
+.theater-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #075E54;
+    border-bottom: 2px solid #AFE3CE;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.theater-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-card {
+    flex: 1;
+    min-width: 200px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    background-color: #e9f7f4;
+}
+
+.info-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #075E54;
+}
+
+.info-card-title {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.info-card-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+.theater-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.theater-actions .btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+/* Seat map styles */
+.seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.row-label {
+    width: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.seat-container {
+    margin: 4px;
+}
+
+.seat {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #e9ecef;
+    color: #212529;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.seat.standard {
+    background-color: #AED6F1;
+    color: #154360;
+}
+
+.seat.vip {
+    background-color: #F9E79F;
+    color: #7D6608;
+}
+
+.seat.premium {
+    background-color: #D7BDE2;
+    color: #4A235A;
+}
+
+.seat-number {
+    position: absolute;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.seat-legend {
+    margin-bottom: 20px;
+}
+
+.screen {
+    width: 80%;
+    height: 30px;
+    background-color: #eee;
+    margin: 0 auto 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    transform: perspective(100px) rotateX(-5deg);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
+}
+
+.back-button {
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.back-button i {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .theater-header {
+        padding: 1.5rem;
+    }
+    
+    .theater-title {
+        font-size: 1.8rem;
+    }
+    
+    .theater-content {
+        padding: 1.5rem;
+    }
+    
+    .info-card {
+        min-width: 100%;
+    }
+}
