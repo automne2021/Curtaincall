@@ -791,4 +791,38 @@ class UserController
         include 'views/admin/users/userBookings.php';
         include 'views/admin/layouts/footer.php';
     }
+
+    public function checkUsername()
+    {
+        header('Content-Type: application/json');
+        
+        $username = isset($_GET['username']) ? $this->sanitizeInput($_GET['username']) : '';
+        
+        if (empty($username)) {
+            echo json_encode(['available' => false, 'error' => 'Username is required']);
+            exit;
+        }
+        
+        $user = $this->userModel->getUserByUsername($username);
+        
+        echo json_encode(['available' => ($user === null)]);
+        exit;
+    }
+
+    public function checkEmail()
+    {
+        header('Content-Type: application/json');
+        
+        $email = isset($_GET['email']) ? $this->sanitizeInput($_GET['email']) : '';
+        
+        if (empty($email)) {
+            echo json_encode(['available' => false, 'error' => 'Email is required']);
+            exit;
+        }
+        
+        $user = $this->userModel->getUserByEmail($email);
+        
+        echo json_encode(['available' => ($user === null)]);
+        exit;
+    }
 }

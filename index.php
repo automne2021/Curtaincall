@@ -85,6 +85,9 @@ $routes['user/google-login'] = ['controller' => 'UserController', 'action' => 'g
 $routes['user/google-callback'] = ['controller' => 'UserController', 'action' => 'googleCallback'];
 $routes['user/disconnectGoogle'] = ['controller' => 'UserController', 'action' => 'disconnectGoogle'];
 $routes['booking/cancelConfirmation'] = ['controller' => 'BookingController', 'action' => 'cancelConfirmation'];
+// Validate routes
+$routes['user/checkUsername'] = ['controller' => 'UserController', 'action' => 'checkUsername'];
+$routes['user/checkEmail'] = ['controller' => 'UserController', 'action' => 'checkEmail'];
 
 // Search routes
 $routes['search/index'] = ['controller' => 'SearchController', 'action' => 'index'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 19, 2025 lúc 05:00 PM
+-- Thời gian đã tạo: Th4 19, 2025 lúc 08:03 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -41,6 +41,20 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`admin_id`, `username`, `password`, `email`, `created_at`) VALUES
 (1, 'admin', '$2y$10$Tn/0xi2s.OElsEgYTieQX.mcyzYyuBcGYHB8f3eQKkaBH8JRvhh8e', 'admin@curtaincall.com', '2025-04-06 22:41:32');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `admin_tokens`
+--
+
+CREATE TABLE `admin_tokens` (
+  `id` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1742,7 +1756,22 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `created_at`, `
 (1, 'user1', '$2y$10$2rG1e/2nVzKbIIM0Rdn.B.4aB1KEvfX0uJnhlis7IYJgXf.LsNBEW', 'user1@gmail.com', '2025-04-06 23:40:53', NULL, NULL, NULL, 'public/images/avatars/default.png', NULL, NULL, NULL),
 (2, 'user2', '$2y$10$puM7Ga5HQIP0hNGug7PkP.XDwtYWjEwm21ZLyfVKHXusEG3234VrG', 'user2@gmail.com', '2025-04-06 23:58:47', 'Nguyen Van A', '0123456789', '268 Ly Thuong Kiet', 'public/images/avatars/default.png', NULL, NULL, NULL),
 (3, 'khanhvy', '$2y$10$tYcQAMVx5XKGepnClazeAev0CxEN033aH6VAFm95zKCLM23i9FMKm', 'vhkhanhvy25082601@gmail.com', '2025-04-07 22:08:44', 'Khánh Vy', NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocKkBPXHVxIv9AyzaF_gIoHH5YWYxmOtphqA8VCIdtIhVg5TFbY=s96-c', NULL, NULL, '114875941151678575320'),
-(4, 'nhanphan', '$2y$10$PXGudNK5Js93jFoWcCYjuOLB5OY8oNy9ptjy3hMElArfpPiJ8aMIq', 'phankhanhnhan01@gmail.com', '2025-04-08 07:01:57', 'Nhân Phan', NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', NULL, NULL, '103729317953199544120');
+(4, 'nhanphan', '$2y$10$PXGudNK5Js93jFoWcCYjuOLB5OY8oNy9ptjy3hMElArfpPiJ8aMIq', 'phankhanhnhan01@gmail.com', '2025-04-08 07:01:57', 'Nhân Phan', NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', NULL, NULL, '103729317953199544120'),
+(5, 'user3', '$2y$10$m8Ill5ZLch0giAtFIFHNrul6Ez1cDh4PlrUqU6gqwpNUTE/WueoM2', 'user3@gmail.com', '2025-04-19 17:59:20', NULL, NULL, NULL, 'public/images/avatars/default.png', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `user_tokens`
+--
+
+CREATE TABLE `user_tokens` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1754,6 +1783,14 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `created_at`, `
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_id`),
   ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Chỉ mục cho bảng `admin_tokens`
+--
+ALTER TABLE `admin_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`),
+  ADD KEY `admin_id` (`admin_id`);
 
 --
 -- Chỉ mục cho bảng `bookings`
@@ -1810,6 +1847,14 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Chỉ mục cho bảng `user_tokens`
+--
+ALTER TABLE `user_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -1818,6 +1863,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `admins`
   MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `admin_tokens`
+--
+ALTER TABLE `admin_tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `bookings`
@@ -1829,11 +1880,23 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `user_tokens`
+--
+ALTER TABLE `user_tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
+
+--
+-- Các ràng buộc cho bảng `admin_tokens`
+--
+ALTER TABLE `admin_tokens`
+  ADD CONSTRAINT `admin_tokens_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`admin_id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `bookings`
@@ -1872,6 +1935,12 @@ ALTER TABLE `seat_maps`
 --
 ALTER TABLE `seat_prices`
   ADD CONSTRAINT `seat_prices_ibfk_1` FOREIGN KEY (`theater_id`) REFERENCES `theaters` (`theater_id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `user_tokens`
+--
+ALTER TABLE `user_tokens`
+  ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
