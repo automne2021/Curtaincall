@@ -9,9 +9,9 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <?php if (!empty($user['avatar'])): ?>
-                    <img src="<?= BASE_URL . $user['avatar'] ?>" class="user-avatar me-3" alt="<?= htmlspecialchars($user['username']) ?>'s avatar">
+                    <img src="<?= BASE_URL . $user['avatar'] ?>" class="user-avatar-small me-3" alt="<?= htmlspecialchars($user['username']) ?>'s avatar">
                 <?php else: ?>
-                    <div class="avatar-placeholder me-3">
+                    <div class="avatar-placeholder-small me-3">
                         <?= strtoupper(substr($user['username'] ?? 'U', 0, 1)) ?>
                     </div>
                 <?php endif; ?>
@@ -45,7 +45,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($bookings as $index => $booking): ?>
+                        <?php 
+                        // Pagination setup
+                        $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+                        $per_page = 5;
+                        $total_bookings = count($bookings);
+                        $total_pages = ceil($total_bookings / $per_page);
+                        
+                        // Ensure current page is valid
+                        $page = min($page, max(1, $total_pages));
+                        
+                        // Get bookings for current page
+                        $start_index = ($page - 1) * $per_page;
+                        $current_page_bookings = array_slice($bookings, $start_index, $per_page);
+                        
+                        foreach ($current_page_bookings as $index => $booking): 
+                        ?>
                         <tr style="animation-delay: <?= 0.1 + ($index * 0.05) ?>s;" class="fade-in">
                             <td class="booking-id"><?= htmlspecialchars($booking['booking_id']) ?></td>
                             <td><?= htmlspecialchars($booking['play_title']) ?></td>
@@ -68,7 +83,50 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                
+                <?php if ($total_pages > 1): ?>
+                    <?php 
+                    // Base URL for pagination
+                    $base_url = BASE_URL . 'index.php?route=admin/userBookings&id=' . $user['user_id'];
+                    
+                    // Pagination info
+                    $pagination = [
+                        'total' => $total_bookings,
+                        'per_page' => $per_page,
+                        'current_page' => $page,
+                        'last_page' => $total_pages
+                    ];
+                    
+                    // Include pagination component
+                    include 'views/admin/pagination.php';
+                    ?>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>
 </div>
+
+<style>
+/* Add these styles for smaller avatars */
+.user-avatar-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.avatar-placeholder-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: #adb5bd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+</style>

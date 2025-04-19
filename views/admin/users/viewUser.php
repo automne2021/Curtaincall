@@ -82,7 +82,7 @@
                             <p class="text-center text-muted">This user has no bookings yet.</p>
                         <?php else: ?>
                             <h6 class="mb-3">Recent Bookings:</h6>
-                            <?php foreach (array_slice($userBookings, 0, 5) as $booking): ?>
+                            <?php foreach (array_slice($userBookings, 0, 2) as $booking): ?>
                                 <div class="booking-item">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div class="booking-title"><?= htmlspecialchars($booking['play_title']) ?></div>
@@ -102,7 +102,7 @@
                                 </div>
                             <?php endforeach; ?>
                             
-                            <?php if (count($userBookings) > 5): ?>
+                            <?php if (count($userBookings) > 2): ?>
                                 <div class="text-center mt-3">
                                     <a href="<?= BASE_URL ?>index.php?route=admin/userBookings&id=<?= $user['user_id'] ?>" class="btn btn-outline-primary">
                                         View All Bookings

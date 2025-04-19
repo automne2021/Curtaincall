@@ -27,6 +27,7 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
     <link rel="stylesheet" href="public/css/booking.css">
     <link rel="stylesheet" href="public/css/payment-success.css">
     <link rel="stylesheet" href="public/css/contact.css">
+    <link rel="stylesheet" href="public/css/pagination.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="public/ckeditor5-builder-45.0.0/ckeditor5/ckeditor5.js"></script>

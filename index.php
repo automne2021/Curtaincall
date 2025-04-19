@@ -28,6 +28,7 @@ $routes['contact/send'] = ['controller' => 'ContactController', 'action' => 'sen
 $routes['user/google-login'] = ['controller' => 'UserController', 'action' => 'googleLogin'];
 $routes['user/google-callback'] = ['controller' => 'UserController', 'action' => 'googleCallback'];
 $routes['user/disconnectGoogle'] = ['controller' => 'UserController', 'action' => 'disconnectGoogle'];
+$routes['booking/cancelConfirmation'] = ['controller' => 'BookingController', 'action' => 'cancelConfirmation'];
 
 // Admin routes
 $routes['admin/login'] = ['controller' => 'AdminController', 'action' => 'login'];

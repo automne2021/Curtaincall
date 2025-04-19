@@ -82,6 +82,29 @@ class PlayController
 
         // Get theaters for the navigation menu
         $theaters_result = $this->theaterModel->getAllTheaters();
+        
+        // Get schedules
+        $schedules_sql = "SELECT * FROM schedules WHERE play_id = ? AND date >= CURDATE() ORDER BY date, start_time";
+        $stmt = $this->conn->prepare($schedules_sql);
+        $stmt->bind_param("s", $play_id);
+        $stmt->execute();
+        $schedules_result = $stmt->get_result();
+        
+        // Process schedules
+        $dates = [];
+        $schedules = [];
+        if ($schedules_result->num_rows > 0) {
+            while ($schedule = $schedules_result->fetch_assoc()) {
+                $date = $schedule['date'];
+                if (!in_array($date, $dates)) {
+                    $dates[] = $date;
+                }
+                $schedules[] = $schedule;
+            }
+        }
+        
+        // Pass the processed data to the view
+        $has_schedules = $schedules_result->num_rows > 0;
 
         // Load the views
         include 'views/layouts/header.php';

@@ -100,8 +100,8 @@
                         <div class="text-center mt-4">
                             <div class="row">
                                 <div class="col-6 text-start">
-                                    <a href="index.php?route=booking/index&play_id=<?= $play['play_id'] ?>" class="btn btn-outline-secondary">
-                                        <i class="bi bi-arrow-left"></i> Back to Schedule
+                                    <a href="index.php?route=play/view&play_id=<?= $play['play_id'] ?>#scheduleSection" class="btn btn-outline-secondary">
+                                        <i class="bi bi-arrow-left"></i> Back to Play
                                     </a>
                                 </div>
                                 <div class="col-6 text-end">
