@@ -83,7 +83,7 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
                         </ul>
 
                         <form id="live-search" class="d-flex search-container" role="search" method="GET" action="index.php">
-                            <input type="hidden" name="route" value="play/search">
+                            <input type="hidden" name="route" value="search/index">
                             <div class="input-group">
                                 <span class="input-group-text bg-white border-end-0">
                                     <i class="bi bi-search text-muted"></i>

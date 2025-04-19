@@ -110,3 +110,102 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const searchHints = document.getElementById('search-hints');
+    const searchForm = document.getElementById('live-search');
+    
+    let typingTimer;
+    const doneTypingInterval = 300; // Time in ms
+    
+    // Show/hide search hints dropdown
+    searchInput.addEventListener('focus', function() {
+        const query = this.value.trim();
+        if (query.length >= 2) {
+            showSearchHints();
+        }
+    });
+    
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !searchHints.contains(e.target)) {
+            hideSearchHints();
+        }
+    });
+    
+    // Live search as user types
+    searchInput.addEventListener('keyup', function() {
+        clearTimeout(typingTimer);
+        const query = this.value.trim();
+        
+        if (query.length >= 2) {
+            typingTimer = setTimeout(() => getSearchHints(query), doneTypingInterval);
+        } else {
+            hideSearchHints();
+        }
+    });
+    
+    // Form submission - redirect to search page
+    searchForm.addEventListener('submit', function(e) {
+        const query = searchInput.value.trim();
+        if (query.length < 2) {
+            e.preventDefault();
+        }
+    });
+    
+    function getSearchHints(query) {
+        fetch(`index.php?route=search/ajaxSearch&query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderSearchHints(data.results, query);
+                }
+            })
+            .catch(error => console.error('Search error:', error));
+    }
+    
+    function renderSearchHints(results, query) {
+        if (results.length === 0) {
+            hideSearchHints();
+            return;
+        }
+        
+        let html = `<div class="search-hint-header">Kết quả tìm kiếm cho "${query}"</div>`;
+        
+        results.forEach(play => {
+            html += `
+            <a href="index.php?route=play/view&play_id=${play.play_id}" class="search-hint-item">
+                <div class="search-hint-image">
+                    <img src="${play.image}" alt="${play.title}">
+                </div>
+                <div class="search-hint-content">
+                    <div class="search-hint-title">${play.title}</div>
+                    <div class="search-hint-theater">${play.theater_name}</div>
+                    <div class="search-hint-price">Từ ${new Intl.NumberFormat('vi-VN').format(play.min_price)}đ</div>
+                </div>
+            </a>
+            `;
+        });
+        
+        html += `
+        <div class="search-hint-footer">
+            <a href="index.php?route=search/index&query=${encodeURIComponent(query)}" class="search-all-btn">
+                Xem tất cả kết quả
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        `;
+        
+        searchHints.innerHTML = html;
+        showSearchHints();
+    }
+    
+    function showSearchHints() {
+        searchHints.classList.remove('d-none');
+    }
+    
+    function hideSearchHints() {
+        searchHints.classList.add('d-none');
+    }
+});

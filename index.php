@@ -30,6 +30,11 @@ $routes['user/google-callback'] = ['controller' => 'UserController', 'action' =>
 $routes['user/disconnectGoogle'] = ['controller' => 'UserController', 'action' => 'disconnectGoogle'];
 $routes['booking/cancelConfirmation'] = ['controller' => 'BookingController', 'action' => 'cancelConfirmation'];
 
+// Search routes
+$routes['search/index'] = ['controller' => 'SearchController', 'action' => 'index'];
+$routes['search/ajaxSearch'] = ['controller' => 'SearchController', 'action' => 'ajaxSearch'];
+$routes['search/ajaxSearchFull'] = ['controller' => 'SearchController', 'action' => 'ajaxSearchFull'];
+
 // Admin routes
 $routes['admin/login'] = ['controller' => 'AdminController', 'action' => 'login'];
 $routes['admin/logout'] = ['controller' => 'AdminController', 'action' => 'logout'];

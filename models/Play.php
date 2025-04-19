@@ -345,4 +345,53 @@ class Play
             ];
         }
     }
+
+    public function searchPlays($query, $limit = null) {
+        try {
+            $searchTerm = '%' . $query . '%';
+            
+            $limitClause = '';
+            if ($limit !== null) {
+                $limitClause = "LIMIT ?";
+            }
+            
+            $sql = "SELECT p.*, MIN(sp.price) as min_price, t.name as theater_name, 
+                    MIN(s.date) as date
+                    FROM plays p
+                    JOIN theaters t ON p.theater_id = t.theater_id
+                    LEFT JOIN seat_prices sp ON p.theater_id = sp.theater_id
+                    LEFT JOIN schedules s ON p.play_id = s.play_id AND s.date >= CURDATE()
+                    WHERE p.title LIKE ? OR p.description LIKE ? OR t.name LIKE ?
+                    GROUP BY p.play_id
+                    ORDER BY 
+                        CASE 
+                            WHEN p.title LIKE ? THEN 1
+                            WHEN t.name LIKE ? THEN 2
+                            ELSE 3
+                        END,
+                        s.date ASC
+                    $limitClause";
+            
+            $stmt = $this->conn->prepare($sql);
+            
+            if ($limit !== null) {
+                $stmt->bind_param("ssssi", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $limit);
+            } else {
+                $stmt->bind_param("sssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm);
+            }
+            
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $plays = [];
+            while ($row = $result->fetch_assoc()) {
+                $plays[] = $row;
+            }
+            
+            return $plays;
+        } catch (Exception $e) {
+            error_log("Error searching plays: " . $e->getMessage());
+            return [];
+        }
+    }
 }
