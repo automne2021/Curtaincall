@@ -313,36 +313,34 @@ class BookingController
     }
 
     // Step 4: Complete booking
-    public function complete()
-    {
+    public function complete() {
         // Check if user is logged in
         if (!isset($_SESSION['user'])) {
-            $_SESSION['redirect_after_login'] = 'index.php?route=booking';
-            $_SESSION['error_message'] = 'Please log in to complete your booking';
-            header('Location: index.php');
+            header('Location: index.php?route=user/login');
             exit;
         }
-
+    
         // Get booking details from session
         $booking_details = $_SESSION['booking_details'] ?? null;
-
+    
         if (!$booking_details) {
-            $_SESSION['error_message'] = 'Booking details not found';
+            $_SESSION['error_message'] = 'No booking information found';
             header('Location: index.php');
             exit;
         }
-
+    
         $user_id = $_SESSION['user']['user_id'];
         $play_id = $booking_details['play_id'];
         $selected_seats = $booking_details['selected_seats'];
-
+        $schedule_date = $booking_details['schedule_date']; // Get the scheduled date
+    
         // Get play details
         $play = $this->playModel->getPlayById($play_id);
         $theater_id = $play['theater_id'];
-
+    
         // Set expiration time (e.g., 15 minutes from now)
         $expires_at = date('Y-m-d H:i:s', strtotime('+15 minutes'));
-
+    
         // Create bookings for each selected seat
         $success = true;
         $booking_ids = [];
@@ -355,52 +353,58 @@ class BookingController
                 // Get price for this seat
                 $price = $this->seatModel->getSeatPrice($theater_id, $seat_id);
                 
-                // Create booking
-                $booking_sql = "INSERT INTO bookings (user_id, play_id, theater_id, seat_id, status, expires_at, amount) 
-                            VALUES (?, ?, ?, ?, 'Paid', ?, ?)";
-                $booking_stmt = $this->conn->prepare($booking_sql);
-                $booking_stmt->bind_param("issssd", $user_id, $play_id, $theater_id, $seat_id, $expires_at, $price);
+                // Create booking record
+                $booking_result = $this->bookingModel->createBooking(
+                    $user_id, 
+                    $play_id, 
+                    $theater_id, 
+                    $seat_id, 
+                    $expires_at,
+                    $price,
+                    $schedule_date  // Pass the schedule date to the createBooking method
+                );
                 
-                if (!$booking_stmt->execute()) {
-                    throw new Exception("Failed to create booking for seat $seat_id");
+                if (!$booking_result) {
+                    $success = false;
+                    break;
                 }
                 
-                $booking_id = $booking_stmt->insert_id;
+                $booking_id = $this->conn->insert_id;
                 $booking_ids[] = $booking_id;
                 
-                // Update seat status
-                $update_seat_sql = "UPDATE seats SET status = 'Booked' WHERE play_id = ? AND theater_id = ? AND seat_id = ?";
-                $update_seat_stmt = $this->conn->prepare($update_seat_sql);
-                $update_seat_stmt->bind_param("sss", $play_id, $theater_id, $seat_id);
-                
-                if (!$update_seat_stmt->execute()) {
-                    throw new Exception("Failed to update seat status for seat $seat_id");
-                }
+                // Update seat status to 'Pending'
+                $this->seatModel->updateSeatStatus($play_id, $theater_id, $seat_id, 'Pending');
             }
             
-            // Commit the transaction
-            $this->conn->commit();
-            
-            // Clear booking session data
-            unset($_SESSION['booking_details']);
-            
-            // Get the last booking ID to highlight
-            $highlight_booking_id = end($booking_ids);
-
-            // Set success message
-            $seatCount = count($selected_seats);
-            $_SESSION['success_message'] = "Payment successful! Your $seatCount ticket" . ($seatCount > 1 ? 's' : '') . " for {$play['title']} " . ($seatCount > 1 ? 'have' : 'has') . " been confirmed.";
-            
-            // Redirect to history page with success parameter and the booking ID to highlight
-            header("Location: index.php?route=booking/history&payment_success=1&booking_id=$highlight_booking_id");
-            exit;
-            
+            // If all bookings were created successfully
+            if ($success) {
+                // For demonstration purposes, set all bookings to 'Paid' status
+                foreach ($booking_ids as $id) {
+                    $this->bookingModel->updateBookingStatus($id, 'Paid');
+                }
+                
+                // Commit transaction
+                $this->conn->commit();
+                
+                // Clear booking session data
+                unset($_SESSION['booking_details']);
+                
+                // Redirect to booking history with success message
+                $_SESSION['success_message'] = 'Payment successful! Your tickets are now confirmed.';
+                header('Location: index.php?route=booking/history&payment_success=1&booking_id=' . $booking_ids[0]);
+                exit;
+            } else {
+                // Rollback transaction if any booking failed
+                $this->conn->rollback();
+                $_SESSION['error_message'] = 'Failed to complete booking';
+                header('Location: index.php?route=booking/selectSeats&return=true');
+                exit;
+            }
         } catch (Exception $e) {
-            // Roll back the transaction on error
+            // Rollback transaction on error
             $this->conn->rollback();
-            
-            $_SESSION['error_message'] = 'Error completing booking: ' . $e->getMessage();
-            header('Location: index.php?route=booking/confirm');
+            $_SESSION['error_message'] = 'An error occurred: ' . $e->getMessage();
+            header('Location: index.php?route=booking/selectSeats&return=true');
             exit;
         }
     }

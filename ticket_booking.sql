@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 18, 2025 lúc 01:59 AM
+-- Thời gian đã tạo: Th4 19, 2025 lúc 03:06 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -58,16 +58,34 @@ CREATE TABLE `bookings` (
   `expires_at` datetime NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `amount` decimal(10,2) NOT NULL DEFAULT 0.00
+  `amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `schedule_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `bookings`
 --
 
-INSERT INTO `bookings` (`booking_id`, `user_id`, `play_id`, `theater_id`, `seat_id`, `status`, `expires_at`, `created_at`, `updated_at`, `amount`) VALUES
-(17, 1, 'IDE08', 'IDE', 'C3', 'Paid', '2025-04-17 18:32:04', '2025-04-17 11:17:04', '2025-04-17 11:17:16', 270000.00),
-(18, 1, 'IDE08', 'IDE', 'E4', 'Paid', '2025-04-17 18:32:04', '2025-04-17 11:17:04', '2025-04-17 11:17:23', 320000.00);
+INSERT INTO `bookings` (`booking_id`, `user_id`, `play_id`, `theater_id`, `seat_id`, `status`, `expires_at`, `created_at`, `updated_at`, `amount`, `schedule_date`) VALUES
+(17, 1, 'IDE08', 'IDE', 'C3', 'Paid', '2025-04-17 18:32:04', '2025-04-17 11:17:04', '2025-04-19 00:41:35', 270000.00, '2025-04-23'),
+(18, 1, 'IDE08', 'IDE', 'E4', 'Paid', '2025-04-17 18:32:04', '2025-04-17 11:17:04', '2025-04-19 00:41:35', 320000.00, '2025-04-23'),
+(19, 1, 'THM02', 'THM', 'C6', 'Paid', '2025-04-19 04:50:51', '2025-04-18 21:35:51', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(20, 1, 'THM02', 'THM', 'E6', 'Paid', '2025-04-19 04:50:51', '2025-04-18 21:35:51', '2025-04-19 00:41:35', 350000.00, '2025-04-23'),
+(21, 1, 'THM02', 'THM', 'D9', 'Paid', '2025-04-19 05:58:51', '2025-04-18 22:43:51', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(22, 1, 'THM02', 'THM', 'E8', 'Paid', '2025-04-19 05:58:51', '2025-04-18 22:43:51', '2025-04-19 00:41:35', 350000.00, '2025-04-23'),
+(23, 1, 'THM02', 'THM', 'D7', 'Paid', '2025-04-19 06:28:23', '2025-04-18 23:13:23', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(24, 1, 'SKN01', 'SKN', 'C4', 'Paid', '2025-04-19 06:28:51', '2025-04-18 23:13:51', '2025-04-19 00:41:35', 270000.00, '2025-04-23'),
+(25, 1, 'THM02', 'THM', 'E3', 'Paid', '2025-04-19 06:29:54', '2025-04-18 23:14:54', '2025-04-19 00:41:35', 350000.00, '2025-04-23'),
+(26, 1, 'THM02', 'THM', 'C4', 'Paid', '2025-04-19 06:48:40', '2025-04-18 23:33:40', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(27, 1, 'THM02', 'THM', 'C8', 'Paid', '2025-04-19 06:53:03', '2025-04-18 23:38:03', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(28, 1, 'THM02', 'THM', 'B9', 'Paid', '2025-04-19 06:53:25', '2025-04-18 23:38:25', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(29, 1, 'THM02', 'THM', 'B6', 'Paid', '2025-04-19 06:55:25', '2025-04-18 23:40:25', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(30, 1, 'THM02', 'THM', 'B7', 'Paid', '2025-04-19 06:55:25', '2025-04-18 23:40:25', '2025-04-19 00:41:35', 300000.00, '2025-04-23'),
+(31, 1, 'THĐ03', 'THĐ', 'D5', 'Paid', '2025-04-19 07:36:47', '2025-04-19 00:21:47', '2025-04-19 00:41:35', 330000.00, '2025-04-23'),
+(32, 1, 'THĐ03', 'THĐ', 'E7', 'Paid', '2025-04-19 07:36:47', '2025-04-19 00:21:47', '2025-04-19 00:41:35', 400000.00, '2025-04-23'),
+(33, 1, 'THĐ03', 'THĐ', 'D6', 'Paid', '2025-04-19 07:51:30', '2025-04-19 00:36:30', '2025-04-19 00:36:30', 330000.00, '2025-04-30'),
+(34, 1, 'THĐ03', 'THĐ', 'C8', 'Paid', '2025-04-19 07:52:05', '2025-04-19 00:37:05', '2025-04-19 00:37:05', 330000.00, '2025-04-23'),
+(35, 1, 'THĐ03', 'THĐ', 'E8', 'Paid', '2025-04-19 07:52:05', '2025-04-19 00:37:05', '2025-04-19 00:37:05', 400000.00, '2025-04-23');
 
 -- --------------------------------------------------------
 
@@ -89,7 +107,7 @@ CREATE TABLE `plays` (
 --
 
 INSERT INTO `plays` (`play_id`, `title`, `description`, `image`, `theater_id`, `views`) VALUES
-('IDE00', 'Đức Thượng Công Tả Quân LÊ VĂN DUYỆT', 'SÂN KHẤU SỬ VIỆT HỌC ĐƯỜNG\r\n\r\n<b>ĐỨC THƯỢNG CÔNG TẢ QUÂN LÊ VĂN DUYỆT\r\n\r\n-------- NGƯỜI MANG 9 ÁN TỬ --------</b>\r\n\r\n- Tác giả: <b>Phạm Văn Quý</b>\r\n\r\n- Đạo diễn: <b>Hoàng Duẩn</b>\r\n\r\n- Diễn viên: <b>Đình Toàn, Đại Nghĩa, Quang Thảo, Hoàng Trinh, Mỹ Duyên, Quốc Thịnh, Hòa Hiệp, Đông Hải, Kan Lê, Quốc Tuấn, Tâm Anh, Công Tôn Nghĩa, Trúc My, Bảo Cường, Hồng Phước, Phương Nguyễn, Thanh Anh, Phạm Hùng và Nhà Hát Thiếu Nhi NỤ CƯỜI.</b>', 'public\\images\\plays\\LeVanDuyet.jpg', 'IDE', 0),
+('IDE00', 'Đức Thượng Công Tả Quân LÊ VĂN DUYỆT', '<p>SÂN KHẤU SỬ VIỆT HỌC ĐƯỜNG&nbsp;</p><p><strong>ĐỨC THƯỢNG CÔNG TẢ QUÂN LÊ VĂN DUYỆT&nbsp;</strong></p><p><strong>-------- NGƯỜI MANG 9 ÁN TỬ --------</strong>&nbsp;</p><p>- Tác giả: <strong>Phạm Văn Quý</strong>&nbsp;</p><p>- Đạo diễn: <strong>Hoàng Duẩn</strong>&nbsp;</p><p>- Diễn viên: <strong>Đình Toàn, Đại Nghĩa, Quang Thảo, Hoàng Trinh, Mỹ Duyên, Quốc Thịnh, Hòa Hiệp, Đông Hải, Kan Lê, Quốc Tuấn, Tâm Anh, Công Tôn Nghĩa, Trúc My, Bảo Cường, Hồng Phước, Phương Nguyễn, Thanh Anh, Phạm Hùng và Nhà Hát Thiếu Nhi NỤ CƯỜI.</strong></p>', 'public\\images\\plays\\LeVanDuyet.jpg', 'IDE', 0),
 ('IDE01', 'Một Ngày Làm VUA', '- Tác giả: Viễn Hùng\r\n-\nĐạo diễn: Hùng Lâm - Đình Toàn\n- Diễn viên: Đình Toàn, Quốc Thịnh, Quang Thảo, Đại Nghĩa, Hồng Ánh, Mỹ Duyên, Cẩm Hò, Bạch Long, Tâm Anh, Quốc Tuấn, Bảo Cường, Phước Lộc, Thái Hiển, Trúc My, Hoài Trang, Phạm Hạnh, Bích Trâm.', 'public\\images\\plays\\MotNgayLamVua.jpg', 'IDE', 0),
 ('IDE02', 'VÀNG ơi là VÀNG!', '...', 'public\\images\\plays\\VANG.jpg', 'IDE', 0),
 ('IDE03', '12 Bà Mụ', '...', 'public\\images\\plays\\12BaMu.jpg', 'IDE', 0),
@@ -108,11 +126,11 @@ INSERT INTO `plays` (`play_id`, `title`, `description`, `image`, `theater_id`, `
 ('THN01', 'Đại Hội Yêu Quái - 7 Con Yêu Nhền Nhện', '...', 'public\\images\\plays\\7NhenNhen.jpg', 'THN', 0),
 ('THN02', 'Thanh Xà Bạch Xà ngoại truyện', '...', 'public\\images\\plays\\ThanhXaBachXa.jpg', 'THN', 0),
 ('THN03', 'Lạc lối ở BangKok', '- Tác giả: Nguyễn Bảo Ngọc\n- Đạo diễn: Hồng Ngọc\n- Diễn viên: Khương Ngọc, BB Trần, Ngọc Phước, Tuấn Kiệt, Long Chun, Bé 7, Mai Bảo Vinh, Duy Tiến, Huỳnh Thi, Tạ Lâm, Vương Chí Nam, Mạnh Lân, Phạm Gia Minh...', 'public\\images\\plays\\LacLoiBangkok.jpg', 'THN', 0),
-('THN04', 'Tung Hoành Pattaya', 'Tác giả: Nguyễn Duy Xăng - Hiếu Nghĩa - Long Duy\nĐạo diễn:  Hồng Ngọc\nDiễn viên: Huỳnh Nhựt, Hải Triều, Tuấn Kiệt, Mai Bảo Vinh, Long Chun, Bé 7, Giỏi Lee, Duy Tiến, Huỳnh Thi, Huyền Duy, Lê Nghĩa và Khương Ngọc.', 'public\\images\\plays\\TungHoanhPattaya.jpg', 'THN', 0),
+('THN04', 'Tung Hoành Pattaya', '<p><strong>Tác giả: Nguyễn Duy Xăng - Hiếu Nghĩa - Long Duy&nbsp;</strong></p><p>Đạo diễn: Hồng Ngọc Diễn viên: Huỳnh Nhựt, Hải Triều, Tuấn Kiệt, Mai Bảo Vinh, Long Chun, Bé 7, Giỏi Lee, Duy Tiến, Huỳnh Thi, Huyền Duy, Lê Nghĩa và Khương Ngọc.</p>', 'public\\images\\plays\\TungHoanhPattaya.jpg', 'THN', 0),
 ('THĐ00', 'CÔ GIÁO DUYÊN', '...', 'public\\images\\plays\\CoGiaoDuyen.jpg', 'THĐ', 0),
 ('THĐ01', 'NGŨ QUÝ TƯƠNG PHÙNG', 'Sân khấu Nghệ Thuật Thiên Đăng trân trọng giới thiệu đến quý khán giả vở hài kịch dân gian\n\"NGŨ QUÝ TƯƠNG PHÙNG\"   -- Phiên Bản Mới Nhất --\n\nTác giả: TUẤN KHÔI - HƯƠNG GIANG\nĐạo diễn: TUẤN KHÔI\nVới sự tham gia của các nghệ sĩ: NSƯT THÀNH LỘC, NSƯT HỮU CHÂU, LƯƠNG THẾ THÀNH, HƯƠNG GIANG, HUY TỨ, TRƯƠNG HẠ, QUỐC TRUNG, KIỀU NGÂN, TRANG TUYỀN, MẠNH HÙNG, HOÀNG KHANH\n\nTrân trọng kính mời quý khán giả.\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.', 'public\\images\\plays\\NguQuyTuongPhung.jpg', 'THĐ', 0),
 ('THĐ02', 'CHUYẾN ĐÒ ĐỊNH MỆNH', 'Sân khấu Kịch Thiên Đăng trân trọng giới thiệu vở diễn MỚI NHẨT\r\n\"CHUYẾN ĐÒ ĐỊNH MỆNH\"\nTác phẩm mới được dàn dựng bởi Đạo diễn - Nhà Giáo - NSND TRẦN MINH NGỌC\r\nTác giả : NGUYỄN HUY THIỆP\n\nVới sự tham gia của các diễn viên: NSUT THÀNH LỘC - NSUT HỮU CHÂU - NSƯT MẠNH HÙNG\nCác diễn viên: HƯƠNG GIANG, TRANG TUYỀN, LƯƠNG THẾ THÀNH, HỒNG NGỌC, HOÀNG KHANH\nSự kiện có xuất VAT. Khách hàng lưu ý gửi thông tin cần thiết trong vòng 24h kể từ khi mua vé để được hỗ trợ. Sau thời gian trên, BTC xin phép được từ chối xuất hoá đơn.\nTrẻ em từ 8 tuổi trở lên sẽ có thể mua vé tham dự vờ diễn.\n\nTrân trọng kính mời quý khách!', 'public\\images\\plays\\ChuyenDoDM.jpg', 'THĐ', 0),
-('THĐ03', 'NHỮNG CON MA NHÀ HÁT', '...', 'public\\images\\plays\\MaNhaHat.jpg', 'THĐ', 0);
+('THĐ03', 'NHỮNG CON MA NHÀ HÁT', '<p>...</p>', 'public\\images\\plays\\MaNhaHat.jpg', 'THĐ', 0);
 
 -- --------------------------------------------------------
 
@@ -154,7 +172,8 @@ INSERT INTO `schedules` (`play_id`, `date`, `start_time`, `end_time`) VALUES
 ('THĐ00', '2025-07-01', '19:30:00', '22:30:00'),
 ('THĐ01', '2025-05-20', '19:30:00', '22:30:00'),
 ('THĐ02', '2025-06-22', '19:30:00', '22:00:00'),
-('THĐ03', '2025-04-23', '18:00:00', '20:00:00');
+('THĐ03', '2025-04-23', '18:00:00', '20:00:00'),
+('THĐ03', '2025-04-30', '18:00:00', '20:00:00');
 
 -- --------------------------------------------------------
 
@@ -698,7 +717,7 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('SKN', 'SKN01', 'C10', 'Available'),
 ('SKN', 'SKN01', 'C2', 'Available'),
 ('SKN', 'SKN01', 'C3', 'Available'),
-('SKN', 'SKN01', 'C4', 'Available'),
+('SKN', 'SKN01', 'C4', 'Pending'),
 ('SKN', 'SKN01', 'C5', 'Available'),
 ('SKN', 'SKN01', 'C6', 'Available'),
 ('SKN', 'SKN01', 'C7', 'Available'),
@@ -890,19 +909,19 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('THM', 'THM02', 'B3', 'Available'),
 ('THM', 'THM02', 'B4', 'Available'),
 ('THM', 'THM02', 'B5', 'Available'),
-('THM', 'THM02', 'B6', 'Available'),
-('THM', 'THM02', 'B7', 'Available'),
+('THM', 'THM02', 'B6', 'Booked'),
+('THM', 'THM02', 'B7', 'Booked'),
 ('THM', 'THM02', 'B8', 'Available'),
-('THM', 'THM02', 'B9', 'Available'),
+('THM', 'THM02', 'B9', 'Booked'),
 ('THM', 'THM02', 'C1', 'Available'),
 ('THM', 'THM02', 'C10', 'Available'),
 ('THM', 'THM02', 'C2', 'Available'),
 ('THM', 'THM02', 'C3', 'Available'),
-('THM', 'THM02', 'C4', 'Available'),
+('THM', 'THM02', 'C4', 'Booked'),
 ('THM', 'THM02', 'C5', 'Available'),
-('THM', 'THM02', 'C6', 'Available'),
+('THM', 'THM02', 'C6', 'Pending'),
 ('THM', 'THM02', 'C7', 'Available'),
-('THM', 'THM02', 'C8', 'Available'),
+('THM', 'THM02', 'C8', 'Booked'),
 ('THM', 'THM02', 'C9', 'Available'),
 ('THM', 'THM02', 'D1', 'Available'),
 ('THM', 'THM02', 'D10', 'Available'),
@@ -911,18 +930,18 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('THM', 'THM02', 'D4', 'Available'),
 ('THM', 'THM02', 'D5', 'Available'),
 ('THM', 'THM02', 'D6', 'Available'),
-('THM', 'THM02', 'D7', 'Available'),
+('THM', 'THM02', 'D7', 'Pending'),
 ('THM', 'THM02', 'D8', 'Available'),
-('THM', 'THM02', 'D9', 'Available'),
+('THM', 'THM02', 'D9', 'Pending'),
 ('THM', 'THM02', 'E1', 'Available'),
 ('THM', 'THM02', 'E10', 'Available'),
 ('THM', 'THM02', 'E2', 'Available'),
-('THM', 'THM02', 'E3', 'Available'),
+('THM', 'THM02', 'E3', 'Pending'),
 ('THM', 'THM02', 'E4', 'Available'),
 ('THM', 'THM02', 'E5', 'Available'),
-('THM', 'THM02', 'E6', 'Available'),
+('THM', 'THM02', 'E6', 'Pending'),
 ('THM', 'THM02', 'E7', 'Available'),
-('THM', 'THM02', 'E8', 'Available'),
+('THM', 'THM02', 'E8', 'Pending'),
 ('THM', 'THM02', 'E9', 'Available'),
 ('THN', 'THN00', 'A1', 'Available'),
 ('THN', 'THN00', 'A10', 'Available'),
@@ -1352,15 +1371,15 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('THĐ', 'THĐ03', 'C5', 'Available'),
 ('THĐ', 'THĐ03', 'C6', 'Available'),
 ('THĐ', 'THĐ03', 'C7', 'Available'),
-('THĐ', 'THĐ03', 'C8', 'Available'),
+('THĐ', 'THĐ03', 'C8', 'Pending'),
 ('THĐ', 'THĐ03', 'C9', 'Available'),
 ('THĐ', 'THĐ03', 'D1', 'Available'),
 ('THĐ', 'THĐ03', 'D10', 'Available'),
 ('THĐ', 'THĐ03', 'D2', 'Available'),
 ('THĐ', 'THĐ03', 'D3', 'Available'),
 ('THĐ', 'THĐ03', 'D4', 'Available'),
-('THĐ', 'THĐ03', 'D5', 'Available'),
-('THĐ', 'THĐ03', 'D6', 'Available'),
+('THĐ', 'THĐ03', 'D5', 'Booked'),
+('THĐ', 'THĐ03', 'D6', 'Pending'),
 ('THĐ', 'THĐ03', 'D7', 'Available'),
 ('THĐ', 'THĐ03', 'D8', 'Available'),
 ('THĐ', 'THĐ03', 'D9', 'Available'),
@@ -1371,8 +1390,8 @@ INSERT INTO `seats` (`theater_id`, `play_id`, `seat_id`, `status`) VALUES
 ('THĐ', 'THĐ03', 'E4', 'Available'),
 ('THĐ', 'THĐ03', 'E5', 'Available'),
 ('THĐ', 'THĐ03', 'E6', 'Available'),
-('THĐ', 'THĐ03', 'E7', 'Available'),
-('THĐ', 'THĐ03', 'E8', 'Available'),
+('THĐ', 'THĐ03', 'E7', 'Booked'),
+('THĐ', 'THĐ03', 'E8', 'Pending'),
 ('THĐ', 'THĐ03', 'E9', 'Available');
 
 -- --------------------------------------------------------
@@ -1690,7 +1709,7 @@ CREATE TABLE `theaters` (
 INSERT INTO `theaters` (`theater_id`, `name`, `location`) VALUES
 ('IDE', 'Nhà Hát Kịch IDECAF', 'Số 28 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh'),
 ('SKN', 'Nhà hát Kịch Sân khấu Nhỏ', '5B, Võ Văn Tần, Phường 06, Quận 3, Thành Phố Hồ Chí Minh'),
-('THM', 'SÂN KHẤU NGHỆ THUẬT TRƯƠNG HÙNG MINH', '22 VĨNH VIỄN, Phường 02, Quận 10, Thành Phố Hồ Chí Minh'),
+('THM', 'Sân Khấu Nghệ Thuật TRƯƠNG HÙNG MINH', '22 VĨNH VIỄN, Phường 02, Quận 10, Thành Phố Hồ Chí Minh'),
 ('THN', 'Nhà Hát THANH NIÊN', '4 Phạm Ngọc Thạch, Bến Nghé, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh'),
 ('THĐ', 'Sân Khấu Thiên Đăng', 'Tầng 12B tòa nhà IMC - 62 Trần Quang Khải, Phường Tân Định, Quận 1, Thành Phố Hồ Chí Minh');
 
@@ -1804,7 +1823,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT cho bảng `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT cho bảng `users`

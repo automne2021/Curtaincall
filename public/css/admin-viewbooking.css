@@ -204,8 +204,8 @@
 }
 
 .admin-viewbooking .seat.booked {
-    background-color: #e0e0e0;
-    color: #666;
+    background-color: #cb2323;
+    color: white;
     cursor: not-allowed;
 }
 

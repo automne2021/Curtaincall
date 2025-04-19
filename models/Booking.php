@@ -6,11 +6,11 @@ class Booking {
         $this->conn = $conn;
     }
     
-    public function createBooking($user_id, $play_id, $theater_id, $seat_id, $expires_at, $amount) {
-        $sql = "INSERT INTO bookings (user_id, play_id, theater_id, seat_id, status, expires_at, amount) 
-                VALUES (?, ?, ?, ?, 'Pending', ?, ?)";
+    public function createBooking($user_id, $play_id, $theater_id, $seat_id, $expires_at, $amount, $schedule_date) {
+        $sql = "INSERT INTO bookings (user_id, play_id, theater_id, seat_id, status, expires_at, amount, schedule_date) 
+                VALUES (?, ?, ?, ?, 'Pending', ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("issssd", $user_id, $play_id, $theater_id, $seat_id, $expires_at, $amount);
+        $stmt->bind_param("issssds", $user_id, $play_id, $theater_id, $seat_id, $expires_at, $amount, $schedule_date);
         return $stmt->execute();
     }
     
@@ -21,7 +21,7 @@ class Booking {
                 FROM bookings b
                 JOIN plays p ON b.play_id = p.play_id
                 JOIN theaters t ON b.theater_id = t.theater_id
-                JOIN schedules s ON b.play_id = s.play_id
+                LEFT JOIN schedules s ON b.play_id = s.play_id AND b.schedule_date = s.date
                 JOIN seat_maps sm ON b.theater_id = sm.theater_id AND b.seat_id = sm.seat_id
                 JOIN seat_prices sp ON b.theater_id = sp.theater_id AND sm.seat_type = sp.seat_type
                 WHERE b.user_id = ?
@@ -163,7 +163,7 @@ class Booking {
                 FROM bookings b
                 JOIN plays p ON b.play_id = p.play_id
                 JOIN theaters t ON b.theater_id = t.theater_id
-                LEFT JOIN schedules s ON b.play_id = s.play_id
+                LEFT JOIN schedules s ON b.play_id = s.play_id AND b.schedule_date = s.date
                 LEFT JOIN seat_maps sm ON b.theater_id = sm.theater_id AND b.seat_id = sm.seat_id
                 LEFT JOIN seat_prices sp ON b.theater_id = sp.theater_id AND sm.seat_type = sp.seat_type
                 WHERE b.booking_id = ?

@@ -33,31 +33,67 @@
         </div>
 
         <div class="play-section">
+            <h2 class="section-title">Performance Schedule</h2>
+            <?php if (empty($schedules)): ?>
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> No schedules have been set for this play.
+                </div>
+            <?php else: ?>
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($schedules as $index => $schedule): 
+                                // Calculate duration
+                                $start = strtotime($schedule['start_time']);
+                                $end = strtotime($schedule['end_time']);
+                                $duration = $end - $start;
+                                if ($duration < 0) {
+                                    $duration += 24 * 3600; // Add 24 hours if ending next day
+                                }
+                                $hours = floor($duration / 3600);
+                                $minutes = floor(($duration % 3600) / 60);
+                            ?>
+                                <tr class="fade-in" style="animation-delay: <?= 0.1 + ($index * 0.05) ?>s;">
+                                    <td><?= date('F j, Y (l)', strtotime($schedule['date'])) ?></td>
+                                    <td><?= date('g:i A', strtotime($schedule['start_time'])) ?></td>
+                                    <td><?= date('g:i A', strtotime($schedule['end_time'])) ?></td>
+                                    <td><?= $hours ?>h <?= $minutes ?>m</td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+        
+        <div class="play-section">
             <h2 class="section-title">Performance Details</h2>
             <div class="play-info">
                 <div class="info-card">
                     <i class="bi bi-calendar-event"></i>
-                    <div class="info-card-title">Date</div>
+                    <div class="info-card-title">Total Performances</div>
                     <div class="info-card-value">
-                        <?= $schedule ? date('F j, Y', strtotime($schedule['date'])) : 'Not scheduled' ?>
+                        <?= count($schedules) ?> performances
                     </div>
                 </div>
                 
+                <?php if (!empty($schedules)): ?>
                 <div class="info-card">
                     <i class="bi bi-clock"></i>
-                    <div class="info-card-title">Start Time</div>
+                    <div class="info-card-title">Next Performance</div>
                     <div class="info-card-value">
-                        <?= $schedule ? date('g:i A', strtotime($schedule['start_time'])) : 'N/A' ?>
+                        <?= date('M j, Y', strtotime($schedules[0]['date'])) ?>
                     </div>
                 </div>
-                
-                <div class="info-card">
-                    <i class="bi bi-clock-history"></i>
-                    <div class="info-card-title">End Time</div>
-                    <div class="info-card-value">
-                        <?= $schedule ? date('g:i A', strtotime($schedule['end_time'])) : 'N/A' ?>
-                    </div>
-                </div>
+                <?php endif; ?>
                 
                 <div class="info-card">
                     <i class="bi bi-eye"></i>

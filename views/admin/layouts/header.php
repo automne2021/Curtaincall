@@ -42,6 +42,7 @@
     ?>
     <script src="<?= BASE_URL ?>public/js/ckeditor-init.js"></script>
     <?php endif; ?>
+    <script src="<?= BASE_URL ?>public/js/schedule-addremove.js"></script>
     </head>
 <?php if (strpos($_GET['route'] ?? '', 'viewBooking') !== false): ?>
 <body class="admin-viewbooking">
