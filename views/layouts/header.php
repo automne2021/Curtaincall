@@ -21,9 +21,11 @@ $isBookingPage = strpos($current_route, 'booking') === 0;
     <link rel="stylesheet" href="public/css/layouts.css">
     <link rel="stylesheet" href="public/css/search.css">
     <link rel="stylesheet" href="public/css/auth.css">
-    <link rel="stylesheet" href="public/css/breadcrumb.css">
+    <link rel="stylesheet" href="public/css/home.css">
+    <link rel="stylesheet" href="public/css/lazy-loading.css">
     <link rel="stylesheet" href="public/css/play-details.css">
     <link rel="stylesheet" href="public/css/profile.css">
+    <link rel="stylesheet" href="public/css/breadcrumb.css">
     <link rel="stylesheet" href="public/css/booking.css">
     <link rel="stylesheet" href="public/css/payment-success.css">
     <link rel="stylesheet" href="public/css/contact.css">

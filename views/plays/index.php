@@ -6,7 +6,10 @@ require_once 'helpers/sort_helpers.php';
     <div class="row mb-4">
         <div class="col">
             <div class="d-flex justify-content-between align-items-start flex-wrap mt-3">
-                <h2 class="theater-title mb-0"><?= htmlspecialchars($theater_name) ?></h2>
+                <div>
+                    <h2 class="theater-title mb-0"><?= htmlspecialchars($theater_name) ?></h2>
+                    <div class="separator"></div>
+                </div>
                 <!-- Sorting options -->
                 <div class="sorting-container mt-3">
                     <div class="sort-label me-2"><i class="bi bi-filter"></i> Sắp xếp theo: </div>

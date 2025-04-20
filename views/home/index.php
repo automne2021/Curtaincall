@@ -13,6 +13,7 @@ require_once 'helpers/sort_helpers.php';
                     <button type="button" data-bs-target="#hotPerformancesCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#hotPerformancesCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
+
                 <!-- Carousel Inner -->
                 <div class="carousel-inner">
                     <?php
@@ -20,13 +21,12 @@ require_once 'helpers/sort_helpers.php';
                     $total_slides = ceil($hot_plays->num_rows / 2);
 
                     for ($i = 0; $i < $total_slides; $i++):
-                        // Reset result pointer to the beginning of this slide
                         $hot_plays->data_seek($i * 2);
                     ?>
                         <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
                             <div class="row">
                                 <?php for ($j = 0; $j < 2 && $play = $hot_plays->fetch_assoc(); $j++): ?>
-                                    <div class="col-md-6">
+                                    <div class="col-12 col-md-6">
                                         <div class="banner-card">
                                             <a href="index.php?route=play/view&play_id=<?= $play['play_id'] ?>">
                                                 <img src="<?= $play['image'] ?>" class="d-block w-100 rounded" alt="<?= $play['title'] ?>">
@@ -99,14 +99,13 @@ require_once 'helpers/sort_helpers.php';
     <div class="row" id="load-more-row">
         <div class="col-12 text-center my-3" id="load-more-container">
             <div class="spinner-border text-primary d-none" id="loading-spinner" role="status">
-                <span class="visually-hidden">Loading...</span>
+                <span class="visually-hidden">Đang tải...</span>
             </div>
         </div>
     </div>
 </main>
 
 <script>
-    // Configuration object to pass PHP variables to JavaScript
     const playConfig = {
         currentPage: <?= $page ?? 1 ?>,
         totalPages: <?= $total_pages ?? 1 ?>,

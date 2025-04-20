@@ -344,12 +344,13 @@ footer .social-links a:hover {
 
 footer .input-group .btn {
     transition: all 0.3s ease;
+    border: none;
 }
 
 footer .input-group .btn:hover {
     background-color: #AFE3CE;
-    transform: translateX(3px);
 }
+
 
 /* === SCROLL TO TOP BUTTON === */
 #myBtn {
@@ -525,5 +526,9 @@ footer .input-group .btn:hover {
     .login-btn {
         align-items: center;
         height: auto;
+    }
+
+    footer {
+        padding: 0 20px;
     }
 }

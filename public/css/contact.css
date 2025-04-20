@@ -1,10 +1,24 @@
-/* Contact page styles matching the site theme */
+.section-heading {
+    margin-top: 20px;
+}
+.section-heading h3 {
+    color: #075E54;
+    position: relative;
+    display: inline-block;
+}
 
-/* Contact cards */
+.separator {
+    height: 2px;
+    width: 100px;
+    background-color: #AFE3CE;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 .contact-card {
     border-radius: 8px;
     border: none;
-    background-color: #f8f9fa;
+    background-color: white;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
@@ -19,6 +33,7 @@
 .contact-icon {
     font-size: 32px;
     margin-bottom: 15px;
+    color: #AFE3CE;
 }
 
 .contact-icon i {
@@ -28,8 +43,7 @@
 .contact-card .card-title {
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 12px;
-    color: #333;
+    color: black;
 }
 
 .contact-link {
@@ -39,13 +53,12 @@
 }
 
 .contact-link:hover {
-    color: #075E54;
     text-decoration: underline;
 }
 
 /* Contact form */
 .contact-form {
-    background-color: #f8f9fa;
+    background-color: white;
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -57,7 +70,7 @@
 }
 
 .contact-form .input-group-text {
-    background-color: #f8f9fa;
+    background-color: #f5f5f5;
     border-right: none;
 }
 
@@ -74,7 +87,6 @@
     border-color: #075E54;
 }
 
-/* Map container */
 .map-container {
     border-radius: 8px;
     overflow: hidden;
@@ -87,21 +99,6 @@
     height: 100%;
 }
 
-/* Section heading styling */
-.section-heading h2, .section-heading h3 {
-    position: relative;
-    display: inline-block;
-}
-
-.separator {
-    height: 3px;
-    width: 50px;
-    background-color: #075E54;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-/* Submit button styling */
 .contact-form .btn-primary {
     padding: 10px 20px;
     font-weight: 500;
@@ -113,7 +110,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Media queries */
 @media (max-width: 768px) {
     .contact-card {
         margin-bottom: 15px;

@@ -1,0 +1,19 @@
+#loading-spinner {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 auto;
+    color: #075E54 !important;
+    border-width: 0.25em;
+}
+
+.spinner-border.text-primary {
+    color: #075E54 !important;
+}
+
+#load-more-container {
+    background-color: transparent;
+}
+
+#load-more-row {
+    background-color: #fffcf0;
+}

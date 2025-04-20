@@ -60,7 +60,7 @@
                 <ul class="list-unstyled">
                     <li class="mb-3">
                         <i class="bi bi-geo-alt-fill me-2"></i>
-                        267 Lý Thường Kiệt, Phường 15, Quận 11, Hồ Chí Minh
+                        267 Lý Thường Kiệt, Phường 15, Quận 11, Thành phố Hồ Chí Minh
                     </li>
                     <li class="mb-3">
                         <i class="bi bi-telephone-fill me-2"></i>
@@ -72,7 +72,7 @@
                     </li>
                     <li>
                         <i class="bi bi-clock-fill me-2"></i>
-                        Thứ 2 - Chủ nhật: 8h - 22h
+                        Thứ 2 - Thứ 7 : 8h - 17h
                     </li>
                 </ul>
             </div>
@@ -102,7 +102,7 @@
 
         <div class="row mt-4 pt-4 border-top border-secondary">
             <div class="col-md-6">
-                <p class="small mb-md-0">&copy; <?= date('Y') ?> Curtain Call. Tất cả các quyền được bảo lưu.</p>
+                <p class="small mb-md-0">&copy; <?= date('Y') ?> CurtainCall. Tất cả các quyền được bảo lưu.</p>
             </div>
             <div class="col-md-6 text-md-end">
                 <a href="#" class="text-white text-decoration-none small me-3">Điều khoản sử dụng</a>

@@ -1,112 +1,4 @@
 /* HOME - INDEX.PHP */
-.banner-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 300px;
-}
-
-.banner-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.banner-card:hover img {
-    transform: scale(1.05);
-}
-
-.banner-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-    color: white;
-    padding: 20px;
-    text-align: left;
-}
-
-.banner-overlay h3 {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.banner-overlay p {
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-}
-
-.banner-overlay .btn {
-    font-weight: 500;
-    padding: 5px 15px;
-    background-color: white;
-    color: black;
-    border: none;
-    transition: all 0.3s ease;
-}
-
-.banner-overlay .btn:hover {
-    background-color: #075E54;
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* Custom carousel */
-.carousel-indicators {
-    bottom: -40px !important;
-    margin-bottom: 0 !important;
-}
-
-.carousel-indicators [data-bs-target] {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #d8d8d8;
-    opacity: 0.5;
-    margin: 0 6px;
-}
-
-.carousel-indicators .active {
-    background-color: #AFE3CE;
-    opacity: 1;
-}
-
-#hotPerformancesCarousel {
-    margin-bottom: 20px;
-}
-
-.carousel-custom-control {
-    width: 40px;
-    height: 40px;
-    background-color: #fffcf0;
-    opacity: 1;
-    border-radius: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.carousel-custom-control:hover {
-    background-color: #fffcf0;
-    opacity: 1;
-}
-
-.carousel-control-prev.carousel-custom-control {
-    left: -20px;
-}
-
-.carousel-control-next.carousel-custom-control {
-    right: -20px;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    filter: invert(0.25);
-}
 
 /* Play card styles */
 .play-card {
@@ -162,7 +54,6 @@
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: #075E54;
-    border-bottom: 2px solid #AFE3CE;
     display: inline-block;
     padding-bottom: 0.5rem;
 }
@@ -179,7 +70,6 @@
     font-weight: 500;
 }
 
-/* Play card link - remove default link styling */
 .play-card-link {
     text-decoration: none;
     color: inherit;
@@ -247,8 +137,6 @@
     font-weight: 600;
 }
 
-
-
 /* Sorting styles */
 .sorting-container {
     display: flex;
@@ -313,30 +201,6 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-#loading-spinner {
-    width: 2rem;
-    height: 2rem;
-    margin: 0 auto;
-    color: #075E54 !important;
-    /* Added !important to ensure this color is used */
-    border-width: 0.25em;
-    /* Make the spinner slightly thicker for better visibility */
-}
-
-/* Add a rule for the Bootstrap class as well to handle all cases */
-.spinner-border.text-primary {
-    color: #075E54 !important;
-}
-
-/* Make sure the container doesn't affect the spinner color */
-#load-more-container {
-    background-color: transparent;
-}
-
-#load-more-row {
-    background-color: #fffcf0;
-}
-
 /* Add these styles to the existing file */
 .notification-container {
     position: fixed;
@@ -352,18 +216,6 @@
 
 /* === FOR SMALLER SCREENS === */
 @media (max-width: 768px) {
-    .carousel-control-prev.carousel-custom-control {
-        left: 0;
-    }
-
-    .carousel-control-next.carousel-custom-control {
-        right: 0;
-    }
-
-    .banner-overlay h3 {
-        font-size: 1.2rem;
-    }
-
     .sorting-container {
         flex-direction: column;
         align-items: flex-start;
