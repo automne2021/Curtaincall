@@ -273,4 +273,64 @@
     .info-label {
         width: 80px;
     }
+
+    /* Better seat map display on mobile */
+    .admin-viewbooking .seat-map {
+        overflow-x: auto;
+        padding-bottom: 15px;
+    }
+    
+    .admin-viewbooking .seat-container {
+        margin: 3px;
+    }
+    
+    .admin-viewbooking .seat {
+        width: 30px;
+        height: 30px;
+        font-size: 0.7rem;
+    }
+    
+    .admin-viewbooking .seat-legend {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .admin-viewbooking .seat-legend .d-flex {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .admin-viewbooking .screen {
+        width: 90%;
+        font-size: 0.7rem;
+        height: 25px;
+    }
+    
+    .info-group {
+        padding: 1rem;
+    }
+    
+    .info-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .info-label {
+        width: 100%;
+        margin-bottom: 0.3rem;
+    }
+    
+    .status-badge {
+        padding: 0.35rem 0.8rem;
+        margin: 0.5rem 0;
+    }
+    
+    .booking-actions .btn {
+        padding: 0.6rem 1rem;
+        margin-bottom: 0.5rem;
+        display: block;
+        width: 100%;
+    }
 }
