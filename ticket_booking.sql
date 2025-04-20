@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 19, 2025 lúc 08:03 PM
+-- Thời gian đã tạo: Th4 20, 2025 lúc 04:49 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -1753,7 +1753,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `created_at`, `name`, `phone`, `address`, `avatar`, `reset_token`, `reset_expires`, `google_id`) VALUES
-(1, 'user1', '$2y$10$2rG1e/2nVzKbIIM0Rdn.B.4aB1KEvfX0uJnhlis7IYJgXf.LsNBEW', 'user1@gmail.com', '2025-04-06 23:40:53', NULL, NULL, NULL, 'public/images/avatars/default.png', NULL, NULL, NULL),
+(1, 'user1', '$2y$10$CFeLc/lSKABauyB6gjSe.eI0HfCuAsk3iaSZxw3QAyDB4phXwWxsO', 'user1@gmail.com', '2025-04-06 23:40:53', NULL, NULL, NULL, 'public/images/avatars/default.png', NULL, NULL, NULL),
 (2, 'user2', '$2y$10$puM7Ga5HQIP0hNGug7PkP.XDwtYWjEwm21ZLyfVKHXusEG3234VrG', 'user2@gmail.com', '2025-04-06 23:58:47', 'Nguyen Van A', '0123456789', '268 Ly Thuong Kiet', 'public/images/avatars/default.png', NULL, NULL, NULL),
 (3, 'khanhvy', '$2y$10$tYcQAMVx5XKGepnClazeAev0CxEN033aH6VAFm95zKCLM23i9FMKm', 'vhkhanhvy25082601@gmail.com', '2025-04-07 22:08:44', 'Khánh Vy', NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocKkBPXHVxIv9AyzaF_gIoHH5YWYxmOtphqA8VCIdtIhVg5TFbY=s96-c', NULL, NULL, '114875941151678575320'),
 (4, 'nhanphan', '$2y$10$PXGudNK5Js93jFoWcCYjuOLB5OY8oNy9ptjy3hMElArfpPiJ8aMIq', 'phankhanhnhan01@gmail.com', '2025-04-08 07:01:57', 'Nhân Phan', NULL, NULL, 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', NULL, NULL, '103729317953199544120'),

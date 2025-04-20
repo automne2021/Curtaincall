@@ -98,11 +98,11 @@
                                     <select name="schedule_time" id="schedule_time" class="form-select" required>
                                         <option value="">-- Chọn lịch diễn --</option>
                                         <?php foreach ($schedules as $schedule): ?>
-                                            <?php 
-                                                $formatted_date = date('l, d/m/Y', strtotime($schedule['date']));
-                                                $formatted_time = date('H:i', strtotime($schedule['start_time'])) . ' - ' . 
-                                                                date('H:i', strtotime($schedule['end_time']));
-                                                $schedule_value = $schedule['play_id'] . '_' . strtotime($schedule['date'] . ' ' . $schedule['start_time']);
+                                            <?php
+                                            $formatted_date = date('d \\t\h\á\\n\g m, Y', strtotime($schedule['date']));
+                                            $formatted_time = date('H:i', strtotime($schedule['start_time'])) . ' - ' .
+                                                date('H:i', strtotime($schedule['end_time']));
+                                            $schedule_value = $schedule['play_id'] . '_' . strtotime($schedule['date'] . ' ' . $schedule['start_time']);
                                             ?>
                                             <option value="<?= $schedule_value ?>">
                                                 <?= $formatted_date ?> (<?= $formatted_time ?>)
@@ -110,7 +110,7 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                
+
                                 <div class="mb-2">
                                     <button type="submit" class="btn buy-ticket-btn h-100">
                                         <i class="bi bi-ticket-perforated me-2"></i>Mua vé ngay
@@ -133,20 +133,20 @@
     document.addEventListener('DOMContentLoaded', function() {
         const dateSelect = document.getElementById('schedule_date');
         const timeSlots = document.getElementById('time-slots');
-        
+
         if (dateSelect) {
             dateSelect.addEventListener('change', function() {
                 const selectedDate = this.value;
-                
+
                 if (selectedDate) {
                     // Show the time-slots div
                     timeSlots.classList.remove('d-none');
-                    
+
                     // Hide all time slot divs
                     document.querySelectorAll('.time-slot').forEach(slot => {
                         slot.style.display = 'none';
                     });
-                    
+
                     // Show only the time slot div for the selected date
                     const selectedSlot = document.querySelector(`.time-slot[data-date="${selectedDate}"]`);
                     if (selectedSlot) {
