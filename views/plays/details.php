@@ -41,13 +41,13 @@
                                 <p class="meta-location"><?= $play['theater_location'] ?? 'Location not available' ?></p>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <hr class="section-divider">
-                            <p class="meta-price mb-1"><span class="text-white">Giá chỉ từ</span> <?= number_format($play['min_price'], 0, ',', '.') ?>đ</p>
-                        </div>
                     </div>
                 </div>
                 <div class="play-actions text-center">
+                    <div>
+                        <hr class="section-divider">
+                        <p class="meta-price mb-1"><span class="text-white">Giá chỉ từ</span> <?= number_format($play['min_price'], 0, ',', '.') ?>đ</p>
+                    </div>
                     <?php if (isset($_SESSION['user'])): ?>
                         <a href="#scheduleSection" class="btn">
                             <i class="bi bi-ticket-perforated me-2"></i>Đặt vé ngay
