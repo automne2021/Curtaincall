@@ -141,3 +141,366 @@
     background-color: #064740;
     border-color: #064740;
 }
+
+/* Mobile and tablet responsive styles for seat selection page */
+@media (max-width: 992px) {
+    /* Seat map container adjustments */
+    .seat-map {
+        max-width: 100%;
+        padding-bottom: 20px;
+    }
+    
+    /* Layout adjustment for better fit on tablets */
+    .booking-summary {
+        margin-top: 2rem;
+    }
+    
+    /* Adjust booking info section */
+    .booking-info {
+        padding: 0 15px;
+    }
+    
+    /* Make continue button full width */
+    #continue-btn {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    
+    /* Adjust seat legend spacing */
+    .seat-legend .d-flex {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Reduce continue button size */
+    #continue-btn {
+        width: 100%;
+        margin-top: 0.3rem;
+        max-width: 300px;
+    }
+    
+    /* Move back button down slightly */
+    .return-link {
+        margin-top: 3rem;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Smaller seat size for mobile phones */
+    .seat {
+        width: 28px;
+        height: 28px;
+        font-size: 10px;
+    }
+    
+    /* Smaller spacing between seats */
+    .seat-container {
+        margin: 3px;
+    }
+    
+    /* Smaller row labels */
+    .row-label {
+        width: 15px;
+        margin-right: 5px;
+        font-size: 0.8rem;
+    }
+    
+    /* Better screen visualization on small devices */
+    .screen {
+        width: 90%;
+        height: 25px;
+        font-size: 0.75rem;
+    }
+    
+    /* Help text for horizontal scrolling */
+    .seat-map::before {
+        content: "← Cuộn ngang để xem tất cả →";
+        display: block;
+        text-align: center;
+        color: #6c757d;
+        font-size: 0.8rem;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    
+    /* Make the seat map scroll horizontally */
+    .seat-map {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    /* Ensure rows don't wrap */
+    .seat-row {
+        display: flex;
+        flex-wrap: nowrap;
+        margin-bottom: 8px;
+    }
+    
+    /* Adjust buttons for better mobile experience */
+    .btn-outline-secondary, 
+    .btn-primary {
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    /* Adjust spacing in booking summary */
+    .card-body ul li {
+        margin-bottom: 10px;
+    }
+
+    #continue-btn {
+        max-width: 250px;
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    /* Move back button down more on small screens */
+    .return-link {
+        margin-top: 3rem;
+        display: block;
+        text-align: center;
+    }
+    
+    /* Make sure the back button doesn't take full width */
+    .return-link .btn-outline-secondary {
+        width: auto;
+        display: inline-block;
+    }
+}
+
+/* Medium mobile devices (768px breakpoint) */
+@media (max-width: 768px) {
+    /* Adjust screen element */
+    .screen {
+        width: 85%;
+        margin-bottom: 25px;
+    }
+    
+    /* Adjust seat size for this breakpoint */
+    .seat {
+        width: 32px;
+        height: 32px;
+        font-size: 11px;
+    }
+    
+    /* Add some breathing room */
+    .booking-page .card {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Better layout for summary */
+    .booking-summary {
+        padding: 0 10px;
+    }
+    
+    /* Continue button positioning */
+    #continue-btn {
+        margin: 0.5rem auto;
+        max-width: 275px;
+    }
+    
+    /* Improve countdown timer visibility */
+    .countdown-timer {
+        padding: 8px 12px;
+    }
+    
+    /* Return link adjustment */
+    .return-link {
+        margin-top: 2.5rem;
+        text-align: center;
+    }
+    
+    /* Adjust seat legend for better visibility */
+    .seat-legend {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+    }
+    
+    /* Ensure the right amount of whitespace */
+    .booking-page .card-body {
+        padding: 1.25rem;
+    }
+}
+
+/* Extra small devices (less than 576px) - Additional refinements */
+@media (max-width: 400px) {
+    /* Even smaller seat size for very small screens */
+    .seat {
+        width: 25px;
+        height: 25px;
+        font-size: 9px;
+    }
+    
+    /* Reduce margin between seats */
+    .seat-container {
+        margin: 2px;
+    }
+    
+    /* Further reduce row labels */
+    .row-label {
+        width: 12px;
+        margin-right: 4px;
+        font-size: 0.7rem;
+    }
+    
+    /* Make screen element smaller */
+    .screen {
+        width: 95%;
+        height: 20px;
+        font-size: 0.7rem;
+        margin-bottom: 20px;
+    }
+    
+    /* Optimized continue button */
+    #continue-btn {
+        max-width: 200px;
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    /* Make sure text is visible in very small viewports */
+    body.booking-page {
+        font-size: 0.9rem;
+    }
+    
+    /* Simplify legend for smallest screens */
+    .seat-legend .seat {
+        width: 20px;
+        height: 20px;
+    }
+    
+    /* Improve scrolling indicator */
+    .seat-map::before {
+        padding: 3px;
+        margin-bottom: 8px;
+    }
+    
+    /* Reduce bottom margin on return link */
+    .return-link {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 850px) and (min-width: 769px) {
+    /* Adjust seat size for medium tablets */
+    .seat {
+        width: 30px;
+        height: 30px;
+        font-size: 10px;
+    }
+    
+    /* Enable horizontal scrolling for wider seat maps */
+    .seat-map {
+        overflow-x: auto;
+        padding-bottom: 15px;
+        max-width: 100%;
+    }
+    
+    /* Prevent row wrapping */
+    .seat-row {
+        white-space: nowrap;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+    
+    /* Add scroll hint */
+    .seat-map::before {
+        content: "← Scroll to see all seats →";
+        display: block;
+        text-align: center;
+        color: #6c757d;
+        font-size: 0.8rem;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    
+    /* Reduce spacing between seats */
+    .seat-container {
+        margin: 4px;
+    }
+    
+    /* Improve screen element */
+    .screen {
+        width: 85%;
+        margin-bottom: 25px;
+    }
+}
+
+/* Fix for very small screens (300px width) */
+@media (max-width: 350px) {
+    /* Ultra-compact seat size */
+    .seat {
+        width: 22px;
+        height: 22px;
+        font-size: 8px;
+    }
+    
+    /* Minimal margins */
+    .seat-container {
+        margin: 1px;
+    }
+    
+    /* Minimalist row labels */
+    .row-label {
+        width: 10px;
+        margin-right: 3px;
+        font-size: 0.65rem;
+    }
+    
+    /* Ensure horizontal scrolling works */
+    .seat-map {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    /* Compact screen */
+    .screen {
+        width: 95%;
+        height: 18px;
+        font-size: 0.65rem;
+        margin-bottom: 15px;
+    }
+    
+    /* Better scrolling message */
+    .seat-map::before {
+        content: "← Swipe to see all →";
+        font-size: 0.7rem;
+        padding: 3px;
+        margin-bottom: 5px;
+    }
+    
+    /* Ultra-compact legend */
+    .seat-legend .seat {
+        width: 18px;
+        height: 18px;
+        margin: 0 2px;
+    }
+    
+    .seat-legend .d-flex {
+        gap: 5px;
+    }
+    
+    /* Optimize button for tiny screens */
+    #continue-btn {
+        max-width: 180px;
+        font-size: 0.85rem;
+        padding: 0.35rem 0.7rem;
+    }
+    
+    /* Improve overall spacing */
+    .booking-page .card-body {
+        padding: 0.75rem;
+    }
+    
+    .booking-summary {
+        padding: 0 5px;
+    }
+    
+    /* Ensure text is visible */
+    body.booking-page {
+        font-size: 0.85rem;
+    }
+}

@@ -99,7 +99,7 @@
                                         <option value="">-- Chọn lịch diễn --</option>
                                         <?php foreach ($schedules as $schedule): ?>
                                             <?php 
-                                                $formatted_date = date('l, d/m/Y', strtotime($schedule['date']));
+                                                $formatted_date = date('d \\t\h\á\\n\g m, Y', strtotime($schedule['date']));
                                                 $formatted_time = date('H:i', strtotime($schedule['start_time'])) . ' - ' . 
                                                                 date('H:i', strtotime($schedule['end_time']));
                                                 $schedule_value = $schedule['play_id'] . '_' . strtotime($schedule['date'] . ' ' . $schedule['start_time']);
