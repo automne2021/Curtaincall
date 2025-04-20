@@ -98,11 +98,11 @@
                                     <select name="schedule_time" id="schedule_time" class="form-select" required>
                                         <option value="">-- Chọn lịch diễn --</option>
                                         <?php foreach ($schedules as $schedule): ?>
-                                            <?php
-                                            $formatted_date = date('d \\t\h\á\\n\g m, Y', strtotime($schedule['date']));
-                                            $formatted_time = date('H:i', strtotime($schedule['start_time'])) . ' - ' .
-                                                date('H:i', strtotime($schedule['end_time']));
-                                            $schedule_value = $schedule['play_id'] . '_' . strtotime($schedule['date'] . ' ' . $schedule['start_time']);
+                                            <?php 
+                                                $formatted_date = date('d \\t\h\á\\n\g m, Y', strtotime($schedule['date']));
+                                                $formatted_time = date('H:i', strtotime($schedule['start_time'])) . ' - ' . 
+                                                                date('H:i', strtotime($schedule['end_time']));
+                                                $schedule_value = $schedule['play_id'] . '_' . strtotime($schedule['date'] . ' ' . $schedule['start_time']);
                                             ?>
                                             <option value="<?= $schedule_value ?>">
                                                 <?= $formatted_date ?> (<?= $formatted_time ?>)
