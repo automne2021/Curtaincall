@@ -133,8 +133,8 @@
 }
 
 .status-badge.status-paid {
-    background-color: rgba(25, 135, 84, 0.1);
-    color: #198754;
+    background-color: rgba(22, 219, 127, 0.1);
+    color: #26e98e;
 }
 
 .status-badge.status-pending {

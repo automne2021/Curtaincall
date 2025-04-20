@@ -55,3 +55,46 @@
     font-weight: 600;
     letter-spacing: 1px;
 }
+
+/* Theater table row hover and animation effects */
+#theatersTable tbody tr {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease;
+}
+
+#theatersTable tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(7, 94, 84, 0.1);
+    background-color: rgba(175, 227, 206, 0.1) !important;
+    z-index: 1;
+    position: relative;
+}
+
+/* Ensure animation fade-in works properly */
+#theatersTable tbody tr {
+    animation-delay: 0s !important;
+}
+
+/* Theater column hover effects */
+#theatersTable td {
+    transition: background-color 0.15s ease;
+}
+
+#theatersTable tr:hover td {
+    background-color: rgba(175, 227, 206, 0.05);
+}
+
+/* Make sure the header doesn't transform */
+#theatersTable thead tr:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+/* Better action buttons hover animation */
+#theatersTable .action-buttons .btn-icon {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#theatersTable .action-buttons .btn-icon:hover {
+    transform: scale(1.1);
+}

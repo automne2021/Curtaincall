@@ -1,6 +1,6 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4 fade-in">
     <h1 class="h3">Edit Play</h1>
-    <a href="<?= BASE_URL ?>index.php?route=admin/plays" class="btn btn-secondary">
+    <a href="<?= BASE_URL ?>index.php?route=admin/plays" class="btn btn-outline-primary back-button">
         <i class="bi bi-arrow-left"></i> Back to Plays
     </a>
 </div>

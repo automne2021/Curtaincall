@@ -8,7 +8,7 @@
 <div class="card shadow mb-4 fade-in" style="animation-delay: 0.1s;">
     <div class="card-body">
         <div class="table-responsive">
-        <table class="table table-modern" id="theatersTable">
+            <table class="table table-modern" id="theatersTable">
                 <thead>
                     <tr>
                         <th>ID</th>

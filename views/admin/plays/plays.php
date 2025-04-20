@@ -44,7 +44,7 @@
                                    data-bs-toggle="tooltip" 
                                    data-bs-placement="top" 
                                    title="Edit Play">
-                                    <i class="bi bi-pencil-square"></i>
+                                    <i class="bi bi-pencil"></i>
                                 </a>
                                 <button type="button" 
                                         class="btn btn-icon btn-delete" 
