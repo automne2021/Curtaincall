@@ -24,6 +24,7 @@
     font-size: 2.2rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+    color: #fff !important;
 }
 
 .theater-location {
@@ -224,5 +225,45 @@
     
     .info-card {
         min-width: 100%;
+    }
+}
+
+/* Enhanced seat map responsiveness for small screens */
+@media (max-width: 768px) {
+    .seat-map {
+        overflow-x: auto;
+        padding-bottom: 15px; /* Add some padding to make scrolling easier */
+    }
+    
+    .seat-container {
+        margin: 3px; /* Slightly reduce margins */
+    }
+    
+    .seat {
+        width: 30px; /* Slightly smaller seats */
+        height: 30px;
+        font-size: 0.7rem; /* Smaller font */
+    }
+    
+    .seat-legend {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .seat-legend .d-flex {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .screen {
+        width: 90%; /* Make screen width relative to container */
+        font-size: 0.7rem;
+        height: 25px;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; }
+        100% { opacity: 0.7; }
     }
 }

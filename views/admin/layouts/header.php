@@ -43,6 +43,7 @@
     <script src="<?= BASE_URL ?>public/js/ckeditor-init.js"></script>
     <?php endif; ?>
     <script src="<?= BASE_URL ?>public/js/schedule-addremove.js"></script>
+    <script src="<?= BASE_URL ?>public/js/sidebar.js" defer></script>
     </head>
 <?php if (strpos($_GET['route'] ?? '', 'viewBooking') !== false): ?>
 <body class="admin-viewbooking">
@@ -64,27 +65,27 @@
             <ul class="list-unstyled components">
                 <li class="<?= strpos($_GET['route'] ?? '', 'dashboard') !== false ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>index.php?route=admin/dashboard">
-                        <i class="bi bi-speedometer2"></i> Dashboard
+                        <i class="bi bi-speedometer2"></i> <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="<?= strpos($_GET['route'] ?? '', 'plays') !== false || strpos($_GET['route'] ?? '', 'Play') !== false ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>index.php?route=admin/plays">
-                        <i class="bi bi-film"></i> Plays
+                        <i class="bi bi-film"></i> <span>Plays</span>
                     </a>
                 </li>
                 <li class="<?= strpos($_GET['route'] ?? '', 'theaters') !== false ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>index.php?route=admin/theaters">
-                        <i class="bi bi-building"></i> Theaters
+                        <i class="bi bi-building"></i> <span>Theaters</span>
                     </a>
                 </li>
                 <li class="<?= strpos($_GET['route'] ?? '', 'bookings') !== false ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>index.php?route=admin/bookings">
-                        <i class="bi bi-journal-check"></i> Bookings
+                        <i class="bi bi-journal-check"></i> <span>Bookings</span>
                     </a>
                 </li>
                 <li class="<?= strpos($_GET['route'] ?? '', 'users') !== false ? 'active' : '' ?>">
                     <a href="<?= BASE_URL ?>index.php?route=admin/users">
-                        <i class="bi bi-people"></i> Users
+                        <i class="bi bi-people"></i> <span>Users</span>
                     </a>
                 </li>
             </ul>

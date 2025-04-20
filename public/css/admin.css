@@ -174,6 +174,41 @@ body {
     color: white;
 }
 
+/* Sidebar collapsed state */
+.sidebar.active {
+    width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.active .sidebar-header h3,
+.sidebar.active .components span {
+    display: none;
+}
+
+.sidebar.active ul li a {
+    padding: 15px 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar.active ul li a i {
+    margin-right: 0;
+    font-size: 1.2rem;
+    width: auto;
+}
+
+.sidebar.active ul li.active > a, 
+.sidebar.active ul li > a:hover {
+    border-left: 4px solid #075E54;
+}
+
+/* Adjust content width when sidebar is collapsed */
+#content.active {
+    width: calc(100% - var(--sidebar-collapsed-width));
+    margin-left: var(--sidebar-collapsed-width);
+}
+
 /* Card Styling */
 .card {
     margin-bottom: 24px;
@@ -264,21 +299,69 @@ body {
 }
 
 /* Responsive adjustments */
+/* Responsive adjustments */
 @media (max-width: 768px) {
+    /* Start with sidebar collapsed on mobile */
     .sidebar {
         margin-left: calc(-1 * var(--sidebar-width));
+        position: fixed;
+        z-index: 1050; /* Higher z-index to overlay content */
+        box-shadow: none;
     }
     
+    /* When active, slide in from left */
     .sidebar.active {
         margin-left: 0;
+        width: var(--sidebar-width); /* Use full width on mobile */
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
     
+    /* Content should take full width by default on mobile */
     #content {
-        width: 100%;
+        width: 100% !important;
+        margin-left: 0 !important;
+        transition: all 0.3s;
     }
     
+    /* Don't change content width when sidebar is active on mobile */
     #content.active {
-        width: calc(100% - var(--sidebar-width));
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+    
+    /* Semi-transparent overlay when sidebar is open */
+    .sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1040; /* Just below sidebar */
+        display: none;
+    }
+    
+    .sidebar-backdrop.active {
+        display: block;
+    }
+    
+    /* Ensure sidebar is fully expanded on mobile when active */
+    .sidebar.active .sidebar-header h3,
+    .sidebar.active .components span {
+        display: block !important; /* Override collapsed style */
+    }
+    
+    .sidebar.active ul li a {
+        padding: 10px 20px !important; /* Reset to normal padding */
+        text-align: left !important;
+        display: block !important;
+        justify-content: flex-start !important;
+    }
+    
+    .sidebar.active ul li a i {
+        margin-right: 10px !important;
+        font-size: 1rem !important;
+        width: 25px !important;
     }
     
     .admin-thumbnail {

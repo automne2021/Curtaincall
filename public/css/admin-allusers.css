@@ -43,12 +43,6 @@
     color: #6c757d;
 }
 
-#usersTable tbody tr:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(7, 94, 84, 0.1);
-    background-color: rgba(175, 227, 206, 0.1) !important;
-}
-
 .user-role {
     font-size: 0.8rem;
     padding: 4px 10px;
@@ -82,4 +76,81 @@
 .user-filter .btn.active {
     background-color: #075E54;
     color: white;
+}
+
+/* User table row hover and animation effects */
+#usersTable tbody tr {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease;
+}
+
+#usersTable tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(7, 94, 84, 0.1);
+    background-color: rgba(175, 227, 206, 0.1) !important;
+    z-index: 1;
+    position: relative;
+}
+
+/* Ensure animation fade-in works properly */
+#usersTable tbody tr {
+    animation-delay: 0s !important;
+}
+
+/* User column hover effects */
+#usersTable td {
+    transition: background-color 0.15s ease;
+}
+
+#usersTable tr:hover td {
+    background-color: rgba(175, 227, 206, 0.05);
+}
+
+/* Make sure the header doesn't transform */
+#usersTable thead tr:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+/* Better action buttons hover animation */
+#usersTable .action-buttons .btn-icon {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#usersTable .action-buttons .btn-icon:hover {
+    transform: scale(1.1);
+}
+
+/* User avatar hover effects */
+#usersTable .user-avatar,
+#usersTable .avatar-placeholder {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#usersTable tr:hover .user-avatar,
+#usersTable tr:hover .avatar-placeholder {
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+}
+
+/* User name cell animation */
+#usersTable .user-name {
+    transition: color 0.2s ease;
+}
+
+#usersTable tr:hover .user-name {
+    color: #075E54;
+}
+
+/* Role badge animation */
+#usersTable .user-role {
+    transition: all 0.3s ease;
+}
+
+#usersTable tr:hover .role-admin {
+    background-color: rgba(25, 135, 84, 0.2);
+}
+
+#usersTable tr:hover .role-user {
+    background-color: rgba(13, 110, 253, 0.2);
 }
