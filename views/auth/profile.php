@@ -239,4 +239,5 @@ unset($_SESSION['password_errors']);
             </div>
         </div>
     </div>
+    <script src="public/js/profile-validation.js"></script>
 </main>
