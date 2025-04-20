@@ -37,7 +37,7 @@ require_once 'helpers/sort_helpers.php';
                         <div class="play-card">
                             <img src="<?= $row['image'] ?>" class="card-img-top" loading="lazy" alt="<?= $row['title'] ?>">
                             <div class="card-body">
-                                <h5 class="card-title"><?= $row['title'] ?></h5>
+                                <h5 class="card-title"><?= '[', $row['theater_name'], '] ', $row['title'] ?></h5>
                                 <p class="fw-bold mb-1">Từ <?= number_format($row['min_price'], 0, ',', '.') ?>đ</p>
                                 <?php if (!empty($row['date'])): ?>
                                     <p class="date-info"><i class="bi bi-calendar-event me-2"></i><?= date("d \\t\h\á\\n\g m, Y", strtotime($row['date'])) ?></p>

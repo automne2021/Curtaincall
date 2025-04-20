@@ -17,9 +17,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkScroll() {
         if (isLoading || allLoaded || lastPageCount < 8) return;
 
+        let triggerOffset;
+
+        if (window.innerWidth <= 576) {
+            triggerOffset = 1000; 
+        } else if (window.innerWidth <= 768) {
+            triggerOffset = 900;
+        } else if (window.innerWidth <= 992) {
+            triggerOffset = 500;
+        } else {
+            triggerOffset = 300;
+        }
+
         // Calculate the position where loading should trigger (near bottom of page)
         const scrollPosition = window.scrollY + window.innerHeight;
-        const triggerPosition = document.body.offsetHeight - 300; // 300px before bottom
+        const triggerPosition = document.body.offsetHeight - triggerOffset;
 
         if (scrollPosition >= triggerPosition) {
             loadMorePlays();
@@ -84,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Helper function to create a play card
-    function createPlayCard(play, showTheaterName) {
+    function createPlayCard(play) {
         const col = document.createElement('div');
         col.className = 'col';
         col.innerHTML = `
@@ -99,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </a>
         `;
-
         return col;
     }
 
