@@ -125,19 +125,13 @@
     }
     .banner-card {
         width: 100%;
-        height: 180px;
+        height: 380px;
         overflow: hidden !important;
     }
 
-    #hotPerformancesCarousel .col-md-6 {
-        width: 50% !important;
-        flex: 0 0 50% !important;
-        max-width: 50% !important;
+    #hotPerformancesCarousel .col-md-6:nth-child(2) {
+        display: none !important;
     }
-    
-        .banner-overlay {
-            padding: 8px;
-        }
 }
 
 @media (max-width: 576px) {
@@ -150,15 +144,11 @@
     }
 
     .banner-card {
-        height: 180px;
+        height: 280px;
     }
 
     .banner-overlay {
         padding: 15px;
-    }
-    .banner-overlay .btn {
-        font-size: 0.85rem;
-        padding: 4px 12px;
     }
 
     #hotPerformancesCarousel .col-md-6:nth-child(2) {
