@@ -23,8 +23,25 @@
 }
 
 .card-header.paid-header {
-    background-color: #d4edda;
+    background-color: #e0e0e0;
     border-bottom: 1px solid #c3e6cb;
+}
+
+.section-title h3 {
+    color: #075E54;
+}
+
+.booking-item i {
+    color: #AFE3CE;
+}
+.booking-item .card-text{
+    font-weight: 500;
+}
+
+.pay-location {
+    color: #333;
+    font-size: 14px;
+    margin-left: 27px;
 }
 
 .paid-ticket-label {

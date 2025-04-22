@@ -28,73 +28,76 @@ class BookingController
     }
 
     // Helper method to check if admin is logged in
-    private function checkAdminAuth() {
+    private function checkAdminAuth()
+    {
         if (!isset($_SESSION['admin'])) {
             header('Location: index.php?route=admin/login');
             exit;
         }
     }
-    
+
     // List all bookings
-    public function bookings() {
+    public function bookings()
+    {
         $this->checkAdminAuth();
-        
+
         // Get current page from query string, default to 1 if not set
         $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
         $per_page = 10;
-        
+
         // Get paginated bookings
         $result = $this->bookingModel->getPaginatedBookings($page, $per_page);
         $bookings = $result['bookings'];
         $pagination = $result['pagination'];
-        
+
         // Set base URL for pagination
         $base_url = BASE_URL . 'index.php?route=admin/bookings';
-        
+
         include 'views/admin/layouts/header.php';
         include 'views/admin/bookings/bookings.php';
         include 'views/admin/layouts/footer.php';
     }
-    
+
     // View a single booking
-    public function viewBooking() {
+    public function viewBooking()
+    {
         $this->checkAdminAuth();
-        
+
         $booking_id = $_GET['id'] ?? null;
         if (!$booking_id) {
-            $_SESSION['error_message'] = 'No booking ID specified';
+            $_SESSION['error_message'] = 'Không tìm thấy ID đặt vé';
             header('Location: index.php?route=admin/bookings');
             exit;
         }
-        
+
         $booking = $this->bookingModel->getBookingDetailsById($booking_id);
         if (!$booking) {
-            $_SESSION['error_message'] = 'Booking not found';
+            $_SESSION['error_message'] = 'Không tìm thấy thông tin đặt vé';
             header('Location: index.php?route=admin/bookings');
             exit;
         }
-        
+
         // Get user details
         $user = $this->userModel->getUserById($booking['user_id']);
-        
+
         // Get theater details
         $theater = $this->theaterModel->getTheaterById($booking['theater_id']);
-        
+
         // Get seat map for this theater
         $seatMap = $this->seatModel->getSeatMapByTheater($booking['theater_id']);
-        
+
         // Get seat prices by type for display
         $seatPrices = $this->seatModel->getSeatPrices($booking['theater_id']);
-        
+
         // Create a mapping of seat types to prices for display
         $seatTypes = [];
         foreach ($seatPrices as $type => $price) {
             $seatTypes[$type] = $price;
         }
-        
+
         // Get all booked seats for this play (to show on the seat map)
         $bookedSeats = $this->bookingModel->getBookedSeatsByPlay($booking['play_id']);
-        
+
         include 'views/admin/layouts/header.php';
         include 'views/admin/bookings/viewBooking.php';
         include 'views/admin/layouts/footer.php';
@@ -106,7 +109,7 @@ class BookingController
         // Check if user is logged in
         if (!isset($_SESSION['user'])) {
             $_SESSION['redirect_after_login'] = 'index.php?route=booking/index';
-            $_SESSION['error_message'] = 'Please log in to book tickets';
+            $_SESSION['error_message'] = 'Vui lòng đăng nhập để đặt vé';
             header('Location: index.php');
             exit;
         }
@@ -115,7 +118,7 @@ class BookingController
         $play_id = $_GET['play_id'] ?? null;
 
         if (!$play_id) {
-            $_SESSION['error_message'] = 'Please select a play to book tickets';
+            $_SESSION['error_message'] = 'Vui lòng chọn một vở kịch để đặt vé';
             header('Location: index.php');
             exit;
         }
@@ -124,7 +127,7 @@ class BookingController
         $play = $this->playModel->getPlayById($play_id);
 
         if (!$play) {
-            $_SESSION['error_message'] = 'Play not found';
+            $_SESSION['error_message'] = 'Vở kịch không tồn tại';
             header('Location: index.php');
             exit;
         }
@@ -141,20 +144,21 @@ class BookingController
         include 'views/layouts/footer.php';
     }
 
-    public function create() {
+    public function create()
+    {
         $play_id = $_GET['play_id'] ?? null;
-        
+
         if (!$play_id) {
-            $_SESSION['error_message'] = 'Please select a play to book tickets';
+            $_SESSION['error_message'] = 'Vui lòng chọn một vở kịch để đặt vé';
             header('Location: index.php');
             exit;
         }
-        
+
         // Redirect to the index method with the play_id
         header("Location: index.php?route=booking/index&play_id=$play_id");
         exit;
     }
-    
+
     // Step 2: Select seats
     public function selectSeats()
     {
@@ -187,11 +191,11 @@ class BookingController
 
             // Parse the composite value from schedule_time (format: play_id_timestamp)
             list($schedule_play_id, $timestamp) = explode('_', $schedule_time);
-            
+
             // Convert timestamp back to datetime format
             $schedule_date_part = date('Y-m-d', $timestamp);
             $schedule_time_part = date('H:i:s', $timestamp);
-            
+
             // Get schedule details using play_id, date and time
             $sql = "SELECT * FROM schedules WHERE play_id = ? AND date = ? AND start_time = ?";
             $stmt = $this->conn->prepare($sql);
@@ -210,6 +214,7 @@ class BookingController
                 'play_id' => $play_id,
                 'schedule_date' => $schedule_date_part,
                 'schedule_time' => $schedule['start_time'],
+                'schedule_end_time' => $schedule['end_time'],
                 'timestamp' => $timestamp
             ];
         }
@@ -225,8 +230,8 @@ class BookingController
 
         // Get seat availability for this play and schedule
         $seatAvailability = $this->seatModel->getSeatAvailability(
-            $play_id, 
-            $_SESSION['booking_details']['schedule_date'], 
+            $play_id,
+            $_SESSION['booking_details']['schedule_date'],
             $_SESSION['booking_details']['timestamp']
         );
 
@@ -239,16 +244,17 @@ class BookingController
         include 'views/layouts/footer.php';
     }
 
-    public function cancelConfirmation() {
+    public function cancelConfirmation()
+    {
         // Get play ID from session
         $play_id = $_SESSION['booking_details']['play_id'] ?? null;
-        
+
         // Clear booking session
         unset($_SESSION['booking_details']);
-        
+
         // Set confirmation message
         $_SESSION['info_message'] = 'Đặt vé đã bị hủy. Bạn có thể tiếp tục duyệt các vở kịch khác.';
-        
+
         // Redirect back to play details
         if ($play_id) {
             header('Location: index.php?route=play/view&play_id=' . $play_id);
@@ -263,7 +269,7 @@ class BookingController
     {
         // Check if user is logged in
         if (!isset($_SESSION['user'])) {
-            $_SESSION['error_message'] = 'Please log in to book tickets';
+            $_SESSION['error_message'] = 'Vui lòng đăng nhập để đặt vé';
             header('Location: index.php');
             exit;
         }
@@ -272,7 +278,7 @@ class BookingController
         $selected_seats = $_POST['seats'] ?? [];
 
         if (empty($selected_seats)) {
-            $_SESSION['error_message'] = 'Please select at least one seat';
+            $_SESSION['error_message'] = 'Vui lòng chọn ít nhất một ghế để đặt vé';
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
@@ -281,7 +287,7 @@ class BookingController
         $booking_details = $_SESSION['booking_details'] ?? null;
 
         if (!$booking_details) {
-            $_SESSION['error_message'] = 'Invalid booking session';
+            $_SESSION['error_message'] = 'Phiên đặt vé không hợp lệ';
             header('Location: index.php');
             exit;
         }
@@ -313,90 +319,91 @@ class BookingController
     }
 
     // Step 4: Complete booking
-    public function complete() {
+    public function complete()
+    {
         // Check if user is logged in
         if (!isset($_SESSION['user'])) {
             header('Location: index.php?route=user/login');
             exit;
         }
-    
+
         // Get booking details from session
         $booking_details = $_SESSION['booking_details'] ?? null;
-    
+
         if (!$booking_details) {
-            $_SESSION['error_message'] = 'No booking information found';
+            $_SESSION['error_message'] = 'Không tìm thấy thông tin đặt vé';
             header('Location: index.php');
             exit;
         }
-    
+
         $user_id = $_SESSION['user']['user_id'];
         $play_id = $booking_details['play_id'];
         $selected_seats = $booking_details['selected_seats'];
         $schedule_date = $booking_details['schedule_date']; // Get the scheduled date
-    
+
         // Get play details
         $play = $this->playModel->getPlayById($play_id);
         $theater_id = $play['theater_id'];
-    
+
         // Set expiration time (e.g., 15 minutes from now)
         $expires_at = date('Y-m-d H:i:s', strtotime('+15 minutes'));
-    
+
         // Create bookings for each selected seat
         $success = true;
         $booking_ids = [];
-        
+
         // Start transaction
         $this->conn->begin_transaction();
-        
+
         try {
             foreach ($selected_seats as $seat_id) {
                 // Get price for this seat
                 $price = $this->seatModel->getSeatPrice($theater_id, $seat_id);
-                
+
                 // Create booking record
                 $booking_result = $this->bookingModel->createBooking(
-                    $user_id, 
-                    $play_id, 
-                    $theater_id, 
-                    $seat_id, 
+                    $user_id,
+                    $play_id,
+                    $theater_id,
+                    $seat_id,
                     $expires_at,
                     $price,
                     $schedule_date  // Pass the schedule date to the createBooking method
                 );
-                
+
                 if (!$booking_result) {
                     $success = false;
                     break;
                 }
-                
+
                 $booking_id = $this->conn->insert_id;
                 $booking_ids[] = $booking_id;
-                
+
                 // Update seat status to 'Pending'
                 $this->seatModel->updateSeatStatus($play_id, $theater_id, $seat_id, 'Pending');
             }
-            
+
             // If all bookings were created successfully
             if ($success) {
                 // For demonstration purposes, set all bookings to 'Paid' status
                 foreach ($booking_ids as $id) {
                     $this->bookingModel->updateBookingStatus($id, 'Paid');
                 }
-                
+
                 // Commit transaction
                 $this->conn->commit();
-                
+
                 // Clear booking session data
                 unset($_SESSION['booking_details']);
-                
+
                 // Redirect to booking history with success message
-                $_SESSION['success_message'] = 'Payment successful! Your tickets are now confirmed.';
+                $_SESSION['success_message'] = 'Đặt vé thành công!';
                 header('Location: index.php?route=booking/history&payment_success=1&booking_id=' . $booking_ids[0]);
                 exit;
             } else {
                 // Rollback transaction if any booking failed
                 $this->conn->rollback();
-                $_SESSION['error_message'] = 'Failed to complete booking';
+                $_SESSION['error_message'] = 'Đặt vé không thành công. Vui lòng thử lại.';
                 header('Location: index.php?route=booking/selectSeats&return=true');
                 exit;
             }
@@ -414,7 +421,7 @@ class BookingController
     {
         // Check if user is logged in
         if (!isset($_SESSION['user'])) {
-            $_SESSION['error_message'] = 'Please log in to view booking history';
+            $_SESSION['error_message'] = 'Vui lòng đăng nhập để xem lịch sử đặt vé';
             header('Location: index.php');
             exit;
         }

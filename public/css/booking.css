@@ -13,10 +13,16 @@
 
 /* Style the card headers to match site theme */
 .booking-page .card-header {
+    background-color: #075E54;
     border-bottom: none;
     padding: 1rem 1.5rem;
 }
 
+#continue-btn:enabled{
+    background-color: #075E54;
+    color: white;
+    font-weight: bold;
+}
 .seat-map {
     margin-bottom: 20px;
 }
@@ -126,6 +132,10 @@
     animation: blink 1s infinite;
 }
 
+.card-body h5 {
+    color: #075E54;
+    font-weight: bold;
+}
 .cancel-btn:hover {
     background-color: #f8d7da;
     color: #842029;
@@ -141,6 +151,7 @@
     background-color: #064740;
     border-color: #064740;
 }
+
 
 /* Mobile and tablet responsive styles for seat selection page */
 @media (max-width: 992px) {
