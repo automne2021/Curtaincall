@@ -119,7 +119,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><?= htmlspecialchars($play['title']) ?></h5>
-                    <p><?= htmlspecialchars($theater['name']) ?></p>
+                    <p><i class="bi bi-geo-alt me-2"></i><?= htmlspecialchars($theater['name']) ?></p>
                     <p><i class="bi bi-calendar-event me-2"></i> <?= date('d \\t\h\á\\n\g m, Y', strtotime($_SESSION['booking_details']['schedule_date'])) ?></p>
                     <p><i class="bi bi-clock me-2"></i> <?= date('H:i ', strtotime($_SESSION['booking_details']['schedule_time'])) ?> - <?= date('H:i', strtotime($_SESSION['booking_details']['schedule_end_time'])) ?></p>
 
