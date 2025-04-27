@@ -1,0 +1,6 @@
+.env
+vendor/
+.vscode/
+.idea/
+*.log
+public/images/avatars/
