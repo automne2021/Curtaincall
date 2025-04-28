@@ -36,22 +36,22 @@ class UserController
 
             // Validate username
             if (empty($username) || strlen($username) < 4) {
-                $errors['username'] = 'Username must be at least 4 characters';
+                $errors['username'] = 'Tên đăng nhập phải từ 4 ký tự trở lên';
             }
 
             // Validate email
             if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors['email'] = 'Please enter a valid email address';
+                $errors['email'] = 'Vui lòng nhập địa chỉ email hợp lệ';
             }
 
             // Validate password
-            if (empty($password) || strlen($password) < 6) {
-                $errors['password'] = 'Password must be at least 6 characters';
+            if (empty($password) || strlen($password) < 8) {
+                $errors['password'] = 'Mật khẩu phải từ 8 ký tự trở lên';
             }
 
             // Validate password confirmation - FIXED to match exactly what's posted
             if ($password !== $confirm_password) {
-                $errors['confirm_password'] = 'Passwords do not match';
+                $errors['confirm_password'] = 'Mật khẩu không khớp';
             }
 
             if (empty($errors)) {
@@ -125,10 +125,10 @@ class UserController
                     if ($remember) {
                         $token = bin2hex(random_bytes(32)); // Generate a secure random token
                         $expires = time() + (30 * 24 * 60 * 60); // 30 days
-                        
+
                         // Store the token in the database
                         $this->userModel->storeRememberToken($user['user_id'], $token, $expires);
-                        
+
                         // Set the cookie
                         setcookie('remember_token', $token, $expires, '/', '', isset($_SERVER['HTTPS']), true);
                     }
@@ -175,22 +175,22 @@ class UserController
         // Clear the remember_token cookie if it exists
         if (isset($_COOKIE['remember_token'])) {
             $token = $_COOKIE['remember_token'];
-            
+
             // Remove token from database
             if (isset($_SESSION['user']['user_id'])) {
                 $this->userModel->deleteRememberToken($_SESSION['user']['user_id'], $token);
             }
-            
+
             // Clear cookie by expiring it
             setcookie('remember_token', '', time() - 3600, '/', '', isset($_SERVER['HTTPS']), true);
         }
-        
+
         // Destroy the user session
         unset($_SESSION['user']);
-        
+
         // Set logged-out message
         $_SESSION['success_message'] = 'You have been logged out successfully.';
-        
+
         // Redirect to home page
         header('Location: index.php');
         exit;
@@ -669,124 +669,128 @@ class UserController
     }
 
     // List all users for admin
-    public function users() {
+    public function users()
+    {
         // Check admin auth
         if (!isset($_SESSION['admin'])) {
             header('Location: index.php?route=admin/login');
             exit;
         }
-        
+
         // Get current page from query string, default to 1 if not set
         $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
         $per_page = 10;
-        
+
         // Get paginated users
         $result = $this->userModel->getPaginatedUsers($page, $per_page);
         $users = $result['users'];
         $pagination = $result['pagination'];
-        
+
         // Set base URL for pagination
         $base_url = BASE_URL . 'index.php?route=admin/users';
-        
+
         include 'views/admin/layouts/header.php';
         include 'views/admin/users/users.php';
         include 'views/admin/layouts/footer.php';
     }
 
     // View single user for admin
-    public function viewUser() {
+    public function viewUser()
+    {
         // Check admin auth
         if (!isset($_SESSION['admin'])) {
             header('Location: index.php?route=admin/login');
             exit;
         }
-        
+
         $user_id = $_GET['id'] ?? null;
         if (!$user_id) {
             $_SESSION['error_message'] = 'No user ID specified';
             header('Location: index.php?route=admin/users');
             exit;
         }
-        
+
         $user = $this->userModel->getUserById($user_id);
         if (!$user) {
             $_SESSION['error_message'] = 'User not found';
             header('Location: index.php?route=admin/users');
             exit;
         }
-        
+
         // Get user's bookings
         require_once 'models/Booking.php';
         $bookingModel = new Booking($this->conn);
         $userBookings = $bookingModel->getBookingsByUserId($user_id);
-        
+
         include 'views/admin/layouts/header.php';
         include 'views/admin/users/viewUser.php';
         include 'views/admin/layouts/footer.php';
     }
 
     // Delete user for admin
-    public function deleteUser() {
+    public function deleteUser()
+    {
         // Check admin auth
         if (!isset($_SESSION['admin'])) {
             header('Location: index.php?route=admin/login');
             exit;
         }
-        
+
         $user_id = $_GET['id'] ?? null;
         if (!$user_id) {
             $_SESSION['error_message'] = 'No user ID specified';
             header('Location: index.php?route=admin/users');
             exit;
         }
-        
+
         $user = $this->userModel->getUserById($user_id);
         if (!$user) {
             $_SESSION['error_message'] = 'User not found';
             header('Location: index.php?route=admin/users');
             exit;
         }
-        
+
         // Delete user
         $success = $this->userModel->deleteUser($user_id);
-        
+
         if ($success) {
             $_SESSION['success_message'] = 'User deleted successfully';
         } else {
             $_SESSION['error_message'] = 'Error deleting user';
         }
-        
+
         header('Location: index.php?route=admin/users');
         exit;
     }
 
     // View user bookings for admin
-    public function userBookings() {
+    public function userBookings()
+    {
         // Check admin auth
         if (!isset($_SESSION['admin'])) {
             header('Location: index.php?route=admin/login');
             exit;
         }
-        
+
         $user_id = $_GET['id'] ?? null;
         if (!$user_id) {
             $_SESSION['error_message'] = 'No user ID specified';
             header('Location: index.php?route=admin/users');
             exit;
         }
-        
+
         $user = $this->userModel->getUserById($user_id);
         if (!$user) {
             $_SESSION['error_message'] = 'User not found';
             header('Location: index.php?route=admin/users');
             exit;
         }
-        
+
         // Get user's bookings
         require_once 'models/Booking.php';
         $bookingModel = new Booking($this->conn);
         $bookings = $bookingModel->getBookingsByUserId($user_id);
-        
+
         include 'views/admin/layouts/header.php';
         include 'views/admin/users/userBookings.php';
         include 'views/admin/layouts/footer.php';
@@ -795,16 +799,16 @@ class UserController
     public function checkUsername()
     {
         header('Content-Type: application/json');
-        
+
         $username = isset($_GET['username']) ? $this->sanitizeInput($_GET['username']) : '';
-        
+
         if (empty($username)) {
             echo json_encode(['available' => false, 'error' => 'Username is required']);
             exit;
         }
-        
+
         $user = $this->userModel->getUserByUsername($username);
-        
+
         echo json_encode(['available' => ($user === null)]);
         exit;
     }
@@ -812,16 +816,16 @@ class UserController
     public function checkEmail()
     {
         header('Content-Type: application/json');
-        
+
         $email = isset($_GET['email']) ? $this->sanitizeInput($_GET['email']) : '';
-        
+
         if (empty($email)) {
             echo json_encode(['available' => false, 'error' => 'Email is required']);
             exit;
         }
-        
+
         $user = $this->userModel->getUserByEmail($email);
-        
+
         echo json_encode(['available' => ($user === null)]);
         exit;
     }

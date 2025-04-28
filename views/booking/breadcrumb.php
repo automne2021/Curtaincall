@@ -8,16 +8,16 @@ $current_route = $_GET['route'] ?? '';
         <!-- Step 1: Select Seats -->
         <div class="breadcrumb-step <?= strpos($_SERVER['REQUEST_URI'], 'selectSeats') !== false ? 'active' : '' ?> <?= strpos($_SERVER['REQUEST_URI'], 'confirm') !== false || strpos($_SERVER['REQUEST_URI'], 'complete') !== false ? 'completed' : '' ?>">
             <div class="step-icon">
-                <i class="bi bi-chair"></i>
+                <i class="bi bi-grid-fill"></i>
                 <div class="step-check">
                     <i class="bi bi-check-lg"></i>
                 </div>
             </div>
-            <div class="step-label">Chọn chỗ</div>
+            <div class="step-label">Chọn ghế</div>
         </div>
-        
+
         <div class="breadcrumb-connector <?= strpos($_SERVER['REQUEST_URI'], 'confirm') !== false || strpos($_SERVER['REQUEST_URI'], 'complete') !== false ? 'active' : '' ?>"></div>
-        
+
         <!-- Step 2: Payment -->
         <div class="breadcrumb-step <?= strpos($_SERVER['REQUEST_URI'], 'confirm') !== false ? 'active' : '' ?> <?= strpos($_SERVER['REQUEST_URI'], 'complete') !== false ? 'completed' : '' ?>">
             <div class="step-icon">

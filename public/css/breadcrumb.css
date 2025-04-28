@@ -38,8 +38,8 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #f8f9fa;
-    border: 2px solid #e9ecef;
+    background-color: #f0f0f0;
+    border: 2px solid #e5e5e5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,17 +59,13 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: #198754;
+    background-color: #075E54;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     transform: scale(0.5);
     transition: all 0.3s ease;
-}
-
-.step-check i {
-    color: white;
 }
 
 .step-label {
@@ -85,7 +81,7 @@
     background-color: #e9ecef;
     margin: 0 15px;
     position: relative;
-    top: -25px;
+    top: -15px;
     z-index: 0;
     max-width: 100px;
     transition: background-color 0.3s ease;
@@ -93,16 +89,16 @@
 
 /* Active step */
 .breadcrumb-step.active .step-icon {
-    border-color: #0d6efd;
-    background-color: #e6f0ff;
+    border-color: #075E54;
+    background-color: #e9f7f4;
 }
 
 .breadcrumb-step.active .step-icon i {
-    color: #0d6efd;
+    color: #075E54;
 }
 
 .breadcrumb-step.active .step-label {
-    color: #0d6efd;
+    color: #075E54;
     font-weight: 600;
 }
 
@@ -113,11 +109,11 @@
 }
 
 .breadcrumb-step.completed .step-icon i {
-    opacity: 0;
+    color: white;
 }
 
 .breadcrumb-connector.active {
-    background-color: #0d6efd;
+    background-color: #075E54;
 }
 
 /* Responsive adjustments */

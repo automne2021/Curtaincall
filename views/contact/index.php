@@ -19,7 +19,7 @@
                         <i class="bi bi-geo-alt-fill"></i>
                     </div>
                     <h5 class="card-title">Địa chỉ</h5>
-                    <p class="card-text">267 Lý Thường Kiệt, Phường 15,<br>Quận 11, TP Hồ Chí Minh</p>
+                    <p class="card-text">268 Lý Thường Kiệt, Phường 14,<br>Quận 10, TP Hồ Chí Minh</p>
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
                 <div class="separator"></div>
             </div>
             <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.520777422487!2d106.65518350880792!3d10.771368259246382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec16cd76359%3A0x3f0d03d1cbdc664b!2zMjY3IEzDvSBUaMaw4budbmcgS2nhu4d0LCBQaMaw4budbmcgMTUsIFF14bqtbiAxMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1745086385350!5m2!1svi!2s"
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.5115110083116!2d106.65532150880797!3d10.772080259233231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec3c161a3fb%3A0xef77cd47a1cc691e!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBCw6FjaCBraG9hIC0gxJDhuqFpIGjhu41jIFF14buRYyBnaWEgVFAuSENN!5e0!3m2!1svi!2s!4v1745391120117!5m2!1svi!2s"
                     width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>

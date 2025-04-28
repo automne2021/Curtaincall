@@ -60,7 +60,7 @@
                 <ul class="list-unstyled">
                     <li class="mb-3">
                         <i class="bi bi-geo-alt-fill me-2"></i>
-                        267 Lý Thường Kiệt, Phường 15, Quận 11, Thành phố Hồ Chí Minh
+                        268 Lý Thường Kiệt, Phường 14, Quận 10, Thành phố Hồ Chí Minh
                     </li>
                     <li class="mb-3">
                         <i class="bi bi-telephone-fill me-2"></i>
